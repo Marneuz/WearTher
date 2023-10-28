@@ -68,9 +68,7 @@ import com.marneux.marneweather.ui.components.SingleWeatherDetailCard
 import com.marneux.marneweather.ui.components.TypingAnimatedText
 
 
-/**
- * An overload that uses [WeatherDetailScreenUiState].
- */
+
 @Composable
 fun WeatherDetailScreen(
     uiState: WeatherDetailScreenUiState,

@@ -1,11 +1,10 @@
 package com.marneux.marneweather.ui.weatherdetail
 
-
-import com.marneux.marneweather.data.repositories.textgenerator.GenerativeTextRepositoryImpl
-import com.marneux.marneweather.data.repositories.weather.WeatherRepositoryImpl
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.marneux.marneweather.data.repositories.textgenerator.GenerativeTextRepositoryImpl
+import com.marneux.marneweather.data.repositories.weather.WeatherRepositoryImpl
 import com.marneux.marneweather.data.repositories.weather.fetchHourlyForecastsForNext24Hours
 import com.marneux.marneweather.data.repositories.weather.fetchPrecipitationProbabilitiesForNext24hours
 import com.marneux.marneweather.ui.navigation.NavigationDestinations
@@ -31,7 +30,7 @@ class WeatherDetailViewModel(
     private val longitude: String =
         savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_LONGITUDE]!!
     private val nameLocation: String =
-        savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_NAME_LOCATION]!!
+        savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_NAME_OF_LOCATION]!!
 
 
     private val _uiState = MutableStateFlow(WeatherDetailScreenUiState())

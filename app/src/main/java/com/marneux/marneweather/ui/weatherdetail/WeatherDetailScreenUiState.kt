@@ -6,9 +6,7 @@ import com.marneux.marneweather.domain.models.weather.HourlyForecast
 import com.marneux.marneweather.domain.models.weather.PrecipitationProbability
 import com.marneux.marneweather.domain.models.weather.SingleWeatherDetail
 
-/**
- * A UI state class that represents the current UI state of the [WeatherDetailScreen].
- */
+
 data class WeatherDetailScreenUiState(
     val isLoading: Boolean = true,
     val isPreviouslySavedLocation: Boolean = false,
