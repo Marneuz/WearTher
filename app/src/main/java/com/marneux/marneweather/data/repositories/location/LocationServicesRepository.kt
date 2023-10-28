@@ -6,15 +6,15 @@ import com.marneux.marneweather.domain.models.location.LocationAutofillSuggestio
 import com.marneux.marneweather.domain.models.location.toLocationAutofillSuggestionList
 import kotlinx.coroutines.CancellationException
 
-class LocationServicesRepository(
+class LocationServicesRepository (
     private val locationClient: LocationClient
 ) : LocationServicesRepositoryImpl {
-        override suspend fun fetchSuggestedPlacesForQuery(query: String): Result<List<LocationAutofillSuggestion>> {
+    override suspend fun fetchSuggestedPlacesForQuery(query: String): Result<List<LocationAutofillSuggestion>> {
         return try {
             if (query.isBlank()) return Result.success(emptyList())
             val suggestions = locationClient.getPlacesSuggestionsForQuery(query = query)
                 .getBodyOrThrowException()
-                .suggestion
+                .suggestions
                 .toLocationAutofillSuggestionList()
             Result.success(suggestions)
         } catch (exception: Exception) {

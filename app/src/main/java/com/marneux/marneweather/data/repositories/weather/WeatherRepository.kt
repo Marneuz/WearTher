@@ -27,7 +27,7 @@ class WeatherRepository (
     private val databaseDao: DatabaseDao
 ) : WeatherRepositoryImpl {
     override suspend fun fetchWeatherForLocation(
-        nameOfLocation: String,
+        nameLocation: String,
         latitude: String,
         longitude: String
     ): Result<CurrentWeatherDetails> = try {
@@ -35,7 +35,7 @@ class WeatherRepository (
             latitude = latitude,
             longitude = longitude
         )
-        Result.success(response.getBodyOrThrowException().toCurrentWeatherDetails(nameOfLocation))
+        Result.success(response.getBodyOrThrowException().toCurrentWeatherDetails(nameLocation))
     } catch (exception: Exception) {
         if (exception is CancellationException) throw exception
         Result.failure(exception)

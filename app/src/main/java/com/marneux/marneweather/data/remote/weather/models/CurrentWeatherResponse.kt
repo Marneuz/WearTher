@@ -4,10 +4,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class CurrentWeatherResponse(
+data class CurrentWeatherResponse(
     @Json(name = "current_weather") val currentWeather: CurrentWeather,
     val latitude: String,
-    val longitude: String,
+    val longitude: String
 ) {
     @JsonClass(generateAdapter = true)
     data class CurrentWeather(

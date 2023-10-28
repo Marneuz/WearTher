@@ -27,5 +27,4 @@ class LocationReverseGeocoder(
             Result.failure(exception)
         }
     }
-
 }

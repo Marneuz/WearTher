@@ -13,4 +13,5 @@ interface LocationClient {
         @Query("name") query: String,
         @Query("count") @IntRange(1, 100) count: Int = 20
     ): Response<SuggestionResponse>
+
 }

@@ -12,24 +12,25 @@ import java.time.LocalDate
 
 interface WeatherRepositoryImpl {
 
+
     suspend fun fetchWeatherForLocation(
         nameLocation: String,
         latitude: String,
         longitude: String
     ): Result<CurrentWeatherDetails>
 
+
     fun getSavedLocationsListStream(): Flow<List<SavedLocation>>
 
-    suspend fun saveWeatherLocation(
-        nameLocation: String,
-        latitude: String,
-        longitude: String)
+    suspend fun saveWeatherLocation(nameLocation: String, latitude: String, longitude: String)
 
     suspend fun deleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails)
 
     suspend fun permanentlyDeleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails)
 
+
     suspend fun tryRestoringDeletedWeatherLocation(nameLocation: String)
+
 
     suspend fun fetchHourlyPrecipitationProbabilities(
         latitude: String,
@@ -37,11 +38,14 @@ interface WeatherRepositoryImpl {
         dateRange: ClosedRange<LocalDate> = LocalDate.now()..LocalDate.now().plusDays(1)
     ): Result<List<PrecipitationProbability>>
 
+
     suspend fun fetchHourlyForecasts(
         latitude: String,
         longitude: String,
         dateRange: ClosedRange<LocalDate>
     ): Result<List<HourlyForecast>>
+
+
 
     suspend fun fetchAdditionalWeatherInfoItemsListForCurrentDay(
         latitude: String,

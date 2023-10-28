@@ -1,7 +1,5 @@
 package com.marneux.marneweather.ui.home
 
-import com.marneux.marneweather.domain.models.location.SavedLocation
-import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marneux.marneweather.data.remote.location.ReverseGeocoder
@@ -9,6 +7,8 @@ import com.marneux.marneweather.data.repositories.location.LocationServicesRepos
 import com.marneux.marneweather.data.repositories.weather.WeatherRepositoryImpl
 import com.marneux.marneweather.data.repositories.weather.fetchHourlyForecastsForNext24Hours
 import com.marneux.marneweather.domain.location.CurrentLocationProviderImpl
+import com.marneux.marneweather.domain.models.location.SavedLocation
+import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
 import com.marneux.marneweather.domain.models.weather.CurrentWeatherDetails
 import com.marneux.marneweather.domain.models.weather.toBriefWeatherDetails
 import kotlinx.coroutines.CancellationException
