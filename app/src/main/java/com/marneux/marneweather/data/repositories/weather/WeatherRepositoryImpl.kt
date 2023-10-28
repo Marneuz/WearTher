@@ -1,6 +1,5 @@
 package com.marneux.marneweather.data.repositories.weather
 
-
 import com.marneux.marneweather.domain.models.location.SavedLocation
 import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
 import com.marneux.marneweather.domain.models.weather.CurrentWeatherDetails

@@ -176,14 +176,14 @@ class HomeViewModel(
             }
 
             val coordinates = currentLocationProvider.getCurrentLocation().getOrThrow()
-            val nameOfLocation = reverseGeocoder.getLocationNameForCoordinates(
+            val nameLocation = reverseGeocoder.getLocationNameForCoordinates(
                 coordinates.latitude.toDouble(),
                 coordinates.longitude.toDouble()
             ).getOrThrow()
 
             val weatherDetailsForCurrentLocation = async {
                 weatherRepository.fetchWeatherForLocation(
-                    nameLocation = nameOfLocation,
+                    nameLocation = nameLocation,
                     latitude = coordinates.latitude,
                     longitude = coordinates.longitude
                 ).getOrThrow().toBriefWeatherDetails()
