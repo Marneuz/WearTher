@@ -8,7 +8,6 @@ import com.marneux.marneweather.data.remote.location.LocationClientConstants
 import com.marneux.marneweather.data.remote.weather.WeatherClient
 import com.marneux.marneweather.data.remote.weather.WeatherClientConstants
 import okhttp3.OkHttpClient
-import org.koin.android.BuildConfig
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -44,7 +43,7 @@ object NetworkModule {
             OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val newRequest = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer $OPEN_AI_API_TOKEN}")
+                        .addHeader("Authorization", "Bearer ${OPEN_AI_API_TOKEN}")
                         .build()
                     chain.proceed(newRequest)
                 }

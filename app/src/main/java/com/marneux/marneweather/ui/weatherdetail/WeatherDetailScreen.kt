@@ -97,7 +97,7 @@ fun WeatherDetailScreen(
     } else {
         WeatherDetailScreen(
             snackbarHostState = snackbarHostState,
-            nameOfLocation = uiState.weatherDetailsOfChosenLocation!!.nameLocation,
+            nameLocation = uiState.weatherDetailsOfChosenLocation!!.nameLocation,
             weatherConditionImage = uiState.weatherDetailsOfChosenLocation.imageResId,
             weatherConditionIconId = uiState.weatherDetailsOfChosenLocation.iconResId,
             weatherInDegrees = uiState.weatherDetailsOfChosenLocation.temperatureRoundedToInt,
@@ -116,7 +116,7 @@ fun WeatherDetailScreen(
 
 @Composable
 fun WeatherDetailScreen(
-    nameOfLocation: String,
+    nameLocation: String,
     weatherCondition: String,
     aiGeneratedWeatherSummaryText: String?,
     @DrawableRes weatherConditionImage: Int,
@@ -150,7 +150,7 @@ fun WeatherDetailScreen(
                     onBackButtonClick = onBackButtonClick,
                     shouldDisplaySaveButton = !isPreviouslySavedLocation,
                     onSaveButtonClick = onSaveButtonClick,
-                    nameOfLocation = nameOfLocation,
+                    nameLocation = nameLocation,
                     currentWeatherInDegrees = weatherInDegrees,
                     weatherCondition = weatherCondition
                 )
@@ -200,7 +200,7 @@ private fun Header(
     onBackButtonClick: () -> Unit,
     shouldDisplaySaveButton: Boolean,
     onSaveButtonClick: () -> Unit,
-    nameOfLocation: String,
+    nameLocation: String,
     currentWeatherInDegrees: Int,
     weatherCondition: String,
 ) {
@@ -261,7 +261,7 @@ private fun Header(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
-                text = nameOfLocation,
+                text = nameLocation,
                 style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
                 maxLines = 2,

@@ -13,12 +13,12 @@ interface GeneratedTextCacheDatabaseDao {
 
     @Query(
         """
-            SELECT *
-            FROM GeneratedTextForLocationEntities
-            WHERE nameLocation = :nameLocation AND
-                  temperature = :temperature AND
-                  conciseWeatherDescription = :conciseWeatherDescription
-            """
+    SELECT * 
+    FROM GeneratedTextForLocationEntities
+    WHERE nameLocation = :nameLocation AND
+          temperature = :temperature AND
+          conciseWeatherDescription = :conciseWeatherDescription
+    """
     )
     suspend fun getSavedGeneratedTextForDetails(
         nameLocation: String,
@@ -28,5 +28,4 @@ interface GeneratedTextCacheDatabaseDao {
 
     @Query("DELETE from GeneratedTextForLocationEntities")
     suspend fun deleteAllSavedText()
-
 }

@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class TextGenerationPromptBody(
+data class TextGenerationPromptBody(
     val messages: List<MessageDTO>,
     val model: String,
     @Json(name = "max_tokens") val maxResponseTokens: Int = 150
