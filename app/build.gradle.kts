@@ -1,5 +1,4 @@
-import com.android.build.api.dsl.Packaging
-import java.util.Properties
+
 
 plugins {
     id("com.android.application")
@@ -15,7 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.marneux.marneweather"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -24,7 +23,7 @@ android {
             useSupportLibrary = true
         }
 // constructo para iniciar las declararas las apikey desde local.properties para que esten a nivel
-    // global, no usada por el momento por error ocasional en error de gpt3
+    // global, no usada por el momento debido a error ocasional en gpt3
 //        val properties = java.util.Properties().apply {
 //            load(project.rootProject.file("local.properties").inputStream())
 //        }

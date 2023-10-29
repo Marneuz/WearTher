@@ -8,11 +8,7 @@ import retrofit2.http.POST
 
 interface TextGeneratorClient {
 
-    /**
-     * Returns a response containing the generated text based on the provided prompt.
-     * @param textGenerationPostBody The request body containing the prompt and LLM model information.
-     * @return A response containing the generated text.
-     */
+
     @POST(TextGeneratorClientConstants.Endpoints.CHAT_COMPLETION_END_POINT)
     suspend fun getModelResponseForConversations(
         @Body textGenerationPostBody: TextGenerationPromptBody

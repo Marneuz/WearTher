@@ -15,7 +15,7 @@ fun getWeatherImageForCode(weatherCode: Int, isDay: Boolean): Int {
             0 -> R.drawable.img_day_clear
             in cloudy -> R.drawable.img_day_cloudy
             in rainy -> R.drawable.img_day_rain
-            in thunderstorms -> R.drawable.img_day_rain
+            in thunderstorms -> R.drawable.img_day_thunder
             in snowy -> R.drawable.img_day_snow
             in foggy -> R.drawable.img_day_fog
             else -> throw IllegalArgumentException("Unknown weatherCode $weatherCode")
@@ -25,7 +25,7 @@ fun getWeatherImageForCode(weatherCode: Int, isDay: Boolean): Int {
         0 -> R.drawable.img_night_clear
         in cloudy -> R.drawable.img_night_cloudy
         in rainy -> R.drawable.img_night_rain
-        in thunderstorms -> R.drawable.img_night_rain
+        in thunderstorms -> R.drawable.img_night_thunder
         in snowy -> R.drawable.img_night_snow
         in foggy -> R.drawable.img_night_fog
         else -> throw IllegalArgumentException("Unknown weatherCode $weatherCode")

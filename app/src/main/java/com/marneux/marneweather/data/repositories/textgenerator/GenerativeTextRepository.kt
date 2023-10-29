@@ -24,7 +24,9 @@ class GenerativeTextRepository (
                 conciseWeatherDescription = weatherDetails.weatherCondition
             )
         if (generatedTextEntity != null) return Result.success(generatedTextEntity.generatedDescription)
-        // prompts
+        // idioma hardcodeado por el moemento
+        // problemas al realizar peticion en español
+        //TODO asignar variable de idioma de sistema
         val systemPrompt = """
             Think that you are a dressmaker and you have to say what clothes to wear, it has to be brief,
               a brief description of the time with the parameters that I give you below, and
@@ -36,7 +38,7 @@ class GenerativeTextRepository (
             weatherCondition = ${weatherDetails.weatherCondition};
             isNight = ${weatherDetails.isDay != 1}
         """.trimIndent()
-        // prompt messages
+        // prompts
         val promptMessages = listOf(
             MessageDTO(role = "system", content = systemPrompt),
             MessageDTO(role = "user", content = userPrompt)
@@ -45,16 +47,16 @@ class GenerativeTextRepository (
             messages = promptMessages,
             model = "gpt-3.5-turbo-0613"
         )
-        // request to generate text based on prompt body
+        // peticion de generacion de texto
         return try {
-            // generate text
+            // genera texto
             val generatedTextResponse = textGeneratorClient.getModelResponseForConversations(
                 textGenerationPostBody = textGenerationPrompt
             ).getBodyOrThrowException()
                 .generatedResponses
                 .first().message
                 .content
-            // save the generated text in database
+            // guarda el texto generado para agilizar futuras peticiones
             val generatedTextForLocationEntity = GeneratedTextForLocationEntity(
                 nameLocation = weatherDetails.nameLocation,
                 temperature = weatherDetails.temperatureRoundedToInt,
@@ -62,7 +64,6 @@ class GenerativeTextRepository (
                 generatedDescription = generatedTextResponse
             )
             generatedTextCacheDatabaseDao.addGeneratedTextForLocation(generatedTextForLocationEntity)
-            // return the result
             Result.success(generatedTextResponse)
         } catch (exception: Exception) {
             if (exception is CancellationException) throw exception
