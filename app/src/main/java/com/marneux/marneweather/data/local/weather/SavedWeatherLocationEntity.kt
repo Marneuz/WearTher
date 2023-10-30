@@ -1,13 +1,16 @@
 package com.marneux.marneweather.data.local.weather
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "SavedWeatherLocations")
+
+@Entity(tableName = "saved_weather_locations")
 data class SavedWeatherLocationEntity(
-    @PrimaryKey val nameLocation: String,
-    val latitude: String,
-    val longitude: String,
-    val isDeleted: Boolean = false
+    @PrimaryKey
+    @ColumnInfo("name_location") val nameLocation: String,
+    @ColumnInfo("latitude") val latitude: String,
+    @ColumnInfo("longitude") val longitude: String,
+    @ColumnInfo("is_deleted") val isDeleted: Boolean = false
 
 )

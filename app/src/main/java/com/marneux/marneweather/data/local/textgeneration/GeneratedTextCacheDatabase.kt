@@ -9,6 +9,7 @@ abstract class GeneratedTextCacheDatabase : RoomDatabase() {
     abstract fun getDao(): GeneratedTextCacheDatabaseDao
 
     companion object {
-        const val DATABASE_NAME = "Generated_Text_Cache_Database"
+        const val DATABASE_NAME = "generated_text_cache_database"
+        const val GENERATED_TEXT_TABLE_NAME = "generated_text_for_location"
     }
 }
