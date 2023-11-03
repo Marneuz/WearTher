@@ -2,7 +2,6 @@ package com.marneux.marneweather.data.local.textgeneration
 
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.Update
 import androidx.room.Upsert
 
 @Dao

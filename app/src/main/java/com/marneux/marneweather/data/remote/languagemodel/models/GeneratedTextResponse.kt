@@ -1,8 +1,5 @@
 package com.marneux.marneweather.data.remote.languagemodel.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
 import com.google.gson.annotations.SerializedName
 
 data class GeneratedTextResponse(
