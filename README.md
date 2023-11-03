@@ -35,7 +35,7 @@ Antes de ejecutar la aplicación, es necesario introducir tu "GPT" `API_KEY` en 
 [TextGeneratorClientConstants](com.marneux.marneweather.data.remote.languagemodel.TextGeneratorClientConstants)
 
 
-## Notas sobre GPT
+### Notas sobre GPT
 
 GPT, al ser una API relativamente reciente, puede presentar ocasionalmente fallos o retardos en sus respuestas. 
 En consecuencia, hay situaciones en las que la API podría no devolver texto.

@@ -7,7 +7,6 @@ data class SuggestionResponse(
     @SerializedName("results") val suggestions: List<Suggestion> = emptyList()
 ) {
 
-
     data class Suggestion(
         @SerializedName("id") val idOfPlace: String,
         @SerializedName("name") val nameOfPlace: String,
