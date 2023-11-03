@@ -10,6 +10,7 @@ import com.marneux.marneweather.data.remote.weather.WeatherClientConstants
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 val networkModule = module {
@@ -24,7 +25,7 @@ object NetworkModule {
 
     fun provideWeatherClient(): WeatherClient = Retrofit.Builder()
         .baseUrl(WeatherClientConstants.BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(WeatherClient::class.java)
 
@@ -33,7 +34,7 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(LocationClientConstants.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(LocationClient::class.java)
     }
@@ -50,7 +51,7 @@ object NetworkModule {
                 .build()
         )
         .baseUrl(TextGeneratorClientConstants.BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(TextGeneratorClient::class.java)
 

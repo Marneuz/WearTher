@@ -1,9 +1,9 @@
 package com.marneux.marneweather.data.remote.languagemodel.models
 
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class MessageDTO(
-    val role: String,
-    val content: String
+
+    @SerializedName("role") val role: String,
+    @SerializedName("content") val content: String
 )

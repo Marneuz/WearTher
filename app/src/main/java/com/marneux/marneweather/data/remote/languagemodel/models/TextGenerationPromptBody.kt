@@ -1,11 +1,14 @@
 package com.marneux.marneweather.data.remote.languagemodel.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class TextGenerationPromptBody(
+    @SerializedName("messages")
     val messages: List<MessageDTO>,
+
+    @SerializedName("model")
     val model: String,
-    @Json(name = "max_tokens") val maxResponseTokens: Int = 150
+
+    @SerializedName("max_tokens")
+    val maxResponseTokens: Int = 150
 )

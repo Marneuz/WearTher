@@ -3,16 +3,25 @@ package com.marneux.marneweather.data.remote.weather.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+import com.google.gson.annotations.SerializedName
+
 data class CurrentWeatherResponse(
-    @Json(name = "current_weather") val currentWeather: CurrentWeather,
+    @SerializedName("current_weather")
+    val currentWeather: CurrentWeather,
+
+    @SerializedName("latitude")
     val latitude: String,
+    @SerializedName("longitude")
     val longitude: String
 ) {
-    @JsonClass(generateAdapter = true)
     data class CurrentWeather(
+        @SerializedName("temperature")
         val temperature: Double,
-        @Json(name = "is_day") val isDay: Int,
-        @Json(name = "weathercode") val weatherCode: Int,
+
+        @SerializedName("is_day")
+        val isDay: Int,
+
+        @SerializedName("weathercode")
+        val weatherCode: Int
     )
 }

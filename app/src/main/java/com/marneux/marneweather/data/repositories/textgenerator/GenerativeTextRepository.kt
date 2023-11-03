@@ -32,13 +32,14 @@ class GenerativeTextRepository (
               a brief description of the time with the parameters that I give you below, and
               then you have to tell me top, bottom, accessories, and footwear .
         """.trimIndent()
+        // prompts
         val userPrompt = """
             location = ${weatherDetails.nameLocation};
             currentTemperature = ${weatherDetails.temperatureRoundedToInt};
             weatherCondition = ${weatherDetails.weatherCondition};
             isNight = ${weatherDetails.isDay != 1}
         """.trimIndent()
-        // prompts
+
         val promptMessages = listOf(
             MessageDTO(role = "system", content = systemPrompt),
             MessageDTO(role = "user", content = userPrompt)

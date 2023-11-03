@@ -1,21 +1,24 @@
 package com.marneux.marneweather.data.remote.location.models
 
+import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
-data class SuggestionResponse(@Json(name = "results") val suggestions: List<Suggestion> = emptyList()) {
+
+data class SuggestionResponse(
+    @SerializedName("results") val suggestions: List<Suggestion> = emptyList()
+) {
 
 
-    @JsonClass(generateAdapter = true)
+
     data class Suggestion(
-        @Json(name = "id") val idOfPlace: String,
-        @Json(name = "name") val nameOfPlace: String,
-        @Json(name = "country") val country: String?,
-        @Json(name = "admin1") val state: String?,
-        @Json(name = "country_code") val countryCode: String?,
-        val latitude: String,
-        val longitude: String
+        @SerializedName("id") val idOfPlace: String,
+        @SerializedName("name") val nameOfPlace: String,
+        @SerializedName("country") val country: String?,
+        @SerializedName("admin1") val state: String?,
+        @SerializedName("country_code") val countryCode: String?,
+        @SerializedName("latitude")val latitude: String,
+        @SerializedName("longitude")val longitude: String
     )
 }
 

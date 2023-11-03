@@ -1,19 +1,29 @@
 package com.marneux.marneweather.data.remote.weather.models
 
+import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+
 data class HourlyWeatherInfoResponse(
+    @SerializedName("latitude")
     val latitude: String,
+    @SerializedName("longitude")
     val longitude: String,
-    @Json(name = "hourly") val hourlyForecast: HourlyForecast
+    @SerializedName("hourly") val hourlyForecast: HourlyForecast
 ) {
-    @JsonClass(generateAdapter = true)
+
     data class HourlyForecast(
-        @Json(name = "time") val timestamps: List<String>,
-        @Json(name = "precipitation_probability") val precipitationProbabilityPercentages: List<Int> = emptyList(),
-        @Json(name = "weathercode") val weatherCodes: List<Int> = emptyList(),
-        @Json(name = "temperature_2m") val temperatureForecasts: List<Float> = emptyList()
+        @SerializedName("time")
+        val timestamps: List<String>,
+
+        @SerializedName("precipitation_probability")
+        val precipitationProbabilityPercentages: List<Int> = emptyList(),
+
+        @SerializedName("weathercode")
+        val weatherCodes: List<Int> = emptyList(),
+
+        @SerializedName("temperature_2m")
+        val temperatureForecasts: List<Float> = emptyList()
     )
 }
