@@ -1,5 +1,6 @@
 package com.marneux.marneweather.data.remote.location.models
 
+/*
 data class CoordinatesResponse(val features: List<Feature>) {
 
 
@@ -15,3 +16,5 @@ val CoordinatesResponse.coordinates: CoordinatesResponse.Coordinates
         val (longitude, latitude) = features.first().geometry.coordinates
         return CoordinatesResponse.Coordinates(longitude, latitude)
     }
+
+ */

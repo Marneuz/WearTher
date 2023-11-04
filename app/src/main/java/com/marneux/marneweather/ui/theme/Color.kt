@@ -32,3 +32,5 @@ val Grey90 = Color(0xFFE0E3E3)
 val BlueGrey30 = Color(0xFF45464F)
 val BlueGrey60 = Color(0xFF90909A)
 val BlueGrey80 = Color(0xFFC6C5D0)
+
+val GreenGPT = Color(0xFF74AA9C)

@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 
-private val CustomDarkColorScheme = darkColorScheme(
+private val MarneDarkColorScheme = darkColorScheme(
     primary = Blue80,
     onPrimary = Blue20,
     primaryContainer = Blue30,
@@ -36,16 +36,17 @@ private val CustomDarkColorScheme = darkColorScheme(
     surfaceVariant = BlueGrey30,
     onSurfaceVariant = BlueGrey80,
     outline = BlueGrey60
+
 )
 
 @Composable
-fun CustomTheme(areDynamicColorsEnabled: Boolean = true, content: @Composable () -> Unit) {
+fun MarneTheme(areDynamicColorsEnabled: Boolean = true, content: @Composable () -> Unit) {
     val doesDeviceSupportDynamicColors =
         areDynamicColorsEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val context = LocalContext.current
     MaterialTheme(
         colorScheme = if (doesDeviceSupportDynamicColors) dynamicDarkColorScheme(context)
-        else CustomDarkColorScheme,
+        else MarneDarkColorScheme,
         typography = Typography,
         content = content
     )

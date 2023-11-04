@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MarneWeather</string>
+    <string name="current_location">Current Location</string>
+    <string name="saved_locations">Saved Locations</string>
+    <string name="error_current_loc">An error occurred when fetching the weather for the current location.</string>
+    <string name="error_saved_loc">An error occurred when fetching the current weather details of saved locations.</string>
+    <string name="search_location">Search for a location</string>
+    <string name="error_fetching_suggestions">An error occurred when fetching the suggestions. Please retype to try again.</string>
+    <string name="retry">Retry</string>
+    <string name="loading">Loading…</string>
+    <string name="go_back">Go back</string>
+    <string name="default_error_message">Oops! An error occurred when trying to fetch the \n weather details. Please try again.</string>
 </resources>

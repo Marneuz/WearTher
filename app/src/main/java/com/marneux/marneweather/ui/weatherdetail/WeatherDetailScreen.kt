@@ -47,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -66,7 +67,7 @@ import com.marneux.marneweather.ui.components.HourlyForecastCard
 import com.marneux.marneweather.ui.components.PrecipitationProbabilitiesCard
 import com.marneux.marneweather.ui.components.SingleWeatherDetailCard
 import com.marneux.marneweather.ui.components.TypingAnimatedText
-
+import com.marneux.marneweather.ui.theme.GreenGPT
 
 
 @Composable
@@ -92,7 +93,7 @@ fun WeatherDetailScreen(
                 textAlign = TextAlign.Center,
                 text = uiState.errorMessage
             )
-            Button(onClick = onBackButtonClick, content = { Text("Go back") })
+            Button(onClick = onBackButtonClick, content = { Text(stringResource(R.string.go_back)) })
         }
     } else {
         WeatherDetailScreen(
@@ -159,7 +160,7 @@ fun WeatherDetailScreen(
             if (aiGeneratedWeatherSummaryText != null || isWeatherSummaryLoading) {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     WeatherSummaryTextCard(
-                        summaryText = aiGeneratedWeatherSummaryText ?: "",
+                        summaryText = aiGeneratedWeatherSummaryText ?: stringResource(id = R.string.loading),
                         isWeatherSummaryLoading = isWeatherSummaryLoading
                     )
                 }
@@ -308,7 +309,7 @@ private fun WeatherSummaryTextCard(
         }
         val imageRequest = remember {
             ImageRequest.Builder(context = context)
-                .data(R.drawable.bard_sparkle_thinking_anim)
+                .data(R.drawable.loading_world)
                 .size(Size.ORIGINAL)
                 .build()
         }
@@ -331,8 +332,8 @@ private fun WeatherSummaryTextCard(
             } else {
                 Icon(
                     modifier = Modifier.size(16.dp),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_bard_logo),
-                    tint = Color.Unspecified,
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_gpt_icon),
+                    tint = GreenGPT,
                     contentDescription = null
                 )
             }

@@ -101,10 +101,8 @@ dependencies {
     // placeholders
     implementation("com.google.accompanist:accompanist-placeholder-material3:0.30.1")
 
-
     // splashscreen
     implementation("androidx.core:core-splashscreen:1.0.1")
-
 
     // room
     implementation("androidx.room:room-runtime:2.5.1")
@@ -129,10 +127,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // moshi
-    implementation("com.squareup.moshi:moshi:1.15.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // Make's moshi not depend on reflection + generates Kotlin code using Kotlin Poet
 
     // work manager
     implementation("androidx.work:work-runtime-ktx:2.8.1")

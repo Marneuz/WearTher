@@ -25,6 +25,7 @@ class WeatherDetailViewModel(
     private val generativeTextRepository: GenerativeTextRepositoryImpl
 ) : ViewModel() {
 
+
     private val latitude: String =
         savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_LATITUDE]!!
     private val longitude: String =
@@ -124,9 +125,9 @@ class WeatherDetailViewModel(
     }
 
     companion object {
-        private const val DEFAULT_ERROR_MESSAGE =
-            "Oops! An error occurred when trying to fetch the " +
-                    "weather details. Please try again."
+
+        private const val DEFAULT_ERROR_MESSAGE = "errorDefaultString"
+
     }
 
 }

@@ -18,6 +18,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -35,6 +36,7 @@ class HomeViewModel(
     private val weatherRepository: WeatherRepositoryImpl
 ) : ViewModel() {
 
+
     private val currentSearchQuery = MutableStateFlow("")
     private val isCurrentlyRetryingToFetchSavedLocation = MutableStateFlow(false)
 
@@ -44,6 +46,9 @@ class HomeViewModel(
 
     private var currentWeatherDetailsCache = mutableMapOf<SavedLocation, CurrentWeatherDetails>()
     private var recentlyDeletedItem: BriefWeatherDetails? = null
+
+    private val _isReady = MutableStateFlow(false)
+    val isReady: StateFlow<Boolean> = _isReady.asStateFlow()
 
     init {
 
@@ -73,7 +78,7 @@ class HomeViewModel(
             }
             isCurrentlyRetryingToFetchSavedLocation.update { false }
         }.launchIn(viewModelScope)
-
+        _isReady.value = true
 
         @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
         currentSearchQuery.debounce(250)
@@ -99,6 +104,7 @@ class HomeViewModel(
                 }
             }
             .launchIn(viewModelScope)
+
     }
 
     fun retryFetchingSavedLocations() {
@@ -107,9 +113,7 @@ class HomeViewModel(
         isCurrentlyRetryingToFetchSavedLocation.update { true }
     }
 
-    /**
-     * Used to set the [searchQuery] for which the suggestions should be generated.
-     */
+
     fun setSearchQueryForSuggestionsGeneration(searchQuery: String) {
         currentSearchQuery.value = searchQuery
     }
@@ -139,7 +143,7 @@ class HomeViewModel(
         for (removedLocation in removedLocations) {
             currentWeatherDetailsCache.remove(removedLocation)
         }
-        // only fetch weather details of the items that are not in cache.
+        // fetch item si no esta en cache
         val locationsNotInCache = savedLocationsSet subtract currentWeatherDetailsCache.keys
         for (savedLocationNotInCache in locationsNotInCache) {
             try {

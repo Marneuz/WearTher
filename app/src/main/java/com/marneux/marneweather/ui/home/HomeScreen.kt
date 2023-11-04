@@ -60,6 +60,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -67,16 +68,16 @@ import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material3.placeholder
+import com.google.accompanist.placeholder.material3.shimmer
+import com.marneux.marneweather.R
 import com.marneux.marneweather.domain.models.location.LocationAutofillSuggestion
 import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
 import com.marneux.marneweather.domain.models.weather.HourlyForecast
 import com.marneux.marneweather.ui.components.AutofillSuggestion
 import com.marneux.marneweather.ui.components.CompactWeatherCardWithHourlyForecast
 import com.marneux.marneweather.ui.components.SwipeToDismissCompactWeatherCard
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material3.placeholder
-import com.google.accompanist.placeholder.material3.shimmer
-
 
 
 @Composable
@@ -143,6 +144,11 @@ fun HomeScreen(
     onLocationPermissionGranted: () -> Unit,
     snackbarHostState: SnackbarHostState
 ) {
+    val currentLocation = stringResource(id = R.string.current_location)
+    val savedLocation = stringResource(id = R.string.saved_locations)
+    val errorCurrentLoc = stringResource(id = R.string.error_current_loc)
+    val errorSavedLoc = stringResource(id = R.string.error_saved_loc)
+
     var isSearchBarActive by remember { mutableStateOf(false) }
     var currentQueryText by remember { mutableStateOf("") }
     val clearQueryText = {
@@ -194,7 +200,7 @@ fun HomeScreen(
 
             if (shouldDisplayCurrentLocationWeatherSubHeader) {
                 subHeaderItem(
-                    title = "Current Location",
+                    title = currentLocation,
                     isLoadingAnimationVisible = isCurrentWeatherDetailsLoading
                 )
             }
@@ -210,13 +216,13 @@ fun HomeScreen(
             if (errorFetchingWeatherForCurrentLocation) {
                 errorCardItem(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    errorMessage = "An error occurred when fetching the weather for the current location.",
+                    errorMessage = errorCurrentLoc,
                     onRetryButtonClick = onRetryFetchingWeatherForCurrentLocation
                 )
             }
 
             subHeaderItem(
-                title = "Saved Locations",
+                title = savedLocation,
                 isLoadingAnimationVisible = isWeatherForSavedLocationsLoading
             )
 
@@ -224,7 +230,7 @@ fun HomeScreen(
                 errorCardItem(
                     modifier = Modifier
                         .padding(horizontal = 16.dp),
-                    errorMessage = "An error occurred when fetching the current weather details of saved locations.",
+                    errorMessage = errorSavedLoc,
                     onRetryButtonClick = onRetryFetchingWeatherForSavedLocations
                 )
             }
@@ -298,7 +304,7 @@ private fun Header(
                     )
                 }
             },
-            placeholder = { Text(text = "Search for a location") },
+            placeholder = { Text(text = stringResource(R.string.search_location)) },
             content = searchBarSuggestionsContent
         )
     }
@@ -448,7 +454,7 @@ private fun LazyListScope.searchBarItem(
                         .align(Alignment.CenterHorizontally)
                         .padding(16.dp),
                     textAlign = TextAlign.Center,
-                    text = "An error occurred when fetching the suggestions. Please retype to try again."
+                    text = stringResource(R.string.error_fetching_suggestions)
                 )
             }
         }
@@ -540,9 +546,9 @@ private fun AutofillSuggestionLeadingIcon(countryFlagUrl: String) {
 private fun LazyListScope.errorCardItem(
     errorMessage: String,
     modifier: Modifier = Modifier,
-    retryButtonText: String = "Retry",
     onRetryButtonClick: () -> Unit
 ) {
+
     item {
         OutlinedCard(modifier = modifier.animateItemPlacement()) {
             Column(
@@ -557,7 +563,7 @@ private fun LazyListScope.errorCardItem(
                 Spacer(modifier = Modifier.size(16.dp))
                 OutlinedButton(
                     onClick = onRetryButtonClick,
-                    content = { Text(text = retryButtonText) })
+                    content = { Text(text = stringResource(id = R.string.retry)) })
             }
         }
     }
