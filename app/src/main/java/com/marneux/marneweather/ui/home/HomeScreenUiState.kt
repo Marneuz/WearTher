@@ -1,8 +1,8 @@
 package com.marneux.marneweather.ui.home
 
-import com.marneux.marneweather.domain.models.location.LocationAutofillSuggestion
-import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
-import com.marneux.marneweather.domain.models.weather.HourlyForecast
+import com.marneux.marneweather.domain.cajondesastre.location.models.location.LocationAutofillSuggestion
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.BriefWeatherDetails
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.HourlyForecast
 
 data class HomeScreenUiState(
     val isLoadingAutofillSuggestions: Boolean = false,

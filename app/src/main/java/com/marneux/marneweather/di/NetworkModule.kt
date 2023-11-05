@@ -1,17 +1,16 @@
 package com.marneux.marneweather.di
 
-import com.marneux.marneweather.data.remote.languagemodel.TextGeneratorClient
-import com.marneux.marneweather.data.remote.languagemodel.TextGeneratorClientConstants
-import com.marneux.marneweather.data.remote.languagemodel.TextGeneratorClientConstants.OPEN_AI_API_TOKEN
-import com.marneux.marneweather.data.remote.location.LocationClient
-import com.marneux.marneweather.data.remote.location.LocationClientConstants
-import com.marneux.marneweather.data.remote.weather.WeatherClient
-import com.marneux.marneweather.data.remote.weather.WeatherClientConstants
+import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClient
+import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClientConstants
+import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClientConstants.OPEN_AI_API_TOKEN
+import com.marneux.marneweather.data.location.remote.LocationClient
+import com.marneux.marneweather.data.location.remote.LocationClientConstants
+import com.marneux.marneweather.data.weather.remote.WeatherClient
+import com.marneux.marneweather.data.weather.remote.WeatherClientConstants
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 val networkModule = module {
 

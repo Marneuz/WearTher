@@ -1,26 +1,26 @@
 package com.marneux.marneweather.di
 
 
-import com.marneux.marneweather.data.repositories.location.LocationServicesRepository
-import com.marneux.marneweather.data.repositories.location.LocationServicesRepositoryImpl
-import com.marneux.marneweather.data.repositories.textgenerator.GenerativeTextRepository
-import com.marneux.marneweather.data.repositories.textgenerator.GenerativeTextRepositoryImpl
-import com.marneux.marneweather.data.repositories.weather.WeatherRepository
-import com.marneux.marneweather.data.repositories.weather.WeatherRepositoryImpl
+import com.marneux.marneweather.data.generatedsummary.GenerativeTextRepositoryImpl
+import com.marneux.marneweather.data.location.LocationServicesRepositoryImpl
+import com.marneux.marneweather.data.weather.WeatherRepositoryImpl
+import com.marneux.marneweather.domain.repositories.location.LocationServicesRepository
+import com.marneux.marneweather.domain.repositories.textgenerator.GenerativeTextRepository
+import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val repositoriesModule = module {
 
-    singleOf(::LocationServicesRepository){
-        bind<LocationServicesRepositoryImpl>()
+    singleOf(::LocationServicesRepositoryImpl) {
+        bind<LocationServicesRepository>()
     }
-    singleOf(::WeatherRepository){
-        bind<WeatherRepositoryImpl>()
+    singleOf(::WeatherRepositoryImpl) {
+        bind<WeatherRepository>()
     }
 
-    singleOf(::GenerativeTextRepository){
-        bind<GenerativeTextRepositoryImpl>()
+    singleOf(::GenerativeTextRepositoryImpl) {
+        bind<GenerativeTextRepository>()
     }
 }

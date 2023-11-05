@@ -72,9 +72,9 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material3.placeholder
 import com.google.accompanist.placeholder.material3.shimmer
 import com.marneux.marneweather.R
-import com.marneux.marneweather.domain.models.location.LocationAutofillSuggestion
-import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
-import com.marneux.marneweather.domain.models.weather.HourlyForecast
+import com.marneux.marneweather.domain.cajondesastre.location.models.location.LocationAutofillSuggestion
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.BriefWeatherDetails
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.HourlyForecast
 import com.marneux.marneweather.ui.components.AutofillSuggestion
 import com.marneux.marneweather.ui.components.CompactWeatherCardWithHourlyForecast
 import com.marneux.marneweather.ui.components.SwipeToDismissCompactWeatherCard

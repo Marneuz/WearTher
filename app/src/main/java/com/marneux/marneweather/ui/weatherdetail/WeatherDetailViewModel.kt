@@ -3,10 +3,10 @@ package com.marneux.marneweather.ui.weatherdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marneux.marneweather.data.repositories.textgenerator.GenerativeTextRepositoryImpl
-import com.marneux.marneweather.data.repositories.weather.WeatherRepositoryImpl
-import com.marneux.marneweather.data.repositories.weather.fetchHourlyForecastsForNext24Hours
-import com.marneux.marneweather.data.repositories.weather.fetchPrecipitationProbabilitiesForNext24hours
+import com.marneux.marneweather.domain.repositories.textgenerator.GenerativeTextRepository
+import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
+import com.marneux.marneweather.domain.repositories.weather.fetchHourlyForecastsForNext24Hours
+import com.marneux.marneweather.domain.repositories.weather.fetchPrecipitationProbabilitiesForNext24hours
 import com.marneux.marneweather.ui.navigation.NavigationDestinations
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
@@ -21,11 +21,15 @@ import kotlinx.coroutines.launch
 
 class WeatherDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val weatherRepository: WeatherRepositoryImpl,
-    private val generativeTextRepository: GenerativeTextRepositoryImpl
+    private val weatherRepository: WeatherRepository,
+    private val generativeTextRepository: GenerativeTextRepository
 ) : ViewModel() {
 
-
+    /**
+     * Se que no es buena practica la doble exclamacion para asegurar que un dato no es null, pero
+     * por limpieza del codigo y dado que la navegacion esta controlada y estos datos siempre tendran
+     * contenido, me he permitido la licencia para evitar boilerplate.
+     * */
     private val latitude: String =
         savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_LATITUDE]!!
     private val longitude: String =

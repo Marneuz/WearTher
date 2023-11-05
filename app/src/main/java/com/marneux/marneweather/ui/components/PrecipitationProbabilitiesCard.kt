@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
-import com.marneux.marneweather.domain.hourStringInTwelveHourFormat
-import com.marneux.marneweather.domain.models.weather.PrecipitationProbability
+import com.marneux.marneweather.domain.cajondesastre.location.hourStringInTwelveHourFormat
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.PrecipitationProbability
 
 @Composable
 fun PrecipitationProbabilitiesCard(

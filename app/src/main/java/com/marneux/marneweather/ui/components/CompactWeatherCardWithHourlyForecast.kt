@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,8 +25,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.marneux.marneweather.domain.hourStringInTwelveHourFormat
-import com.marneux.marneweather.domain.models.weather.HourlyForecast
+import com.marneux.marneweather.domain.cajondesastre.location.hourStringInTwelveHourFormat
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.HourlyForecast
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)

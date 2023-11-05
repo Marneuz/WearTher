@@ -1,6 +1,5 @@
 package com.marneux.marneweather.ui.weatherdetail
 
-
 import android.os.Build.VERSION.SDK_INT
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -60,15 +59,14 @@ import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import com.marneux.marneweather.R
-import com.marneux.marneweather.domain.models.weather.HourlyForecast
-import com.marneux.marneweather.domain.models.weather.PrecipitationProbability
-import com.marneux.marneweather.domain.models.weather.SingleWeatherDetail
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.HourlyForecast
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.PrecipitationProbability
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.SingleWeatherDetail
 import com.marneux.marneweather.ui.components.HourlyForecastCard
 import com.marneux.marneweather.ui.components.PrecipitationProbabilitiesCard
 import com.marneux.marneweather.ui.components.SingleWeatherDetailCard
 import com.marneux.marneweather.ui.components.TypingAnimatedText
 import com.marneux.marneweather.ui.theme.GreenGPT
-
 
 @Composable
 fun WeatherDetailScreen(

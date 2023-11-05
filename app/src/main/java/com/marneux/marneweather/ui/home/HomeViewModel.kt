@@ -2,15 +2,16 @@ package com.marneux.marneweather.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marneux.marneweather.data.remote.location.ReverseGeocoder
-import com.marneux.marneweather.data.repositories.location.LocationServicesRepositoryImpl
-import com.marneux.marneweather.data.repositories.weather.WeatherRepositoryImpl
-import com.marneux.marneweather.data.repositories.weather.fetchHourlyForecastsForNext24Hours
-import com.marneux.marneweather.domain.location.CurrentLocationProviderImpl
-import com.marneux.marneweather.domain.models.location.SavedLocation
-import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
-import com.marneux.marneweather.domain.models.weather.CurrentWeatherDetails
-import com.marneux.marneweather.domain.models.weather.toBriefWeatherDetails
+import com.marneux.marneweather.data.location.remote.ReverseGeocoder
+import com.marneux.marneweather.data.weather.remote.mapper.toBriefWeatherDetails
+import com.marneux.marneweather.domain.cajondesastre.location.models.location.SavedLocation
+import com.marneux.marneweather.domain.cajondesastre.location.models.locationprovider.CurrentLocationProvider
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.BriefWeatherDetails
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.CurrentWeather
+import com.marneux.marneweather.domain.repositories.location.LocationServicesRepository
+import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
+import com.marneux.marneweather.domain.repositories.weather.fetchHourlyForecastsForNext24Hours
+import com.marneux.marneweather.domain.usecases.weather.FetchWeatherForLocationUseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,10 +31,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val currentLocationProvider: CurrentLocationProviderImpl,
+    private val currentLocationProvider: CurrentLocationProvider,
     private val reverseGeocoder: ReverseGeocoder,
-    private val locationServicesRepository: LocationServicesRepositoryImpl,
-    private val weatherRepository: WeatherRepositoryImpl
+    private val locationServicesRepository: LocationServicesRepository,
+    private val weatherRepository: WeatherRepository,
+    private val fetchWeatherForLocationUseCase: FetchWeatherForLocationUseCase
 ) : ViewModel() {
 
 
@@ -44,7 +46,7 @@ class HomeViewModel(
     val uiState = _uiState as StateFlow<HomeScreenUiState>
 
 
-    private var currentWeatherDetailsCache = mutableMapOf<SavedLocation, CurrentWeatherDetails>()
+    private var currentWeatherCache = mutableMapOf<SavedLocation, CurrentWeather>()
     private var recentlyDeletedItem: BriefWeatherDetails? = null
 
     private val _isReady = MutableStateFlow(false)
@@ -139,26 +141,26 @@ class HomeViewModel(
 
     private suspend fun fetchCurrentWeatherDetailsWithCache(savedLocations: List<SavedLocation>): Result<List<BriefWeatherDetails>?> {
         val savedLocationsSet = savedLocations.toSet()
-        val removedLocations = currentWeatherDetailsCache.keys subtract savedLocationsSet
+        val removedLocations = currentWeatherCache.keys subtract savedLocationsSet
         for (removedLocation in removedLocations) {
-            currentWeatherDetailsCache.remove(removedLocation)
+            currentWeatherCache.remove(removedLocation)
         }
         // fetch item si no esta en cache
-        val locationsNotInCache = savedLocationsSet subtract currentWeatherDetailsCache.keys
+        val locationsNotInCache = savedLocationsSet subtract currentWeatherCache.keys
         for (savedLocationNotInCache in locationsNotInCache) {
             try {
                 weatherRepository.fetchWeatherForLocation(
                     nameLocation = savedLocationNotInCache.nameLocation,
                     latitude = savedLocationNotInCache.coordinates.latitude,
                     longitude = savedLocationNotInCache.coordinates.longitude
-                ).getOrThrow().also { currentWeatherDetailsCache[savedLocationNotInCache] = it }
+                ).getOrThrow().also { currentWeatherCache[savedLocationNotInCache] = it }
             } catch (exception: Exception) {
                 if (exception is CancellationException) throw exception
                 return Result.failure(exception)
             }
         }
         return Result.success(
-            currentWeatherDetailsCache.values.toList().map { it.toBriefWeatherDetails() })
+            currentWeatherCache.values.toList().map { it.toBriefWeatherDetails() })
     }
 
     fun fetchWeatherForCurrentUserLocation() {
@@ -186,7 +188,7 @@ class HomeViewModel(
             ).getOrThrow()
 
             val weatherDetailsForCurrentLocation = async {
-                weatherRepository.fetchWeatherForLocation(
+                fetchWeatherForLocationUseCase.execute(
                     nameLocation = nameLocation,
                     latitude = coordinates.latitude,
                     longitude = coordinates.longitude

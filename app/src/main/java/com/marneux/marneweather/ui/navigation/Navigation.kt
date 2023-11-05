@@ -16,8 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.marneux.marneweather.domain.models.location.LocationAutofillSuggestion
-import com.marneux.marneweather.domain.models.weather.BriefWeatherDetails
+import com.marneux.marneweather.domain.cajondesastre.location.models.location.LocationAutofillSuggestion
+import com.marneux.marneweather.domain.cajondesastre.location.models.weather.BriefWeatherDetails
 import com.marneux.marneweather.ui.home.HomeScreen
 import com.marneux.marneweather.ui.home.HomeViewModel
 import com.marneux.marneweather.ui.weatherdetail.WeatherDetailScreen

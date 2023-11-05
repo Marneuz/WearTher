@@ -2,32 +2,31 @@ package com.marneux.marneweather.di
 
 import android.content.Context
 import androidx.room.Room
-import com.marneux.marneweather.data.local.textgeneration.GeneratedTextCacheDatabase
-import com.marneux.marneweather.data.local.textgeneration.GeneratedTextCacheDatabaseDao
-import com.marneux.marneweather.data.local.weather.Database
-import com.marneux.marneweather.data.local.weather.DatabaseDao
+import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDatabaseDao
+import com.marneux.marneweather.data.local.database.Database
+import com.marneux.marneweather.data.weather.database.WeatherDao
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val databaseModule = module {
-    singleOf(::provideDatabaseDao)
-    singleOf(::provideGeneratedTextCacheDatabaseDao)
+    singleOf(::provideWeatherDao)
+    singleOf(::provideGeneratedTextDao)
 }
 
 
-private fun provideDatabaseDao(
+private fun provideWeatherDao(
     context: Context
-): DatabaseDao = Room.databaseBuilder(
+): WeatherDao = Room.databaseBuilder(
     context = context,
     klass = Database::class.java,
     name = Database.DATABASE_NAME
-).build().getDao()
+).build().getWeatherDao()
 
 
-private fun provideGeneratedTextCacheDatabaseDao(
+private fun provideGeneratedTextDao(
     context: Context
-): GeneratedTextCacheDatabaseDao = Room.databaseBuilder(
+): GeneratedTextDatabaseDao = Room.databaseBuilder(
     context = context,
-    klass = GeneratedTextCacheDatabase::class.java,
-    name = GeneratedTextCacheDatabase.DATABASE_NAME
-).build().getDao()
+    klass = Database::class.java,
+    name = Database.DATABASE_NAME
+).build().getGeneratedTextDao()
