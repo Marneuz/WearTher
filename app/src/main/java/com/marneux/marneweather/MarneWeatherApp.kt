@@ -10,6 +10,7 @@ import com.marneux.marneweather.di.databaseModule
 import com.marneux.marneweather.di.locationServiceModule
 import com.marneux.marneweather.di.networkModule
 import com.marneux.marneweather.di.repositoriesModule
+import com.marneux.marneweather.di.useCaseModule
 import com.marneux.marneweather.di.viewModelsModule
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidContext
@@ -32,7 +33,8 @@ class MarneWeatherApp : Application(), KoinComponent {
                 databaseModule,
                 repositoriesModule,
                 locationServiceModule,
-                coroutineDispatchersModule
+                coroutineDispatchersModule,
+                useCaseModule
             )
         }
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())

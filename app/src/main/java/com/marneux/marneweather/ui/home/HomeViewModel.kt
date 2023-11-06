@@ -10,8 +10,12 @@ import com.marneux.marneweather.domain.cajondesastre.location.models.weather.Bri
 import com.marneux.marneweather.domain.cajondesastre.location.models.weather.CurrentWeather
 import com.marneux.marneweather.domain.repositories.location.LocationServicesRepository
 import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
-import com.marneux.marneweather.domain.repositories.weather.fetchHourlyForecastsForNext24Hours
+import com.marneux.marneweather.domain.usecases.location.FetchSuggestedPlacesForQueryUseCase
+import com.marneux.marneweather.domain.usecases.weather.DeleteWeatherLocationFromSavedItemUseCase
+import com.marneux.marneweather.domain.usecases.weather.FetchHourlyForecastsForNext24HoursUseCase
 import com.marneux.marneweather.domain.usecases.weather.FetchWeatherForLocationUseCase
+import com.marneux.marneweather.domain.usecases.weather.GetSavedLocationsListStreamUseCase
+import com.marneux.marneweather.domain.usecases.weather.TryRestoringDeletedWeatherLocationUseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,8 +38,17 @@ class HomeViewModel(
     private val currentLocationProvider: CurrentLocationProvider,
     private val reverseGeocoder: ReverseGeocoder,
     private val locationServicesRepository: LocationServicesRepository,
-    private val weatherRepository: WeatherRepository,
-    private val fetchWeatherForLocationUseCase: FetchWeatherForLocationUseCase
+    private val weatherRepository: WeatherRepository,//los dejo para que puto jalper vea que ya
+    // no se usan
+    private val fetchWeatherForLocationUseCase: FetchWeatherForLocationUseCase,
+    getSavedLocationsListStreamUseCase: GetSavedLocationsListStreamUseCase,
+    private val deleteWeatherLocationFromSavedItemsUseCase:
+    DeleteWeatherLocationFromSavedItemUseCase,
+    private val tryRestoringDeletedWeatherLocationUseCase:
+    TryRestoringDeletedWeatherLocationUseCase,
+    private val fetchSuggestedPlacesForQueryUseCase: FetchSuggestedPlacesForQueryUseCase,
+    private val fetchHourlyForecastsForNext24HoursUseCase:
+    FetchHourlyForecastsForNext24HoursUseCase
 ) : ViewModel() {
 
 
@@ -55,7 +68,7 @@ class HomeViewModel(
     init {
 
         combine(
-            weatherRepository.getSavedLocationsListStream(),
+            getSavedLocationsListStreamUseCase.execute(),
             isCurrentlyRetryingToFetchSavedLocation
         ) { savedLocations, _ ->
             savedLocations
@@ -93,7 +106,7 @@ class HomeViewModel(
                         errorFetchingAutofillSuggestions = false
                     )
                 }
-                locationServicesRepository.fetchSuggestedPlacesForQuery(query)
+                fetchSuggestedPlacesForQueryUseCase.execute(query)
             }
             .onEach { autofillSuggestionsResult ->
                 val autofillSuggestions = autofillSuggestionsResult.getOrNull()
@@ -123,14 +136,14 @@ class HomeViewModel(
     fun deleteSavedWeatherLocation(briefWeatherDetails: BriefWeatherDetails) {
         recentlyDeletedItem = briefWeatherDetails
         viewModelScope.launch {
-            weatherRepository.deleteWeatherLocationFromSavedItems(briefWeatherDetails)
+            deleteWeatherLocationFromSavedItemsUseCase.execute(briefWeatherDetails)
         }
     }
 
     fun restoreRecentlyDeletedItem() {
         recentlyDeletedItem?.let {
             viewModelScope.launch {
-                weatherRepository.tryRestoringDeletedWeatherLocation(
+                tryRestoringDeletedWeatherLocationUseCase.execute(
                     it
                         .nameLocation
                 )
@@ -149,7 +162,7 @@ class HomeViewModel(
         val locationsNotInCache = savedLocationsSet subtract currentWeatherCache.keys
         for (savedLocationNotInCache in locationsNotInCache) {
             try {
-                weatherRepository.fetchWeatherForLocation(
+                fetchWeatherForLocationUseCase.execute(
                     nameLocation = savedLocationNotInCache.nameLocation,
                     latitude = savedLocationNotInCache.coordinates.latitude,
                     longitude = savedLocationNotInCache.coordinates.longitude
@@ -196,7 +209,7 @@ class HomeViewModel(
             }
 
             val hourlyForecastsForCurrentLocation = async {
-                weatherRepository.fetchHourlyForecastsForNext24Hours(
+                fetchHourlyForecastsForNext24HoursUseCase.execute(
                     latitude = coordinates.latitude,
                     longitude = coordinates.longitude
                 ).getOrThrow()

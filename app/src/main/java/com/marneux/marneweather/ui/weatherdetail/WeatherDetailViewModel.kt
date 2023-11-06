@@ -3,10 +3,13 @@ package com.marneux.marneweather.ui.weatherdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marneux.marneweather.domain.repositories.textgenerator.GenerativeTextRepository
-import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
-import com.marneux.marneweather.domain.repositories.weather.fetchHourlyForecastsForNext24Hours
-import com.marneux.marneweather.domain.repositories.weather.fetchPrecipitationProbabilitiesForNext24hours
+import com.marneux.marneweather.domain.usecases.textgenerator.GenerateTextForWeatherDetailsUseCase
+import com.marneux.marneweather.domain.usecases.weather.FetchAdditionalWeatherInfoItemsListForCurrentDayUseCase
+import com.marneux.marneweather.domain.usecases.weather.FetchHourlyForecastsForNext24HoursUseCase
+import com.marneux.marneweather.domain.usecases.weather.FetchPrecipitationProbabilitiesForNext24hoursUseCase
+import com.marneux.marneweather.domain.usecases.weather.FetchWeatherForLocationUseCase
+import com.marneux.marneweather.domain.usecases.weather.GetSavedLocationsListStreamUseCase
+import com.marneux.marneweather.domain.usecases.weather.SaveWeatherLocationUseCase
 import com.marneux.marneweather.ui.navigation.NavigationDestinations
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
@@ -21,8 +24,15 @@ import kotlinx.coroutines.launch
 
 class WeatherDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val weatherRepository: WeatherRepository,
-    private val generativeTextRepository: GenerativeTextRepository
+    private val generateTextForWeatherDetailsUseCase: GenerateTextForWeatherDetailsUseCase,
+    private val fetchWeatherForLocationUseCase: FetchWeatherForLocationUseCase,
+    getSavedLocationsListStreamUseCase: GetSavedLocationsListStreamUseCase,
+    private val saveWeatherLocationUseCase: SaveWeatherLocationUseCase,
+    private val fetchAdditionalWeatherInfoItemsListForCurrentDayUseCase:
+    FetchAdditionalWeatherInfoItemsListForCurrentDayUseCase,
+    private val fetchHourlyForecastsForNext24HoursUseCase:
+    FetchHourlyForecastsForNext24HoursUseCase,
+    private val fetchPrecipitationProbabilitiesForNext24hoursUseCase: FetchPrecipitationProbabilitiesForNext24hoursUseCase
 ) : ViewModel() {
 
     /**
@@ -42,7 +52,7 @@ class WeatherDetailViewModel(
     val uiState = _uiState as StateFlow<WeatherDetailScreenUiState>
 
     init {
-        weatherRepository.getSavedLocationsListStream()
+        getSavedLocationsListStreamUseCase.execute()
             .map { namesOfSavedLocationsList ->
                 namesOfSavedLocationsList.any { it.nameLocation == nameLocation }
             }
@@ -65,7 +75,7 @@ class WeatherDetailViewModel(
         _uiState.update { it.copy(isLoading = true, isWeatherSummaryTextLoading = true) }
 
         val weatherDetailsOfChosenLocation = async {
-            weatherRepository.fetchWeatherForLocation(
+            fetchWeatherForLocationUseCase.execute(
                 nameLocation = nameLocation,
                 latitude = latitude,
                 longitude = longitude
@@ -73,28 +83,28 @@ class WeatherDetailViewModel(
         }
 
         val summaryMessage = async {
-            generativeTextRepository.generateTextForWeatherDetails(
+            generateTextForWeatherDetailsUseCase.execute(
                 weatherDetails = weatherDetailsOfChosenLocation.await()
             ).getOrNull()
         }
 
         val precipitationProbabilities =
             async {
-                weatherRepository.fetchPrecipitationProbabilitiesForNext24hours(
+                fetchPrecipitationProbabilitiesForNext24hoursUseCase.execute(
                     latitude = latitude,
                     longitude = longitude
                 ).getOrThrow()
             }
 
         val hourlyForecasts = async {
-            weatherRepository.fetchHourlyForecastsForNext24Hours(
+            fetchHourlyForecastsForNext24HoursUseCase.execute(
                 latitude = latitude,
                 longitude = longitude
             ).getOrThrow()
         }
 
         val additionalWeatherInfoItems = async {
-            weatherRepository.fetchAdditionalWeatherInfoItemsListForCurrentDay(
+            fetchAdditionalWeatherInfoItemsListForCurrentDayUseCase.execute(
                 latitude = latitude,
                 longitude = longitude
             ).getOrThrow()
@@ -120,7 +130,7 @@ class WeatherDetailViewModel(
 
     fun addLocationToSavedLocations() {
         viewModelScope.launch {
-            weatherRepository.saveWeatherLocation(
+            saveWeatherLocationUseCase.execute(
                 nameLocation = nameLocation,
                 latitude = latitude,
                 longitude = longitude
