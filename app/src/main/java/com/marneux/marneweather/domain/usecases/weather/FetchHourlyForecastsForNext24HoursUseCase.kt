@@ -1,15 +1,11 @@
 package com.marneux.marneweather.domain.usecases.weather
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.HourlyForecast
 import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
-import com.marneux.marneweather.domain.repositories.weather.WeatherRepositoryExtensions
-import kotlinx.coroutines.CancellationException
+import com.marneux.marneweather.model.weather.HourlyForecast
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class FetchHourlyForecastsForNext24HoursUseCase(
-    private val weatherRepositoryExtension: WeatherRepositoryExtensions,
     private val weatherRepository: WeatherRepository
 ) {
     suspend fun execute(
@@ -22,13 +18,13 @@ class FetchHourlyForecastsForNext24HoursUseCase(
                 longitude = longitude,
                 dateRange = LocalDate.now()..LocalDate.now().plusDays(1)
             ).getOrThrow().filter {
-                val isSameDay = it.dateTime == LocalDateTime.now()
-                if (isSameDay) it.dateTime.toLocalTime() >= LocalTime.now()
-                else it.dateTime > LocalDateTime.now()
+                val currentTime = LocalDateTime.now()
+                val isSameDay = it.dateTime.toLocalDate() == currentTime.toLocalDate()
+                if (isSameDay) it.dateTime.toLocalTime() >= currentTime.toLocalTime()
+                else it.dateTime > currentTime
             }.take(24)
             Result.success(hourlyForecastsForNext24Hours)
         } catch (exception: Exception) {
-            if (exception is CancellationException) throw exception
             Result.failure(exception)
         }
     }

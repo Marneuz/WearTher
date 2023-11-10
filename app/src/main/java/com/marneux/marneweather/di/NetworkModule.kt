@@ -2,7 +2,7 @@ package com.marneux.marneweather.di
 
 import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClient
 import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClientConstants
-import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClientConstants.OPEN_AI_API_TOKEN
+import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClientConstants.GPT_TOKEN
 import com.marneux.marneweather.data.location.remote.LocationClient
 import com.marneux.marneweather.data.location.remote.LocationClientConstants
 import com.marneux.marneweather.data.weather.remote.WeatherClient
@@ -28,7 +28,6 @@ object NetworkModule {
         .build()
         .create(WeatherClient::class.java)
 
-
     fun provideLocationClient(): LocationClient {
 
         return Retrofit.Builder()
@@ -43,7 +42,7 @@ object NetworkModule {
             OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val newRequest = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer ${OPEN_AI_API_TOKEN}")
+                        .addHeader("Authorization", "Bearer $GPT_TOKEN")
                         .build()
                     chain.proceed(newRequest)
                 }
@@ -53,5 +52,4 @@ object NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(TextGeneratorClient::class.java)
-
 }

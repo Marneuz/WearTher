@@ -9,27 +9,30 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeatherDao {
-    @Query("SELECT * FROM ${Database.SAVED_WEATHER_LOCATION_TABLE_NAME} WHERE is_deleted = 0")
-    fun getAllWeatherEntitiesMarkedAsNotDeleted(): Flow<List<SavedWeatherLocationEntity>>
+    @Query("SELECT * FROM ${Database.CURRENT_WEATHER_TABLE_NAME} WHERE is_deleted = 0")
+    fun getAllWeatherEntitiesMarkedAsNotDeleted(): Flow<List<CurrentWeatherEntity>>
 
-    @Query("SELECT * FROM ${Database.SAVED_WEATHER_LOCATION_TABLE_NAME}")
-    fun getAllWeatherEntitiesIrrespectiveOfDeletedStatus(): Flow<List<SavedWeatherLocationEntity>>
+    @Query("SELECT * FROM ${Database.CURRENT_WEATHER_TABLE_NAME}")
+    fun getAllWeatherEntitiesIrrespectiveOfDeletedStatus(): Flow<List<CurrentWeatherEntity>>
 
     @Upsert
-    suspend fun addSavedWeatherEntity(weatherLocationEntity: SavedWeatherLocationEntity)
+    suspend fun addSavedWeatherEntity(weatherLocationEntity: CurrentWeatherEntity)
 
     @Query(
-        "UPDATE ${Database.SAVED_WEATHER_LOCATION_TABLE_NAME} SET is_deleted = 1 WHERE " +
-            "name_location = :nameOfWeatherLocationEntity")
+        "UPDATE ${Database.CURRENT_WEATHER_TABLE_NAME} SET is_deleted = 1 WHERE " +
+                "name_location = :nameOfWeatherLocationEntity"
+    )
     suspend fun markWeatherEntityAsDeleted(nameOfWeatherLocationEntity: String)
 
-    @Query("UPDATE ${Database.SAVED_WEATHER_LOCATION_TABLE_NAME} SET is_deleted = 0 WHERE " +
-            "name_location = :nameOfWeatherLocationEntity")
+    @Query(
+        "UPDATE ${Database.CURRENT_WEATHER_TABLE_NAME} SET is_deleted = 0 WHERE " +
+                "name_location = :nameOfWeatherLocationEntity"
+    )
     suspend fun markWeatherEntityAsUnDeleted(nameOfWeatherLocationEntity: String)
 
-    @Query("DELETE FROM ${Database.SAVED_WEATHER_LOCATION_TABLE_NAME} WHERE is_deleted = 1")
+    @Query("DELETE FROM ${Database.CURRENT_WEATHER_TABLE_NAME} WHERE is_deleted = 1")
     suspend fun deleteAllItemsMarkedAsDeleted()
 
     @Delete
-    suspend fun deleteSavedWeatherEntity(weatherLocationEntity: SavedWeatherLocationEntity)
+    suspend fun deleteSavedWeatherEntity(weatherLocationEntity: CurrentWeatherEntity)
 }

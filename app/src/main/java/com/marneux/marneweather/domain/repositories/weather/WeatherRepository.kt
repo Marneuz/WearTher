@@ -1,11 +1,11 @@
 package com.marneux.marneweather.domain.repositories.weather
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.location.SavedLocation
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.BriefWeatherDetails
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.CurrentWeather
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.HourlyForecast
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.PrecipitationProbability
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.SingleWeatherDetail
+import com.marneux.marneweather.model.location.SavedLocation
+import com.marneux.marneweather.model.weather.BriefWeatherDetails
+import com.marneux.marneweather.model.weather.CurrentWeather
+import com.marneux.marneweather.model.weather.HourlyForecast
+import com.marneux.marneweather.model.weather.PrecipitationProbability
+import com.marneux.marneweather.model.weather.SingleWeatherDetail
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -26,7 +26,6 @@ interface WeatherRepository {
 
     suspend fun permanentlyDeleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails)
 
-    suspend fun tryRestoringDeletedWeatherLocation(nameLocation: String)
 
     suspend fun fetchHourlyPrecipitationProbabilities(
         latitude: String,
@@ -44,4 +43,6 @@ interface WeatherRepository {
         latitude: String,
         longitude: String
     ): Result<List<SingleWeatherDetail>>
+
+    suspend fun tryRestoringDeletedWeatherLocation(nameLocation: String)
 }

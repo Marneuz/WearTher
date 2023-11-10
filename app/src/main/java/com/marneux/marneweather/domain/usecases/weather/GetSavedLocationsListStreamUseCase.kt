@@ -1,7 +1,7 @@
 package com.marneux.marneweather.domain.usecases.weather
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.location.SavedLocation
 import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
+import com.marneux.marneweather.model.location.SavedLocation
 import kotlinx.coroutines.flow.Flow
 
 class GetSavedLocationsListStreamUseCase(

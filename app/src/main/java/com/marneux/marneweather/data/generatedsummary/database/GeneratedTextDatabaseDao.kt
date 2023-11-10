@@ -9,7 +9,10 @@ import com.marneux.marneweather.data.local.database.Database
 interface GeneratedTextDatabaseDao {
 
     @Upsert
-    suspend fun addGeneratedTextForLocation(generatedTextForLocationEntity: GeneratedTextForLocationEntity)
+    suspend fun addGeneratedTextForLocation(
+        generatedTextForLocationEntity:
+        GeneratedTextForLocationEntity
+    )
 
     @Query(
         """

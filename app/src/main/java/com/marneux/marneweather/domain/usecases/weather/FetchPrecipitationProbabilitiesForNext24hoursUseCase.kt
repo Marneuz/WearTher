@@ -1,11 +1,9 @@
 package com.marneux.marneweather.domain.usecases.weather
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.PrecipitationProbability
 import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
-import kotlinx.coroutines.CancellationException
+import com.marneux.marneweather.model.weather.PrecipitationProbability
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class FetchPrecipitationProbabilitiesForNext24hoursUseCase(
     private val weatherRepository: WeatherRepository
@@ -21,13 +19,13 @@ class FetchPrecipitationProbabilitiesForNext24hoursUseCase(
                     longitude = longitude,
                     dateRange = LocalDate.now()..LocalDate.now().plusDays(1)
                 ).getOrThrow().filter {
-                    val isSameDay = it.dateTime == LocalDateTime.now()
-                    if (isSameDay) it.dateTime.toLocalTime() >= LocalTime.now()
-                    else it.dateTime > LocalDateTime.now()
+                    val currentTime = LocalDateTime.now()
+                    val isSameDay = it.dateTime.toLocalDate() == currentTime.toLocalDate()
+                    if (isSameDay) it.dateTime.toLocalTime() >= currentTime.toLocalTime()
+                    else it.dateTime > currentTime
                 }.take(24)
             Result.success(probabilitiesForNext24hours)
         } catch (exception: Exception) {
-            if (exception is CancellationException) throw exception
             Result.failure(exception)
         }
     }

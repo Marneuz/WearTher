@@ -16,15 +16,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.marneux.marneweather.domain.cajondesastre.location.models.location.LocationAutofillSuggestion
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.BriefWeatherDetails
-import com.marneux.marneweather.ui.home.HomeScreen
-import com.marneux.marneweather.ui.home.HomeViewModel
-import com.marneux.marneweather.ui.weatherdetail.WeatherDetailScreen
-import com.marneux.marneweather.ui.weatherdetail.WeatherDetailViewModel
+import com.marneux.marneweather.model.location.LocationAutofillSuggestion
+import com.marneux.marneweather.model.weather.BriefWeatherDetails
+import com.marneux.marneweather.ui.views.home.HomeScreen
+import com.marneux.marneweather.ui.views.home.HomeViewModel
+import com.marneux.marneweather.ui.views.weatherdetail.WeatherDetailScreen
+import com.marneux.marneweather.ui.views.weatherdetail.WeatherDetailViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun Navigation(navController: NavHostController = rememberNavController()) {
@@ -37,14 +36,14 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
             route = NavigationDestinations.HomeScreen.route,
             onSuggestionClick = {
                 navController.navigateToWeatherDetailScreen(
-                    nameOfLocation = it.nameLocation,
+                    nameLocation = it.nameLocation,
                     latitude = it.coordinatesLocation.latitude,
                     longitude = it.coordinatesLocation.longitude
                 )
             },
             onSavedLocationItemClick = {
                 navController.navigateToWeatherDetailScreen(
-                    nameOfLocation = it.nameLocation,
+                    nameLocation = it.nameLocation,
                     latitude = it.coordinates.latitude,
                     longitude = it.coordinates.longitude
                 )
@@ -129,12 +128,12 @@ fun NavGraphBuilder.weatherDetailScreen(
 }
 
 private fun NavHostController.navigateToWeatherDetailScreen(
-    nameOfLocation: String,
+    nameLocation: String,
     latitude: String,
     longitude: String
 ) {
     val destination = NavigationDestinations.WeatherDetailScreen.buildRoute(
-        nameLocation = nameOfLocation,
+        nameLocation = nameLocation,
         latitude = latitude,
         longitude = longitude
     )

@@ -8,10 +8,9 @@ import retrofit2.http.POST
 
 interface TextGeneratorClient {
 
-
     @POST(TextGeneratorClientConstants.Endpoints.CHAT_COMPLETION_END_POINT)
+
     suspend fun getModelResponseForConversations(
         @Body textGenerationPostBody: TextGenerationPromptBody
     ): Response<GeneratedTextResponse>
-
 }

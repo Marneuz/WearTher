@@ -1,6 +1,6 @@
 package com.marneux.marneweather.domain.repositories.textgenerator
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.CurrentWeather
+import com.marneux.marneweather.model.weather.CurrentWeather
 
 interface GenerativeTextRepository {
     suspend fun generateTextForWeatherDetails(

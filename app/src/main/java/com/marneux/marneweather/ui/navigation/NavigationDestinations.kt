@@ -5,7 +5,7 @@ sealed class NavigationDestinations(val route: String) {
     object HomeScreen : NavigationDestinations(route = "home_screen")
 
     object WeatherDetailScreen :
-        NavigationDestinations(route = "weather_detail/{nameOfLocation}/{latitude}/{longitude}") {
+        NavigationDestinations(route = "weather_detail/{nameLocation}/{latitude}/{longitude}") {
         const val NAV_ARG_NAME_OF_LOCATION = "nameLocation"
         const val NAV_ARG_LATITUDE = "latitude"
         const val NAV_ARG_LONGITUDE = "longitude"

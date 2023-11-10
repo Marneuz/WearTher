@@ -14,9 +14,12 @@ interface WeatherClient {
     suspend fun getWeatherForCoordinates(
         @Query("latitude") latitude: String,
         @Query("longitude") longitude: String,
-        @Query("temperature_unit") temperatureUnit: WeatherClientConstants.TemperatureUnits = WeatherClientConstants.TemperatureUnits.CELSIUS,
-        @Query("windspeed_unit") windSpeedUnit: WeatherClientConstants.WindSpeedUnit = WeatherClientConstants.WindSpeedUnit.KILOMETERS_PER_HOUR,
-        @Query("precipitation_unit") precipitationUnit: WeatherClientConstants.PrecipitationUnit = WeatherClientConstants.PrecipitationUnit.MILLIMETERS,
+        @Query("temperature_unit") temperatureUnit: WeatherClientConstants.TemperatureUnits
+        = WeatherClientConstants.TemperatureUnits.CELSIUS,
+        @Query("windspeed_unit") windSpeedUnit: WeatherClientConstants.WindSpeedUnit
+        = WeatherClientConstants.WindSpeedUnit.KILOMETERS_PER_HOUR,
+        @Query("precipitation_unit") precipitationUnit: WeatherClientConstants.PrecipitationUnit
+        = WeatherClientConstants.PrecipitationUnit.MILLIMETERS,
         @Query("current_weather") shouldIncludeCurrentWeatherInformation: Boolean = true
     ): Response<CurrentWeatherResponse>
 

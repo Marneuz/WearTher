@@ -14,10 +14,8 @@ data class CurrentWeatherResponse(
 data class CurrentWeatherData(
     @SerializedName("temperature")
     val temperature: Double,
-
     @SerializedName("is_day")
     val isDay: Int,
-
     @SerializedName("weathercode")
     val weatherCode: Int
 )

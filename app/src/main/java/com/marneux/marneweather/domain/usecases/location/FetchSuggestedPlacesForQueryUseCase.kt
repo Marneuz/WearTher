@@ -1,15 +1,15 @@
 package com.marneux.marneweather.domain.usecases.location
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.location.LocationAutofillSuggestion
-import com.marneux.marneweather.domain.repositories.location.LocationServicesRepository
+import com.marneux.marneweather.domain.repositories.location.LocationRepository
+import com.marneux.marneweather.model.location.LocationAutofillSuggestion
 
 class FetchSuggestedPlacesForQueryUseCase(
-    private val locationServicesRepository: LocationServicesRepository
+    private val locationRepository: LocationRepository
 ) {
     suspend fun execute(
         query: String
     ): Result<List<LocationAutofillSuggestion>> {
-        return locationServicesRepository.fetchSuggestedPlacesForQuery(
+        return locationRepository.fetchSuggestedPlacesForQuery(
             query
         )
     }

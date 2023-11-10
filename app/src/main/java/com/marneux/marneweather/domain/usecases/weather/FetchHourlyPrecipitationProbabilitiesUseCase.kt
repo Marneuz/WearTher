@@ -1,7 +1,7 @@
 package com.marneux.marneweather.domain.usecases.weather
 
-import com.marneux.marneweather.domain.cajondesastre.location.models.weather.PrecipitationProbability
 import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
+import com.marneux.marneweather.model.weather.PrecipitationProbability
 import java.time.LocalDate
 
 class FetchHourlyPrecipitationProbabilitiesUseCase(
