@@ -1,6 +1,5 @@
 package com.marneux.marneweather.di
 
-
 import com.marneux.marneweather.data.generatedsummary.GenerativeTextRepositoryImpl
 import com.marneux.marneweather.data.location.LocationRepositoryImpl
 import com.marneux.marneweather.data.weather.WeatherRepositoryImpl

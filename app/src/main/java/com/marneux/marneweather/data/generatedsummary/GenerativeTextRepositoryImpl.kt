@@ -1,7 +1,7 @@
 package com.marneux.marneweather.data.generatedsummary
 
-import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDatabaseDao
-import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextForLocationEntity
+import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDao
+import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextEntity
 import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClient
 import com.marneux.marneweather.data.generatedsummary.remote.models.MessageDTO
 import com.marneux.marneweather.data.generatedsummary.remote.models.TextGenerationPromptBody
@@ -13,35 +13,34 @@ import java.util.Locale
 
 class GenerativeTextRepositoryImpl(
     private val textGeneratorClient: TextGeneratorClient,
-    private val generatedTextDatabaseDao: GeneratedTextDatabaseDao,
+    private val generatedTextDao: GeneratedTextDao,
 ) : GenerativeTextRepository {
 
+
     companion object {
+
         private const val MODEL_ID = "gpt-3.5-turbo-1106"
         private val SYSTEM_PROMPT = """
-            Proporciona una recomendación breve y concisa de vestimenta adecuada para un 
-            hombre, siguiendo el formato especificado a continuación:
-            
-            -Parte superior:(chaquetas, camisas, camisetas, 
-            abrigos, etc...)
-            
-            -Parte inferior: (pantalones, faldas, bermudas, etc...)
-            
-            -Calzado: (zapatillas, sandalias, botas, etc...)
-            
-            -Accesorios: (gorros, bufandas, relojes, etc...)
-            
-            Cada sugerencia debe de ser muy breve y estar bien coordinada y alineada con las 
-            tendencias actuales de la moda masculina. 
-            Tu respuesta deberá ser proporcionada en el idioma que se te indica mediante el 
-            código de idioma del sistema. Traduce las cabeceras tambien ( Parte superior, parte 
-            inferior, calzado, accesorios )
-        """.trimIndent()
+            "Provide a brief and concise weather description and then procced to make a clothing recommendation for a man, following the format specified below:
+
+            -Top: (jackets, shirts, t-shirts, coats, etc.)
+
+            -Bottom: (pants, skirts, shorts, etc.)
+
+            -Footwear: (sneakers, sandals, boots, etc.)
+
+            -Accessories: (hats, scarves, watches, etc.)
+
+            Each suggestion should be very brief and well-coordinated in style and colors, 
+            aligning with current trends in men's fashion. Your response should be provided in 
+            the language indicated by the system's language code. 
+            Translate the headings as well (Top, Bottom, Footwear, Accessories)."
+      """.trimIndent()
     }
 
     override suspend fun generateTextForWeatherDetails(weatherDetails: CurrentWeather): Result<String> {
         val systemLanguageCode = Locale.getDefault().language
-        return generatedTextDatabaseDao.getSavedGeneratedTextForDetails(
+        return generatedTextDao.getSavedGeneratedTextForDetails(
             nameLocation = weatherDetails.nameLocation,
             temperature = weatherDetails.temperatureRoundedToInt,
             conciseWeatherDescription = weatherDetails.weatherCondition
@@ -90,12 +89,12 @@ class GenerativeTextRepositoryImpl(
     }
 
     private suspend fun saveGeneratedText(weatherDetails: CurrentWeather, generatedText: String) {
-        val generatedTextForLocationEntity = GeneratedTextForLocationEntity(
+        val generatedTextEntity = GeneratedTextEntity(
             nameLocation = weatherDetails.nameLocation,
             temperature = weatherDetails.temperatureRoundedToInt,
             conciseWeatherDescription = weatherDetails.weatherCondition,
             generatedDescription = generatedText
         )
-        generatedTextDatabaseDao.addGeneratedTextForLocation(generatedTextForLocationEntity)
+        generatedTextDao.addGeneratedTextForLocation(generatedTextEntity)
     }
 }

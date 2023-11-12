@@ -2,20 +2,20 @@ package com.marneux.marneweather.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDatabaseDao
-import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextForLocationEntity
+import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDao
+import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextEntity
 import com.marneux.marneweather.data.weather.database.CurrentWeatherEntity
 import com.marneux.marneweather.data.weather.database.WeatherDao
 
 @Database(
     entities = [
         CurrentWeatherEntity::class,
-        GeneratedTextForLocationEntity::class],
+        GeneratedTextEntity::class],
     version = 1
 )
 abstract class Database : RoomDatabase() {
 
-    abstract fun getGeneratedTextDao(): GeneratedTextDatabaseDao
+    abstract fun getGeneratedTextDao(): GeneratedTextDao
     abstract fun getWeatherDao(): WeatherDao
 
 

@@ -17,7 +17,7 @@
         android:theme="@style/Theme.MarneWeather"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".presentation.activities.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MarneWeather.SplashScreen"

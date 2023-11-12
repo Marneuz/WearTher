@@ -16,5 +16,4 @@ val locationServiceModule = module {
     single<GeocoderRepository> {
         GeocoderImpl(get(), get(named(KOIN_IO_COROUTINE_DISPATCHER_NAME)))
     }
-
 }

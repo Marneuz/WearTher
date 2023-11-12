@@ -44,7 +44,7 @@ class MarneWeatherApp : Application(), KoinComponent {
     private fun enqueueDeleteMarkedItemsWorker() {
 
         val periodicWorkRequest = PeriodicWorkRequestBuilder<CleanupWorker>(
-            repeatInterval = 7,
+            repeatInterval = 1,
             repeatIntervalTimeUnit = TimeUnit.DAYS
         ).build()
 

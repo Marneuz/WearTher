@@ -1,7 +1,7 @@
 package com.marneux.marneweather.data.weather.mapper
 
 import com.marneux.marneweather.R
-import com.marneux.marneweather.data.weather.remote.models.AdditionalDailyForecastVariablesResponse
+import com.marneux.marneweather.data.weather.remote.models.DailyForecastOptions
 import com.marneux.marneweather.model.weather.SingleWeatherDetail
 import java.time.Instant
 import java.time.LocalDateTime
@@ -9,14 +9,14 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
-fun AdditionalDailyForecastVariablesResponse.toSingleWeatherDetailList(
+fun DailyForecastOptions.toSingleWeatherDetailList(
     timeFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("hh : mm a")
-): List<SingleWeatherDetail> = additionalForecastedVariables.toSingleWeatherDetailList(
+): List<SingleWeatherDetail> = additionalForecastOptions.toSingleWeatherDetailList(
     timezone = timezone,
     timeFormat = timeFormat
 )
 
-private fun AdditionalDailyForecastVariablesResponse.AdditionalForecastedVariables.toSingleWeatherDetailList(
+private fun DailyForecastOptions.AdditionalForecastOptions.toSingleWeatherDetailList(
     timezone: String,
     timeFormat: DateTimeFormatter
 ): List<SingleWeatherDetail> {

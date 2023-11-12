@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">MarneWeather</string>
+
+    <!-- Home View -->
+    <string name="home_saved_locations">Ubicaciones Guardadas</string>
+    <string name="home_search_location">Buscar una ubicació</string>
+    <string name="home_current_location">Ubicación Actual</string>
+    <string name="home_dialog_title">Advertencia de Permisos</string>
+    <string name="home_dialog_description">Al denegar los permisos, algunas funciones pueden no
+        estar disponibles. ¿Deseas continuar o cambiar los ajustes de permisos?</string>
+
+    <!-- Commons -->
+    <string name="error_current_loc">Ocurrió un error al obtener el clima de la ubicación actual.</string>
+    <string name="error_saved_loc">Ocurrió un error al obtener los detalles del clima actual de las ubicaciones guardadas.</string>
+    <string name="error_fetching_suggestions">Ocurrió un error al obtener las sugerencias. Por favor, vuelva a escribir para intentar de nuevo</string>
+    <string name="retry">Reintentar</string>
+    <string name="go_back">Volver</string>
+    <string name="default_error_message">¡Vaya! Ocurrió un error al intentar obtener los detalles del clima. Por favor, intente de nuevo.</string>
+    <string name="accept">Aceptar</string>
+    <string name="settings">Ajustes</string>
+
+    <!-- Detail View -->
+    <string name="detail_loading">Cargando…</string>
+    <string name="detail_assistant">Asistente</string>
+    <string name="detail_hourly_forecast">Pronóstico por Hora</string>
+    <string name="detail_chance_of_rain">Probabilidad de lluvia</string>
+</resources>

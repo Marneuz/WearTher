@@ -2,7 +2,7 @@ package com.marneux.marneweather.di
 
 import android.content.Context
 import androidx.room.Room
-import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDatabaseDao
+import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDao
 import com.marneux.marneweather.data.local.database.Database
 import com.marneux.marneweather.data.weather.database.WeatherDao
 import org.koin.core.module.dsl.singleOf
@@ -13,7 +13,6 @@ val databaseModule = module {
     singleOf(::provideGeneratedTextDao)
 }
 
-
 private fun provideWeatherDao(
     context: Context
 ): WeatherDao = Room.databaseBuilder(
@@ -22,10 +21,9 @@ private fun provideWeatherDao(
     name = Database.DATABASE_NAME
 ).build().getWeatherDao()
 
-
 private fun provideGeneratedTextDao(
     context: Context
-): GeneratedTextDatabaseDao = Room.databaseBuilder(
+): GeneratedTextDao = Room.databaseBuilder(
     context = context,
     klass = Database::class.java,
     name = Database.DATABASE_NAME

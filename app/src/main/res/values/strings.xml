@@ -1,14 +1,28 @@
 <resources>
-    <string name="app_name">MarneWeather</string>
-    <string name="current_location">Current Location</string>
-    <string name="saved_locations">Saved Locations</string>
+    <string name="app_name" translatable="false">MarneWeather</string>
+
+    <!-- Home View -->
+    <string name="home_saved_locations">Saved Locations</string>
+    <string name="home_search_location">Search for a location</string>
+    <string name="home_current_location">Current Location</string>
+    <string name="home_dialog_title">Permission Warning</string>
+    <string name="home_dialog_description">By denying permissions, some features may not be available.
+        Would you like to continue or change the permission settings?</string>
+
+
+    <!-- Commons -->
     <string name="error_current_loc">An error occurred when fetching the weather for the current location.</string>
     <string name="error_saved_loc">An error occurred when fetching the current weather details of saved locations.</string>
-    <string name="search_location">Search for a location</string>
     <string name="error_fetching_suggestions">An error occurred when fetching the suggestions. Please retype to try again.</string>
     <string name="retry">Retry</string>
-    <string name="loading">Loading…</string>
     <string name="go_back">Go back</string>
     <string name="default_error_message">Oops! An error occurred when trying to fetch the \n weather details. Please try again.</string>
-    <string name="assistant">Assistant</string>
+    <string name="accept">Accept</string>
+    <string name="settings">Settings</string>
+
+    <!-- Detail View -->
+    <string name="detail_loading">Loading…</string>
+    <string name="detail_assistant">Assistant</string>
+    <string name="detail_hourly_forecast">Hourly Forecast</string>
+    <string name="detail_chance_of_rain">Chance of Rain</string>
 </resources>

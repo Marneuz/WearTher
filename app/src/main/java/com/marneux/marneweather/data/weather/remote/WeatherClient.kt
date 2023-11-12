@@ -1,7 +1,7 @@
 package com.marneux.marneweather.data.weather.remote
 
-import com.marneux.marneweather.data.weather.remote.models.AdditionalDailyForecastVariablesResponse
 import com.marneux.marneweather.data.weather.remote.models.CurrentWeatherResponse
+import com.marneux.marneweather.data.weather.remote.models.DailyForecastOptions
 import com.marneux.marneweather.data.weather.remote.models.HourlyWeatherInfoResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -44,7 +44,7 @@ interface WeatherClient {
         @Query("timezone") timezoneConfiguration: WeatherClientConstants.TimeZoneConfiguration = WeatherClientConstants.TimeZoneConfiguration.DEFAULT_FOR_GIVEN_COORDINATES,
         @Query("timeformat") timeFormat: WeatherClientConstants.TimeFormats = WeatherClientConstants.TimeFormats.UNIX_EPOCH_TIME_IN_SECONDS,
         @Query("daily") dailyForecastsToReturn: WeatherClientConstants.DailyForecastItems = WeatherClientConstants.DailyForecastItems.ALL
-    ): Response<AdditionalDailyForecastVariablesResponse>
+    ): Response<DailyForecastOptions>
 
 
 }

@@ -1,10 +1,8 @@
-
-
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id ("com.google.devtools.ksp")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -22,17 +20,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-// constructo para iniciar las declararas las apikey desde local.properties para que esten a nivel
-    // global, no usada por el momento debido a error ocasional en gpt3
-//        val properties = java.util.Properties().apply {
-//            load(project.rootProject.file("local.properties").inputStream())
-//        }
-//        val openAiApiToken = properties.getProperty("OPEN_AI_API_TOKEN")
-//        buildConfigField(
-//            type = "String",
-//            name = "OPEN_AI_API_TOKEN",
-//            value = "\"$openAiApiToken\""
-//        )
     }
 
     buildTypes {
@@ -89,6 +76,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
     implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.compose.material:material-android:1.5.4")
+
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
@@ -107,7 +96,7 @@ dependencies {
     // room
     implementation("androidx.room:room-runtime:2.5.1")
     implementation("androidx.room:room-ktx:2.5.1")
-    ksp ("androidx.room:room-compiler:2.5.1")
+    ksp("androidx.room:room-compiler:2.5.1")
 
     // logging
     implementation("com.jakewharton.timber:timber:5.0.1")
@@ -128,6 +117,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    //Gson
+    implementation("com.google.code.gson:gson:2.8.9")
+
     // work manager
     implementation("androidx.work:work-runtime-ktx:2.8.1")
 
@@ -139,11 +131,9 @@ dependencies {
 
     // koin dependency injection
     val koinVersion = "3.4.0"
-    implementation ("io.insert-koin:koin-android:$koinVersion")
-    implementation ("io.insert-koin:koin-androidx-compose:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
     implementation("io.insert-koin:koin-androidx-workmanager:$koinVersion")
 
-    //Gson
-    implementation("com.google.code.gson:gson:2.8.9")
 
 }
