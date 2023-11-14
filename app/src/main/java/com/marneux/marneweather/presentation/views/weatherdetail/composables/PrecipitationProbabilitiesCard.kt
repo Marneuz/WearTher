@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,10 +32,13 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.PrecipitationProbability
 import com.marneux.marneweather.presentation.common.model.hourStringInTwelveHourFormat
+import com.marneux.marneweather.presentation.theme.MarneTheme
+import java.time.LocalDateTime
 
 @Composable
 fun PrecipitationProbabilitiesCard(
@@ -119,3 +123,24 @@ private fun ProbabilityProgressColumn(
         )
     }
 }
+
+@Preview
+@Composable
+private fun PrecipitationPreview() {
+    MarneTheme {
+        Surface {
+            val mockRainProbability = listOf(
+                PrecipitationProbability("1", "100", LocalDateTime.now(), 25),
+                PrecipitationProbability("16", "100", LocalDateTime.now().plusHours(1), 80),
+                PrecipitationProbability("16", "16", LocalDateTime.now().plusHours(2), 50),
+
+                )
+
+            PrecipitationProbabilitiesCard(mockRainProbability)
+        }
+    }
+}
+//val latitude: String,
+//val longitude: String,
+//val dateTime: LocalDateTime,
+//val probabilityPercentage: Int

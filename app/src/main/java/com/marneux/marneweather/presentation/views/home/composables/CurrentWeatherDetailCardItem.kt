@@ -11,7 +11,7 @@ import com.marneux.marneweather.model.weather.HourlyForecast
 @ExperimentalFoundationApi
 fun LazyListScope.currentWeatherCardItem(
     weatherCurrentLocation: BriefWeatherDetails,
-    hourlyForecastsCurrentLocation: List<HourlyForecast>,
+    hourlyForecast: List<HourlyForecast>,
     onClick: () -> Unit,
 ) {
     item {
@@ -24,7 +24,7 @@ fun LazyListScope.currentWeatherCardItem(
             shortDescriptionIcon = weatherCurrentLocation.shortDescriptionIcon,
             weatherInDegrees = weatherCurrentLocation.currentTemperatureRoundedToInt.toString(),
             onClick = onClick,
-            hourlyForecasts = hourlyForecastsCurrentLocation,
+            hourlyForecasts = hourlyForecast,
         )
     }
 }

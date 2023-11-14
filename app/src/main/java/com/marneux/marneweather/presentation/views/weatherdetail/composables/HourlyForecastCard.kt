@@ -1,5 +1,6 @@
 package com.marneux.marneweather.presentation.views.weatherdetail.composables
 
+import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
@@ -43,7 +46,7 @@ fun HourlyForecastCard(
                 modifier = Modifier.size(24.dp),
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_schedule_24),
                 contentDescription = null,
-                tint = Color.Unspecified
+                tint = Color.White
             )
             Text(
                 text = stringResource(R.string.detail_hourly_forecast),
@@ -97,4 +100,22 @@ private fun HourlyForecastItem(
         )
     }
 
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) // para ponerlo modo noche en caso de tener
+// dia y noche
+@Composable
+private fun HourlyForecastPreview() {
+    Surface {
+        val mockHourlyForecasts = listOf(
+            HourlyForecast(LocalDateTime.now(), R.drawable.ic_day_clear, 18),
+            HourlyForecast(LocalDateTime.now().plusHours(1), R.drawable.ic_day_rain, 20),
+            HourlyForecast(LocalDateTime.now().plusHours(2), R.drawable.ic_day_few_clouds, 17)
+        )
+
+        HourlyForecastCard(
+            hourlyForecasts = mockHourlyForecasts
+        )
+    }
 }

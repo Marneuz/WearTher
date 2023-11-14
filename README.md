@@ -28,7 +28,6 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 
 ## Recursos Utilizados
 - **DALL·E 3**: Se utilizó para generar recursos basados en prompts del clima.
-- **Flaticon**: Fuente de los iconos utilizados en la aplicación.
 
 ## Configuración Previa
 Antes de ejecutar la aplicación, es necesario introducir tu "GPT" `API_KEY` en el archivo

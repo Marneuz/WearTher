@@ -204,7 +204,7 @@ fun HomeScreen(
             if (weatherCurrentLocation != null && hourlyForecastCurrentLocation != null) {
                 currentWeatherCardItem(
                     weatherCurrentLocation = weatherCurrentLocation,
-                    hourlyForecastsCurrentLocation = hourlyForecastCurrentLocation,
+                    hourlyForecast = hourlyForecastCurrentLocation,
                     onClick = { onSavedLocationItemClick(weatherCurrentLocation) }
                 )
             }

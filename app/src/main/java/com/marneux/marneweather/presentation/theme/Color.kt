@@ -1,36 +1,41 @@
 package com.marneux.marneweather.presentation.theme
 
+
 import androidx.compose.ui.graphics.Color
 
+val md_theme_dark_primary = Color(0xFFD0BCFF)
+val md_theme_dark_onPrimary = Color(0xFF381E72)
+val md_theme_dark_primaryContainer = Color(0xFF4F378B)
+val md_theme_dark_onPrimaryContainer = Color(0xFFEADDFF)
+val md_theme_dark_secondary = Color(0xFFCCC2DC)
+val md_theme_dark_onSecondary = Color(0xFF332D41)
+val md_theme_dark_secondaryContainer = Color(0xFF4A4458)
+val md_theme_dark_onSecondaryContainer = Color(0xFFE8DEF8)
+val md_theme_dark_tertiary = Color(0xFFEFB8C8)
+val md_theme_dark_onTertiary = Color(0xFF492532)
+val md_theme_dark_tertiaryContainer = Color(0xFF633B48)
+val md_theme_dark_onTertiaryContainer = Color(0xFFFFD8E4)
+val md_theme_dark_error = Color(0xFFF2B8B5)
+val md_theme_dark_onError = Color(0xFF601410)
+val md_theme_dark_errorContainer = Color(0xFF8C1D18)
+val md_theme_dark_onErrorContainer = Color(0xFFF9DEDC)
+val md_theme_dark_outline = Color(0xFF938F99)
+val md_theme_dark_background = Color(0xFF1C1B1F)
+val md_theme_dark_onBackground = Color(0xFFE6E1E5)
+val md_theme_dark_surface = Color(0xFF1C1B1F)
+val md_theme_dark_onSurface = Color(0xFFE6E1E5)
+val md_theme_dark_surfaceVariant = Color(0xFF49454F)
+val md_theme_dark_onSurfaceVariant = Color(0xFFCAC4D0)
+val md_theme_dark_inverseSurface = Color(0xFFE6E1E5)
+val md_theme_dark_inverseOnSurface = Color(0xFF313033)
+val md_theme_dark_inversePrimary = Color(0xFF6750A4)
+val md_theme_dark_shadow = Color(0xFF000000)
+val md_theme_dark_surfaceTint = Color(0xFFD0BCFF)
+val md_theme_dark_outlineVariant = Color(0xFF49454F)
+val md_theme_dark_scrim = Color(0xFF000000)
 
-val Blue20 = Color(0xFF001E92)
-val Blue30 = Color(0xFF002ECC)
-val Blue40 = Color(0xFF1546F6)
-val Blue80 = Color(0xFFB8C3FF)
-val Blue90 = Color(0xFFDDE1FF)
 
-val DarkBlue20 = Color(0xFF000BA6)
-val DarkBlue30 = Color(0xFF1026D3)
-val DarkBlue80 = Color(0xFFBBC2FF)
-val DarkBlue90 = Color(0xFFDEE0FF)
+val seed = Color(0xFF6750A4)
 
-val Yellow20 = Color(0xFF402D00)
-val Yellow30 = Color(0xFF5C4200)
-val Yellow80 = Color(0xFFFABD1B)
-val Yellow90 = Color(0xFFFFDE9C)
-
-val Red20 = Color(0xFF680003)
-val Red30 = Color(0xFF930006)
-val Red80 = Color(0xFFFFB4A9)
-val Red90 = Color(0xFFFFDAD4)
-
-val Grey10 = Color(0xFF191C1D)
-val Grey20 = Color(0xFF2D3132)
-val Grey80 = Color(0xFFC4C7C7)
-val Grey90 = Color(0xFFE0E3E3)
-
-val BlueGrey30 = Color(0xFF45464F)
-val BlueGrey60 = Color(0xFF90909A)
-val BlueGrey80 = Color(0xFFC6C5D0)
 
 val GreenGPT = Color(0xFF74AA9C)

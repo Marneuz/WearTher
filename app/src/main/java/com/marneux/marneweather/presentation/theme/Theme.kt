@@ -1,6 +1,5 @@
 package com.marneux.marneweather.presentation.theme
 
-
 import android.os.Build
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -9,45 +8,53 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 
-private val marneDarkColorScheme = darkColorScheme(
-    primary = Blue80,
-    onPrimary = Blue20,
-    primaryContainer = Blue30,
-    onPrimaryContainer = Blue90,
-    inversePrimary = Blue40,
-    secondary = DarkBlue80,
-    onSecondary = DarkBlue20,
-    secondaryContainer = DarkBlue30,
-    onSecondaryContainer = DarkBlue90,
-    tertiary = Yellow80,
-    onTertiary = Yellow20,
-    tertiaryContainer = Yellow30,
-    onTertiaryContainer = Yellow90,
-    error = Red80,
-    onError = Red20,
-    errorContainer = Red30,
-    onErrorContainer = Red90,
-    background = Grey10,
-    onBackground = Grey90,
-    surface = Grey10,
-    onSurface = Grey80,
-    inverseSurface = Grey90,
-    inverseOnSurface = Grey20,
-    surfaceVariant = BlueGrey30,
-    onSurfaceVariant = BlueGrey80,
-    outline = BlueGrey60
-
+private val DarkColors = darkColorScheme(
+    primary = md_theme_dark_primary,
+    onPrimary = md_theme_dark_onPrimary,
+    primaryContainer = md_theme_dark_primaryContainer,
+    onPrimaryContainer = md_theme_dark_onPrimaryContainer,
+    secondary = md_theme_dark_secondary,
+    onSecondary = md_theme_dark_onSecondary,
+    secondaryContainer = md_theme_dark_secondaryContainer,
+    onSecondaryContainer = md_theme_dark_onSecondaryContainer,
+    tertiary = md_theme_dark_tertiary,
+    onTertiary = md_theme_dark_onTertiary,
+    tertiaryContainer = md_theme_dark_tertiaryContainer,
+    onTertiaryContainer = md_theme_dark_onTertiaryContainer,
+    error = md_theme_dark_error,
+    onError = md_theme_dark_onError,
+    errorContainer = md_theme_dark_errorContainer,
+    onErrorContainer = md_theme_dark_onErrorContainer,
+    outline = md_theme_dark_outline,
+    background = md_theme_dark_background,
+    onBackground = md_theme_dark_onBackground,
+    surface = md_theme_dark_surface,
+    onSurface = md_theme_dark_onSurface,
+    surfaceVariant = md_theme_dark_surfaceVariant,
+    onSurfaceVariant = md_theme_dark_onSurfaceVariant,
+    inverseSurface = md_theme_dark_inverseSurface,
+    inverseOnSurface = md_theme_dark_inverseOnSurface,
+    inversePrimary = md_theme_dark_inversePrimary,
+    surfaceTint = md_theme_dark_surfaceTint,
+    outlineVariant = md_theme_dark_outlineVariant,
+    scrim = md_theme_dark_scrim,
 )
 
+//Esta preparado para usar Dynamic colors, colores se ajustan al theme del sistema, y siempre
+// tema oscuro
 @Composable
-fun MarneTheme(areDynamicColorsEnabled: Boolean = true, content: @Composable () -> Unit) {
-    val doesDeviceSupportDynamicColors =
-        areDynamicColorsEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+fun MarneTheme(
+    content: @Composable () -> Unit
+) {
     val context = LocalContext.current
+    val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        dynamicDarkColorScheme(context)
+    } else {
+        DarkColors
+    }
+
     MaterialTheme(
-        colorScheme = if (doesDeviceSupportDynamicColors) dynamicDarkColorScheme(context)
-        else marneDarkColorScheme,
-        typography = Typography,
+        colorScheme = colors,
         content = content
     )
 }
