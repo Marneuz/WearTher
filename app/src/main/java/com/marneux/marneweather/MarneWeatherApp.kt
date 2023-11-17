@@ -53,7 +53,6 @@ class MarneWeatherApp : Application(), KoinComponent {
             ExistingPeriodicWorkPolicy.KEEP,
             periodicWorkRequest
         )
-
     }
 
     companion object {

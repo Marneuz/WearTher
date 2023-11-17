@@ -17,7 +17,6 @@ val networkModule = module {
     single { NetworkModule.provideLocationClient() }
     single { NetworkModule.provideWeatherClient() }
     single { NetworkModule.provideTextGeneratorClient() }
-
 }
 
 object NetworkModule {

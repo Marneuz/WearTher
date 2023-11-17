@@ -13,8 +13,9 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 - `DI`: Relacionado con la inyección de dependencias.
 - `Domain`: Contiene las reglas de negocio y las entidades.
 - `Data`: Se encarga de los datos, ya sea obtenidos de fuentes locales o remotas.
-- `Presentation`: Contiene las clases relacionadas con la interfaz de usuario y la presentación de datos.
-- `Model`: Integrado dentro de cada módulo, contiene los modelos que necesita cada módulo.
+- `Presentation`: Contiene las clases relacionadas con la interfaz de usuario y la presentación de
+  datos.
+- `Model`: Integrado dentro de cada módulo, contiene los modelos que necesita cada capa.
 
 ## Librerías Utilizadas
 - **Koin**: Para la inyección de dependencias.
@@ -27,21 +28,23 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 - **Compose con Material 3**: Framework moderno de UI para Android.
 
 ## Recursos Utilizados
+
 - **DALL·E 3**: Se utilizó para generar recursos basados en prompts del clima.
 
-## Configuración Previa
-Antes de ejecutar la aplicación, es necesario introducir tu "GPT" `API_KEY` en el archivo
+> [!IMPORTANT]
+>## Configuración Previa
+Antes de ejecutar la aplicación, es necesario introducir tu "GPT" __`API_KEY`__ en el archivo
 [TextGeneratorClientConstants](com.marneux.marneweather.data.remote.languagemodel.TextGeneratorClientConstants)
 
+### [!NOTE] sobre GPT
 
-### Notas sobre GPT
-
-GPT, al ser una API relativamente reciente, puede presentar ocasionalmente fallos o retardos en sus respuestas. 
+GPT, al ser una API relativamente reciente, puede presentar ocasionalmente fallos o retardos en sus
+respuestas.
 En consecuencia, hay situaciones en las que la API podría no devolver texto.
 
-Para gestionar la presentación de textos devueltos por GPT en la aplicación, 
-se emplean literales de cadenas de texto multilínea (""" """) en Kotlin. Esto permite representar el 
-texto exactamente como se recibe, manteniendo su formato original. Para más información sobre literales de 
-cadenas de texto multilínea en Kotlin, se puede consultar [esta fuente](https://realkotlin.com/tutorials/2018-06-26-multiline-string-literals-in-kotlin/)
-. 
-
+Para gestionar la presentación de textos devueltos por GPT en la aplicación,
+se emplean literales de cadenas de texto multilínea (""" """) en Kotlin. Esto permite representar el
+texto exactamente como se recibe, manteniendo su formato original. Para más información sobre
+literales de
+cadenas de texto multilínea en Kotlin, se puede
+consultar [esta fuente](https://realkotlin.com/tutorials/2018-06-26-multiline-string-literals-in-kotlin/).

@@ -10,7 +10,7 @@ interface TextGeneratorClient {
 
     @POST(TextGeneratorClientConstants.Endpoints.CHAT_COMPLETION_END_POINT)
 
-    suspend fun getModelResponseForConversations(
+    suspend fun getAIModelResponse(
         @Body textGenerationPostBody: TextGenerationPromptBody
     ): Response<GeneratedTextResponse>
 }

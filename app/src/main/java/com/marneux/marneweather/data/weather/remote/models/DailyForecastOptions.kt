@@ -11,10 +11,10 @@ data class DailyForecastOptions(
 ) {
     data class AdditionalForecastOptions(
         @SerializedName("temperature_2m_min")
-        val minTemperatureForTheDay: List<Double>,
+        val minTemperature: List<Double>,
 
         @SerializedName("temperature_2m_max")
-        val maxTemperatureForTheDay: List<Double>,
+        val maxTemperature: List<Double>,
 
         @SerializedName("apparent_temperature_max")
         val maxApparentTemperature: List<Double>,

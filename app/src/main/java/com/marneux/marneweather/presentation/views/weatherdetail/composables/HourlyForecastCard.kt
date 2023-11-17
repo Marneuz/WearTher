@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
-import com.marneux.marneweather.presentation.common.model.hourStringInTwelveHourFormat
+import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
 import java.time.LocalDateTime
 
 @Composable
@@ -84,7 +84,7 @@ private fun HourlyForecastItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = dateTime.hourStringInTwelveHourFormat,
+            text = dateTime.hourTwelveHourFormat,
             style = MaterialTheme.typography.labelLarge
         )
 

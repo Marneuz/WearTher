@@ -1,9 +1,7 @@
 package com.marneux.marneweather.domain.repositories.location
 
-import com.marneux.marneweather.model.location.LocationAutofillSuggestion
+import com.marneux.marneweather.model.location.AutoSuggestLocation
 
 interface LocationRepository {
-    suspend fun fetchSuggestedPlacesForQuery(query: String): Result<List<LocationAutofillSuggestion>>
-
-
+    suspend fun fetchSuggestedLocationQuery(query: String): Result<List<AutoSuggestLocation>>
 }

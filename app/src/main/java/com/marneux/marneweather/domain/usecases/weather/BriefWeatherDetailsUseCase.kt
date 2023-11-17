@@ -9,4 +9,3 @@ class BriefWeatherDetailsUseCase {
         return currentWeather.toBriefWeatherDetails()
     }
 }
-

@@ -8,8 +8,8 @@ data class SuggestionResponse(
 ) {
 
     data class Suggestion(
-        @SerializedName("id") val idOfPlace: String,
-        @SerializedName("name") val nameOfPlace: String,
+        @SerializedName("id") val idLocation: String,
+        @SerializedName("name") val nameLocation: String,
         @SerializedName("country") val country: String?,
         @SerializedName("admin1") val state: String?,
         @SerializedName("country_code") val countryCode: String?,

@@ -6,13 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marneux.marneweather.domain.usecases.location.CurrentLocationUseCase
-import com.marneux.marneweather.domain.usecases.location.LocationNameFromCoordsUseCase
-import com.marneux.marneweather.domain.usecases.location.SuggestedPlacesUseCase
+import com.marneux.marneweather.domain.usecases.location.DeleteSavedLocationUseCase
+import com.marneux.marneweather.domain.usecases.location.ListSavedLocationUseCase
+import com.marneux.marneweather.domain.usecases.location.LocationNameCoordsUseCase
+import com.marneux.marneweather.domain.usecases.location.RestoreLocationUseCase
+import com.marneux.marneweather.domain.usecases.location.SuggestedLocationUseCase
 import com.marneux.marneweather.domain.usecases.weather.BriefWeatherDetailsUseCase
-import com.marneux.marneweather.domain.usecases.weather.DeleteSavedLocationUseCase
 import com.marneux.marneweather.domain.usecases.weather.HourlyForecastUseCase
-import com.marneux.marneweather.domain.usecases.weather.RestoreLocationUseCase
-import com.marneux.marneweather.domain.usecases.weather.StreamSavedLocationsUseCase
 import com.marneux.marneweather.domain.usecases.weather.WeatherByLocationUseCase
 import com.marneux.marneweather.model.location.SavedLocation
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
@@ -35,13 +35,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    streamSavedLocationsUseCase: StreamSavedLocationsUseCase,
+    listSavedLocationUseCase: ListSavedLocationUseCase,
     private val briefWeatherDetailsUseCase: BriefWeatherDetailsUseCase,
-    private val locationNameFromCoordsUseCase: LocationNameFromCoordsUseCase,
+    private val locationNameCoordsUseCase: LocationNameCoordsUseCase,
     private val weatherByLocationUseCase: WeatherByLocationUseCase,
     private val deleteSavedLocationUseCase: DeleteSavedLocationUseCase,
     private val restoreLocationUseCase: RestoreLocationUseCase,
-    private val suggestedPlacesUseCase: SuggestedPlacesUseCase,
+    private val suggestedLocationUseCase: SuggestedLocationUseCase,
     private val hourlyForecastUseCase: HourlyForecastUseCase,
     private val currentLocationUseCase: CurrentLocationUseCase
 ) : ViewModel() {
@@ -55,16 +55,19 @@ class HomeViewModel(
     private var recentlyDeletedItem: BriefWeatherDetails? = null
     private var currentWeather = mutableMapOf<SavedLocation, CurrentWeather>()
 
-    private val _uiState = MutableStateFlow(HomeScreenUiState())
-    val uiState = _uiState as StateFlow<HomeScreenUiState>
+    private val _uiState = MutableStateFlow(HomeState())
+    val uiState = _uiState as StateFlow<HomeState>
 
+    /** Esta función combina dos flujos de datos: las ubicaciones guardadas y un disparador de
+    reintento. Se actualiza el estado de la UI cada vez que cambia alguno de estos flujos.*/
     init {
         combine(
-            streamSavedLocationsUseCase.execute(),
+            listSavedLocationUseCase.execute(),
             retryFetchSavedLocation
         ) { savedLocations, _ ->
             savedLocations
         }.onEach {
+            // Actualiza el estado de la UI antes de comenzar a cargar nuevos datos.
             _uiState.update {
                 it.copy(
                     isLoadingSavedLocations = true,
@@ -72,8 +75,10 @@ class HomeViewModel(
                 )
             }
         }.map { savedLocations ->
+            // Procesa las ubicaciones guardadas y obtiene los detalles del clima.
             fetchCurrentWeatherDetails(savedLocations)
         }.onEach { weatherSavedLocationsResult ->
+            // Actualiza el estado de la UI con los resultados obtenidos.
             val weatherSavedLocations =
                 weatherSavedLocationsResult.getOrNull()
             _uiState.update {
@@ -97,7 +102,7 @@ class HomeViewModel(
                         errorFetchAutofillSuggestions = false
                     )
                 }
-                suggestedPlacesUseCase.execute(query)
+                suggestedLocationUseCase.execute(query)
             }
             .onEach { autofillSuggestionsResult ->
                 val autofillSuggestions = autofillSuggestionsResult.getOrNull()
@@ -152,8 +157,10 @@ class HomeViewModel(
             currentWeather.remove(removedLocation)
         }
         val locationsNotSaved = savedLocationsSet subtract currentWeather.keys
+        // Itera sobre las ubicaciones guardadas y obtiene los detalles del clima.
         for (savedLocationNotStored in locationsNotSaved) {
             try {
+                // Ejecuta la consulta de clima y maneja excepciones.
                 weatherByLocationUseCase.execute(
                     nameLocation = savedLocationNotStored.nameLocation,
                     latitude = savedLocationNotStored.coordinates.latitude,
@@ -164,6 +171,7 @@ class HomeViewModel(
                 return Result.failure(exception)
             }
         }
+        // Devuelve los detalles del clima obtenidos.
         return Result.success(
             currentWeather.values.toList().map { currentWeather ->
                 briefWeatherDetailsUseCase(currentWeather)
@@ -189,7 +197,7 @@ class HomeViewModel(
             }
 
             val coordinates = currentLocationUseCase.execute().getOrThrow()
-            val nameLocation = locationNameFromCoordsUseCase.execute(
+            val nameLocation = locationNameCoordsUseCase.execute(
                 coordinates.latitude.toDouble(),
                 coordinates.longitude.toDouble()
             ).getOrThrow()

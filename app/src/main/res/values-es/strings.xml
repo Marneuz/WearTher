@@ -21,8 +21,16 @@
     <string name="settings">Ajustes</string>
 
     <!-- Detail View -->
-    <string name="detail_loading">Cargando…</string>
+    <string name="detail_loading">Pensando…</string>
     <string name="detail_assistant">Asistente</string>
     <string name="detail_hourly_forecast">Pronóstico por Hora</string>
     <string name="detail_chance_of_rain">Probabilidad de lluvia</string>
+    <string name="min_temp">Temp Min</string>
+    <string name="max_temp">Temp Max</string>
+    <string name="sunrise">Amanecer</string>
+    <string name="sunset">Atardecer</string>
+    <string name="feels_like">Sensación</string>
+    <string name="max_uv_index">Índice Max UV</string>
+    <string name="wind_direction">Dir. Viento</string>
+    <string name="wind_speed">Vel. Viento</string>
 </resources>

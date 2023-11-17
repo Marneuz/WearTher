@@ -3,6 +3,9 @@ package com.marneux.marneweather.data.weather.remote
 import java.time.ZoneId
 
 object WeatherClientConstants {
+
+    /** Parametros de la API con las cuales se puede mostrar un valores metricos o imperiales*/
+
     const val BASE_URL = "https://api.open-meteo.com/v1/"
 
     object EndPoints {

@@ -21,7 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,16 +33,17 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
-import com.marneux.marneweather.model.weather.PrecipitationProbability
-import com.marneux.marneweather.presentation.common.model.hourStringInTwelveHourFormat
+import com.marneux.marneweather.model.weather.RainChances
+import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
 import com.marneux.marneweather.presentation.theme.MarneTheme
 import java.time.LocalDateTime
 
 @Composable
 fun PrecipitationProbabilitiesCard(
-    precipitationProbabilities: List<PrecipitationProbability>,
+    precipitationProbabilities: List<RainChances>,
     modifier: Modifier = Modifier,
 ) {
     Card(modifier = modifier) {
@@ -69,7 +70,7 @@ fun PrecipitationProbabilitiesCard(
             items(precipitationProbabilities) {
                 ProbabilityProgressColumn(
                     modifier = Modifier.padding(bottom = 16.dp),
-                    precipitationProbability = it
+                    rainChances = it
                 )
             }
         }
@@ -78,15 +79,15 @@ fun PrecipitationProbabilitiesCard(
 
 @Composable
 private fun ProbabilityProgressColumn(
-    precipitationProbability: PrecipitationProbability,
+    rainChances: RainChances,
     modifier: Modifier = Modifier
 ) {
-    var progressValue by remember { mutableStateOf(0f) }
+    var progressValue by remember { mutableFloatStateOf(0f) }
     val animatedProgressValue by animateFloatAsState(targetValue = progressValue, label = "")
-    LaunchedEffect(precipitationProbability) {
-        progressValue = precipitationProbability.probabilityPercentage / 100f
+    LaunchedEffect(rainChances) {
+        progressValue = rainChances.probabilityPercentage / 100f
     }
-    val (heightOfProgressBarWhenVertical, widthOfProgressBarWhenVertical) = remember {
+    val (heightProgressBar, widthProgressBar) = remember {
         Pair(120.dp, 16.dp)
     }
     Column(
@@ -95,21 +96,21 @@ private fun ProbabilityProgressColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = precipitationProbability.dateTime.hourStringInTwelveHourFormat.padStart(length = 5),
+            text = rainChances.dateTime.hourTwelveHourFormat.padStart(length = 5),
             style = MaterialTheme.typography.labelLarge
         )
         Box(
             modifier = Modifier.size(
-                height = heightOfProgressBarWhenVertical,
-                width = widthOfProgressBarWhenVertical
+                height = heightProgressBar,
+                width = widthProgressBar
             )
         ) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .requiredSize(
-                        height = widthOfProgressBarWhenVertical,
-                        width = heightOfProgressBarWhenVertical
+                        height = widthProgressBar,
+                        width = heightProgressBar
                     )
                     .rotate(-90f),
                 progress = animatedProgressValue,
@@ -118,21 +119,21 @@ private fun ProbabilityProgressColumn(
             )
         }
         Text(
-            text = "${precipitationProbability.probabilityPercentage}%".padStart(length = 4),
+            text = "${rainChances.probabilityPercentage}%".padStart(length = 4),
             style = MaterialTheme.typography.labelLarge
         )
     }
 }
 
-@Preview
+@Preview(wallpaper = Wallpapers.NONE)
 @Composable
 private fun PrecipitationPreview() {
     MarneTheme {
         Surface {
             val mockRainProbability = listOf(
-                PrecipitationProbability("1", "100", LocalDateTime.now(), 25),
-                PrecipitationProbability("16", "100", LocalDateTime.now().plusHours(1), 80),
-                PrecipitationProbability("16", "16", LocalDateTime.now().plusHours(2), 50),
+                RainChances("1", "100", LocalDateTime.now(), 25),
+                RainChances("16", "100", LocalDateTime.now().plusHours(1), 80),
+                RainChances("16", "16", LocalDateTime.now().plusHours(2), 50),
 
                 )
 
@@ -140,7 +141,3 @@ private fun PrecipitationPreview() {
         }
     }
 }
-//val latitude: String,
-//val longitude: String,
-//val dateTime: LocalDateTime,
-//val probabilityPercentage: Int

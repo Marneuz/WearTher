@@ -1,10 +1,13 @@
 package com.marneux.marneweather.model.weather
 
-import androidx.annotation.DrawableRes
 
 data class SingleWeatherDetail(
-    val name: String,
+    val itemType: WeatherItem,
     val value: String,
-    @DrawableRes val iconResId: Int
 )
 
+//crear enum
+enum class WeatherItem {
+    MIN_TEMP, MAX_TEMP, SUNRISE, SUNSET, FEELS_LIKE,
+    MAX_UV_INDEX, WIND_DIRECTION, WIND_SPEED
+}

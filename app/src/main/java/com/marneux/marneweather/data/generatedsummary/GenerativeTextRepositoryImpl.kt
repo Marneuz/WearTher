@@ -16,9 +16,8 @@ class GenerativeTextRepositoryImpl(
     private val generatedTextDao: GeneratedTextDao,
 ) : GenerativeTextRepository {
 
-
+    // Definición de constantes y plantillas utilizadas para generar texto.
     companion object {
-
         private const val MODEL_ID = "gpt-3.5-turbo-1106"
         private val SYSTEM_PROMPT = """
             "Provide a brief and concise weather description and then procced to make a clothing recommendation for a man, following the format specified below:
@@ -38,6 +37,7 @@ class GenerativeTextRepositoryImpl(
       """.trimIndent()
     }
 
+    // Función principal para generar texto basado en los detalles del clima.
     override suspend fun generateTextForWeatherDetails(weatherDetails: CurrentWeather): Result<String> {
         val systemLanguageCode = Locale.getDefault().language
         return generatedTextDao.getSavedGeneratedTextForDetails(
@@ -48,10 +48,12 @@ class GenerativeTextRepositoryImpl(
             ?: generateAndSaveText(weatherDetails, systemLanguageCode)
     }
 
+    // Función para generar y guardar el texto.
     private suspend fun generateAndSaveText(
         weatherDetails: CurrentWeather,
         systemLanguageCode: String
     ): Result<String> {
+        // Genera el prompt del usuario y prepara el cuerpo de la petición.
         val userPrompt = generateUserPrompt(weatherDetails, systemLanguageCode)
         val textGenerationPrompt = TextGenerationPromptBody(
             messages = listOf(
@@ -62,8 +64,9 @@ class GenerativeTextRepositoryImpl(
             maxResponseTokens = 150
         )
         return try {
+            // Realiza la petición al cliente de generación de texto y procesa la respuesta.
             val generatedTextResponse =
-                textGeneratorClient.getModelResponseForConversations(textGenerationPrompt)
+                textGeneratorClient.getAIModelResponse(textGenerationPrompt)
                     .getBodyOrThrowException()
                     .generatedResponses
                     .first().message
@@ -71,10 +74,12 @@ class GenerativeTextRepositoryImpl(
             saveGeneratedText(weatherDetails, generatedTextResponse)
             Result.success(generatedTextResponse)
         } catch (exception: Exception) {
+            // Maneja las excepciones y devuelve un resultado de error.
             exception.handleRepositoryException()
         }
     }
 
+    // Función auxiliar para generar el prompt del usuario.
     private fun generateUserPrompt(
         weatherDetails: CurrentWeather,
         systemLanguageCode: String
@@ -88,6 +93,7 @@ class GenerativeTextRepositoryImpl(
         """.trimIndent()
     }
 
+    // Función para guardar el texto generado en la base de datos.
     private suspend fun saveGeneratedText(weatherDetails: CurrentWeather, generatedText: String) {
         val generatedTextEntity = GeneratedTextEntity(
             nameLocation = weatherDetails.nameLocation,

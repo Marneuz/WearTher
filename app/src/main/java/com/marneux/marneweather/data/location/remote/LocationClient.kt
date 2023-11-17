@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface LocationClient {
 
     @GET(LocationClientConstants.EndPoints.GET_PLACES_SUGGESTIONS_FOR_QUERY)
-    suspend fun getPlacesSuggestionsForQuery(
+    suspend fun getLocationSuggestionsQuery(
         @Query("name") query: String,
         @Query("count") @IntRange(1, 100) count: Int = 20
     ): Response<SuggestionResponse>

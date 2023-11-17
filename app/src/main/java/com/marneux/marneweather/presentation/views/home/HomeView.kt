@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.marneux.marneweather.R
-import com.marneux.marneweather.model.location.LocationAutofillSuggestion
+import com.marneux.marneweather.model.location.AutoSuggestLocation
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.model.weather.HourlyForecast
 import com.marneux.marneweather.presentation.views.home.composables.ShowPermissionWarningDialog
@@ -47,31 +47,31 @@ import com.marneux.marneweather.presentation.views.home.composables.subHeaderIte
 
 @Composable
 fun HomeScreen(
-    homeScreenUiState: HomeScreenUiState,
+    uiState: HomeState,
     snackbarHostState: SnackbarHostState,
     onSavedLocationDismissed: (BriefWeatherDetails) -> Unit,
     onSearchQueryChange: (String) -> Unit,
-    onSuggestionClick: (LocationAutofillSuggestion) -> Unit,
+    onSuggestionClick: (AutoSuggestLocation) -> Unit,
     onSavedLocationItemClick: (BriefWeatherDetails) -> Unit,
     onLocationPermissionGranted: () -> Unit,
-    onRetryFetchingWeatherForSavedLocations: () -> Unit,
+    onRetryFetchWeatherSavedLocations: () -> Unit,
     modifier: Modifier = Modifier,
     onRetryFetchWeatherCurrentLocation: () -> Unit = onLocationPermissionGranted
 ) {
     HomeScreen(
         modifier = modifier,
-        weatherSavedLocations = homeScreenUiState.weatherSavedLocations,
-        suggestionSearchQuery = homeScreenUiState.autofillSuggestions,
-        isSuggestionLoading = homeScreenUiState.isLoadingAutofillSuggestions,
-        isWeatherForecastLoading = homeScreenUiState.isLoadingWeatherCurrentLocation,
-        isSavedLocationsLoading = homeScreenUiState.isLoadingSavedLocations,
-        weatherCurrentLocation = homeScreenUiState.weatherDetailsCurrentLocation,
-        hourlyForecastCurrentLocation = homeScreenUiState.hourlyForecastsCurrentLocation,
-        errorFetchWeatherCurrentLocation = homeScreenUiState.errorFetchWeatherCurrentLocation,
-        errorFetchWeatherSavedLocations = homeScreenUiState.errorFetchWeatherSavedLocations,
-        errorLoadingAutofillSuggestions = homeScreenUiState.errorFetchAutofillSuggestions,
+        weatherSavedLocations = uiState.weatherSavedLocations,
+        suggestionSearchQuery = uiState.autofillSuggestions,
+        isSuggestionLoading = uiState.isLoadingAutofillSuggestions,
+        isWeatherForecastLoading = uiState.isLoadingWeatherCurrentLocation,
+        isSavedLocationsLoading = uiState.isLoadingSavedLocations,
+        weatherCurrentLocation = uiState.weatherDetailsCurrentLocation,
+        hourlyForecastCurrentLocation = uiState.hourlyForecastsCurrentLocation,
+        errorFetchWeatherCurrentLocation = uiState.errorFetchWeatherCurrentLocation,
+        errorFetchWeatherSavedLocations = uiState.errorFetchWeatherSavedLocations,
+        errorLoadingAutofillSuggestions = uiState.errorFetchAutofillSuggestions,
         onRetryFetchWeatherCurrentLocation = onRetryFetchWeatherCurrentLocation,
-        onRetryFetchWeatherSavedLocations = onRetryFetchingWeatherForSavedLocations,
+        onRetryFetchWeatherSavedLocations = onRetryFetchWeatherSavedLocations,
         onSavedLocationDismissed = onSavedLocationDismissed,
         onSearchQueryChange = onSearchQueryChange,
         onSuggestionClick = onSuggestionClick,
@@ -93,7 +93,7 @@ fun HomeScreen(
 fun HomeScreen(
     modifier: Modifier = Modifier,
     weatherSavedLocations: List<BriefWeatherDetails>,
-    suggestionSearchQuery: List<LocationAutofillSuggestion>,
+    suggestionSearchQuery: List<AutoSuggestLocation>,
     weatherCurrentLocation: BriefWeatherDetails?,
     hourlyForecastCurrentLocation: List<HourlyForecast>?,
     isSuggestionLoading: Boolean = false,
@@ -105,7 +105,7 @@ fun HomeScreen(
     onRetryFetchWeatherSavedLocations: () -> Unit,
     onRetryFetchWeatherCurrentLocation: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
-    onSuggestionClick: (LocationAutofillSuggestion) -> Unit,
+    onSuggestionClick: (AutoSuggestLocation) -> Unit,
     onSavedLocationItemClick: (BriefWeatherDetails) -> Unit,
     onSavedLocationDismissed: (BriefWeatherDetails) -> Unit,
     onLocationPermissionGranted: () -> Unit,

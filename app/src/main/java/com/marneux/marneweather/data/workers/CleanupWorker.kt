@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDao
-import com.marneux.marneweather.data.weather.database.WeatherDao
+import com.marneux.marneweather.data.location.database.LocationDao
 import com.marneux.marneweather.di.KOIN_IO_COROUTINE_DISPATCHER_NAME
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,7 +18,7 @@ class CleanupWorker(
     workerParameters: WorkerParameters,
 ) : CoroutineWorker(context, workerParameters), KoinComponent {
 
-    private val savedWeatherDetailsDao: WeatherDao by inject()
+    private val savedWeatherDetailsDao: LocationDao by inject()
     private val generatedTextCacheDao: GeneratedTextDao by inject()
     private val ioDispatcher: CoroutineDispatcher by inject(named(KOIN_IO_COROUTINE_DISPATCHER_NAME))
 

@@ -61,7 +61,7 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material3.placeholder
 import com.google.accompanist.placeholder.material3.shimmer
 import com.marneux.marneweather.R
-import com.marneux.marneweather.model.location.LocationAutofillSuggestion
+import com.marneux.marneweather.model.location.AutoSuggestLocation
 
 @ExperimentalMaterial3Api
 @ExperimentalAnimationApi
@@ -70,11 +70,11 @@ fun LazyListScope.searchBarItem(
     isSearchBarActive: Boolean,
     isSuggestionsListLoading: Boolean,
     errorLoadingSuggestions: Boolean,
-    suggestionsForSearchQuery: List<LocationAutofillSuggestion>,
+    suggestionsForSearchQuery: List<AutoSuggestLocation>,
     onClearSearchQueryIconClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onSearchBarActiveChange: (Boolean) -> Unit,
-    onSuggestionClick: (LocationAutofillSuggestion) -> Unit
+    onSuggestionClick: (AutoSuggestLocation) -> Unit
 ) {
     item {
         val searchBarSuggestionsContent = @Composable {
@@ -113,9 +113,9 @@ fun LazyListScope.searchBarItem(
 
 @Composable
 private fun AutoFillSuggestionsList(
-    suggestions: List<LocationAutofillSuggestion>,
+    suggestions: List<AutoSuggestLocation>,
     isSuggestionsListLoading: Boolean,
-    onSuggestionClick: (LocationAutofillSuggestion) -> Unit
+    onSuggestionClick: (AutoSuggestLocation) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         if (isSuggestionsListLoading) {
@@ -257,8 +257,8 @@ private fun AutofillSuggestionLeadingIcon(countryFlagUrl: String) {
 }
 
 private fun LazyListScope.autofillSuggestionItems(
-    suggestions: List<LocationAutofillSuggestion>,
-    onSuggestionClick: (LocationAutofillSuggestion) -> Unit,
+    suggestions: List<AutoSuggestLocation>,
+    onSuggestionClick: (AutoSuggestLocation) -> Unit,
 ) {
     items(items = suggestions, key = { it.idLocation }) {
         AutofillSuggestion(

@@ -29,8 +29,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
-import com.marneux.marneweather.model.weather.PrecipitationProbability
+import com.marneux.marneweather.model.weather.RainChances
 import com.marneux.marneweather.model.weather.SingleWeatherDetail
+import com.marneux.marneweather.model.weather.WeatherItem
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.Header
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.HourlyForecastCard
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.PrecipitationProbabilitiesCard
@@ -39,7 +40,7 @@ import com.marneux.marneweather.presentation.views.weatherdetail.composables.Wea
 
 @Composable
 fun WeatherDetailScreen(
-    uiState: WeatherDetailScreenUiState,
+    uiState: WeatherDetailState,
     snackbarHostState: SnackbarHostState,
     onSaveButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
@@ -60,7 +61,9 @@ fun WeatherDetailScreen(
                 textAlign = TextAlign.Center,
                 text = uiState.errorMessage
             )
-            Button(onClick = onBackButtonClick, content = { Text(stringResource(R.string.go_back)) })
+            Button(
+                onClick = onBackButtonClick,
+                content = { Text(stringResource(R.string.go_back)) })
         }
     } else {
         WeatherDetailScreen(
@@ -96,7 +99,7 @@ fun WeatherDetailScreen(
     onSaveButtonClick: () -> Unit,
     singleWeatherDetails: List<SingleWeatherDetail>,
     hourlyForecasts: List<HourlyForecast>,
-    precipitationProbabilities: List<PrecipitationProbability>,
+    precipitationProbabilities: List<RainChances>,
     snackbarHostState: SnackbarHostState,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
@@ -142,13 +145,32 @@ fun WeatherDetailScreen(
             item(span = { GridItemSpan(maxLineSpan) }) {
                 PrecipitationProbabilitiesCard(precipitationProbabilities = precipitationProbabilities)
             }
-            items(singleWeatherDetails) {
+            items(singleWeatherDetails) { detail ->
                 SingleWeatherDetailCard(
-                    name = it.name,
-                    value = it.value,
-                    iconResId = it.iconResId
+                    nameResId = when (detail.itemType) {
+                        WeatherItem.MIN_TEMP -> R.string.min_temp
+                        WeatherItem.MAX_TEMP -> R.string.max_temp
+                        WeatherItem.SUNRISE -> R.string.sunrise
+                        WeatherItem.SUNSET -> R.string.sunset
+                        WeatherItem.FEELS_LIKE -> R.string.feels_like
+                        WeatherItem.MAX_UV_INDEX -> R.string.max_uv_index
+                        WeatherItem.WIND_DIRECTION -> R.string.wind_direction
+                        WeatherItem.WIND_SPEED -> R.string.wind_speed
+                    },
+                    value = detail.value,
+                    iconResId = when (detail.itemType) {
+                        WeatherItem.MIN_TEMP -> R.drawable.ic_min_temp
+                        WeatherItem.MAX_TEMP -> R.drawable.ic_max_temp
+                        WeatherItem.SUNRISE -> R.drawable.ic_sunrise
+                        WeatherItem.SUNSET -> R.drawable.ic_sunset
+                        WeatherItem.FEELS_LIKE -> R.drawable.ic_wind_pressure
+                        WeatherItem.MAX_UV_INDEX -> R.drawable.ic_uv_index
+                        WeatherItem.WIND_DIRECTION -> R.drawable.ic_wind_direction
+                        WeatherItem.WIND_SPEED -> R.drawable.ic_wind
+                    }
                 )
             }
+
             item {
                 Spacer(modifier = Modifier.navigationBarsPadding())
             }

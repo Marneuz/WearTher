@@ -15,6 +15,7 @@ val repositoriesModule = module {
     singleOf(::LocationRepositoryImpl) {
         bind<LocationRepository>()
     }
+
     singleOf(::WeatherRepositoryImpl) {
         bind<WeatherRepository>()
     }

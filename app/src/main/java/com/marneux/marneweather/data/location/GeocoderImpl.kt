@@ -13,7 +13,7 @@ class GeocoderImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : GeocoderRepository {
 
-    override suspend fun getLocationNameForCoordinates(
+    override suspend fun getLocationName(
         latitude: Double,
         longitude: Double
     ): Result<String> = withContext(ioDispatcher) {

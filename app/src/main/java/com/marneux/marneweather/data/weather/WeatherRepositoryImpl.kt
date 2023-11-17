@@ -1,31 +1,23 @@
 package com.marneux.marneweather.data.weather
 
+//import com.marneux.marneweather.data.weather.mapper.toSavedLocation
 import com.marneux.marneweather.data.getBodyOrThrowException
 import com.marneux.marneweather.data.safeCall
-import com.marneux.marneweather.data.weather.database.CurrentWeatherEntity
-import com.marneux.marneweather.data.weather.database.WeatherDao
 import com.marneux.marneweather.data.weather.mapper.toCurrentWeather
 import com.marneux.marneweather.data.weather.mapper.toHourlyForecasts
 import com.marneux.marneweather.data.weather.mapper.toPrecipitationProbabilities
-import com.marneux.marneweather.data.weather.mapper.toSavedLocation
-import com.marneux.marneweather.data.weather.mapper.toSavedWeatherLocationEntity
 import com.marneux.marneweather.data.weather.mapper.toSingleWeatherDetailList
 import com.marneux.marneweather.data.weather.remote.WeatherClient
 import com.marneux.marneweather.domain.repositories.weather.WeatherRepository
-import com.marneux.marneweather.model.location.SavedLocation
-import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.model.weather.CurrentWeather
 import com.marneux.marneweather.model.weather.HourlyForecast
-import com.marneux.marneweather.model.weather.PrecipitationProbability
+import com.marneux.marneweather.model.weather.RainChances
 import com.marneux.marneweather.model.weather.SingleWeatherDetail
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 
 class WeatherRepositoryImpl(
     private val weatherClient: WeatherClient,
-    private val weatherDao: WeatherDao
 ) : WeatherRepository {
 
     override suspend fun fetchWeatherForLocation(
@@ -38,39 +30,11 @@ class WeatherRepositoryImpl(
             response.getBodyOrThrowException().toCurrentWeather(nameLocation)
         }
 
-    override fun getSavedLocationsListStream(): Flow<List<SavedLocation>> =
-        weatherDao.getAllWeatherEntitiesMarkedAsNotDeleted()
-            .map { entities -> entities.map(CurrentWeatherEntity::toSavedLocation) }
-
-    override suspend fun saveWeatherLocation(
-        nameLocation: String,
-        latitude: String,
-        longitude: String
-    ) {
-        safeCall {
-            weatherDao.addSavedWeatherEntity(
-                CurrentWeatherEntity(
-                    nameLocation,
-                    latitude,
-                    longitude
-                )
-            )
-        }
-    }
-
-    override suspend fun deleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails) {
-        weatherDao.markWeatherEntityAsDeleted(briefWeatherLocation.nameLocation)
-    }
-
-    override suspend fun permanentlyDeleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails) {
-        weatherDao.deleteSavedWeatherEntity(briefWeatherLocation.toSavedWeatherLocationEntity())
-    }
-
-    override suspend fun fetchHourlyPrecipitationProbabilities(
+    override suspend fun rainChances(
         latitude: String,
         longitude: String,
         dateRange: ClosedRange<LocalDate>
-    ): Result<List<PrecipitationProbability>> =
+    ): Result<List<RainChances>> =
         safeCall {
             val probabilities = weatherClient.getHourlyForecast(
                 latitude,
@@ -96,7 +60,7 @@ class WeatherRepositoryImpl(
             forecasts.getBodyOrThrowException().toHourlyForecasts()
         }
 
-    override suspend fun fetchAdditionalWeatherInfoItemsListForCurrentDay(
+    override suspend fun fetchAdditionalInfoItems(
         latitude: String,
         longitude: String
     ): Result<List<SingleWeatherDetail>> =
@@ -106,10 +70,4 @@ class WeatherRepositoryImpl(
                 weatherClient.getAdditionalDailyForecastVariables(latitude, longitude, today, today)
             additionalInfo.getBodyOrThrowException().toSingleWeatherDetailList()
         }
-
-    override suspend fun tryRestoringDeletedWeatherLocation(nameLocation: String) {
-        weatherDao.markWeatherEntityAsUnDeleted(nameLocation)
-    }
-
-
 }

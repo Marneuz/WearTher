@@ -21,8 +21,17 @@
     <string name="settings">Settings</string>
 
     <!-- Detail View -->
-    <string name="detail_loading">Loading…</string>
+    <string name="detail_loading">Thinking…</string>
     <string name="detail_assistant">Assistant</string>
     <string name="detail_hourly_forecast">Hourly Forecast</string>
     <string name="detail_chance_of_rain">Chance of Rain</string>
+    <string name="min_temp">Min Temp</string>
+    <string name="max_temp">Max Temp</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="feels_like">Feels Like</string>
+    <string name="max_uv_index">Max UV Index</string>
+    <string name="wind_direction">Wind Direction</string>
+    <string name="wind_speed">Wind Speed</string>
+
 </resources>

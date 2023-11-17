@@ -16,7 +16,7 @@ data class HourlyWeatherInfoResponse(
         val timestamps: List<String>,
 
         @SerializedName("precipitation_probability")
-        val precipitationProbabilityPercentages: List<Int> = emptyList(),
+        val precipitationProbability: List<Int> = emptyList(),
 
         @SerializedName("weathercode")
         val weatherCodes: List<Int> = emptyList(),

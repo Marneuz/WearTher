@@ -16,7 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.marneux.marneweather.model.location.LocationAutofillSuggestion
+import com.marneux.marneweather.model.location.AutoSuggestLocation
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.presentation.views.home.HomeScreen
 import com.marneux.marneweather.presentation.views.home.HomeViewModel
@@ -27,11 +27,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun Navigation(navController: NavHostController = rememberNavController()) {
+    // Crea un host de navegación para manejar las pantallas de la aplicación.
     NavHost(
         navController = navController,
         startDestination = NavigationDestinations.HomeScreen.route
     ) {
-
+        // Define la pantalla de inicio y la pantalla de detalle del clima en la navegación.
         homeScreen(
             route = NavigationDestinations.HomeScreen.route,
             onSuggestionClick = {
@@ -49,7 +50,6 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
                 )
             }
         )
-
         weatherDetailScreen(
             route = NavigationDestinations.WeatherDetailScreen.route,
             onBackButtonClick = navController::popBackStack
@@ -59,13 +59,15 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
 
 private fun NavGraphBuilder.homeScreen(
     route: String,
-    onSuggestionClick: (suggestion: LocationAutofillSuggestion) -> Unit,
+    onSuggestionClick: (suggestion: AutoSuggestLocation) -> Unit,
     onSavedLocationItemClick: (BriefWeatherDetails) -> Unit
 ) {
     composable(route = route) {
+        // Inicialización del ViewModel de la pantalla de inicio y manejo de su estado.
         val viewModel: HomeViewModel = koinViewModel()
-
         val uiState by viewModel.uiState.collectAsState()
+
+        // Configuración de componentes reactivos y manejo de eventos de Snackbar.
         val snackbarHostState = remember { SnackbarHostState() }
         val coroutineScope = rememberCoroutineScope()
         val showSnackbar = { briefWeatherDetails: BriefWeatherDetails ->
@@ -81,10 +83,10 @@ private fun NavGraphBuilder.homeScreen(
                 }
             }
         }
-
+        // Pantalla de inicio con su estado y manejadores de eventos.
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
-            homeScreenUiState = uiState,
+            uiState = uiState,
             snackbarHostState = snackbarHostState,
             onSavedLocationDismissed = {
                 viewModel.deleteSavedLocation(it)
@@ -94,7 +96,7 @@ private fun NavGraphBuilder.homeScreen(
             onSuggestionClick = onSuggestionClick,
             onSavedLocationItemClick = onSavedLocationItemClick,
             onLocationPermissionGranted = viewModel::fetchWeatherCurrentLocation,
-            onRetryFetchingWeatherForSavedLocations = viewModel::retryFetchingSavedLocations
+            onRetryFetchWeatherSavedLocations = viewModel::retryFetchingSavedLocations
         )
     }
 }
@@ -103,13 +105,12 @@ fun NavGraphBuilder.weatherDetailScreen(
     route: String,
     onBackButtonClick: () -> Unit
 ) {
-
-
     composable(route) {
-        // val viewModel = hiltViewModel<WeatherDetailViewModel>()
+        // Inicialización del ViewModel de la pantalla de detalle del clima y manejo de su estado.
         val viewModel: WeatherDetailViewModel = koinViewModel()
-
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+        // Configuración de componentes reactivos y manejo de eventos de Snackbar.
         val coroutineScope = rememberCoroutineScope()
         val snackbarHostState = remember { SnackbarHostState() }
         WeatherDetailScreen(
@@ -132,6 +133,7 @@ private fun NavHostController.navigateToWeatherDetailScreen(
     latitude: String,
     longitude: String
 ) {
+    // Función auxiliar para navegar a la pantalla de detalle del clima.
     val destination = NavigationDestinations.WeatherDetailScreen.buildRoute(
         nameLocation = nameLocation,
         latitude = latitude,

@@ -1,12 +1,9 @@
 package com.marneux.marneweather.domain.repositories.weather
 
-import com.marneux.marneweather.model.location.SavedLocation
-import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.model.weather.CurrentWeather
 import com.marneux.marneweather.model.weather.HourlyForecast
-import com.marneux.marneweather.model.weather.PrecipitationProbability
+import com.marneux.marneweather.model.weather.RainChances
 import com.marneux.marneweather.model.weather.SingleWeatherDetail
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 
@@ -18,20 +15,11 @@ interface WeatherRepository {
         longitude: String
     ): Result<CurrentWeather>
 
-    fun getSavedLocationsListStream(): Flow<List<SavedLocation>>
-
-    suspend fun saveWeatherLocation(nameLocation: String, latitude: String, longitude: String)
-
-    suspend fun deleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails)
-
-    suspend fun permanentlyDeleteWeatherLocationFromSavedItems(briefWeatherLocation: BriefWeatherDetails)
-
-
-    suspend fun fetchHourlyPrecipitationProbabilities(
+    suspend fun rainChances(
         latitude: String,
         longitude: String,
         dateRange: ClosedRange<LocalDate> = LocalDate.now()..LocalDate.now().plusDays(1)
-    ): Result<List<PrecipitationProbability>>
+    ): Result<List<RainChances>>
 
     suspend fun fetchHourlyForecasts(
         latitude: String,
@@ -39,10 +27,8 @@ interface WeatherRepository {
         dateRange: ClosedRange<LocalDate>
     ): Result<List<HourlyForecast>>
 
-    suspend fun fetchAdditionalWeatherInfoItemsListForCurrentDay(
+    suspend fun fetchAdditionalInfoItems(
         latitude: String,
         longitude: String
     ): Result<List<SingleWeatherDetail>>
-
-    suspend fun tryRestoringDeletedWeatherLocation(nameLocation: String)
 }

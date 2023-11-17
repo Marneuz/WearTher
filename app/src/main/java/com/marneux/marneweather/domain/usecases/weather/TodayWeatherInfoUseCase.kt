@@ -10,7 +10,7 @@ class TodayWeatherInfoUseCase(
         latitude: String,
         longitude: String
     ): Result<List<SingleWeatherDetail>> {
-        return weatherRepository.fetchAdditionalWeatherInfoItemsListForCurrentDay(
+        return weatherRepository.fetchAdditionalInfoItems(
             latitude,
             longitude,
         )

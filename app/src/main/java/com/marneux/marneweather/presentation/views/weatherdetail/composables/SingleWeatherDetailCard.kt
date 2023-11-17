@@ -1,6 +1,7 @@
 package com.marneux.marneweather.presentation.views.weatherdetail.composables
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -21,10 +23,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SingleWeatherDetailCard(
     @DrawableRes iconResId: Int,
-    name: String,
+    @StringRes nameResId: Int,
     value: String,
     modifier: Modifier = Modifier
 ) {
+
+    val name = stringResource(id = nameResId)
+
     Card(modifier = modifier) {
         Row(
             modifier = Modifier.padding(16.dp),

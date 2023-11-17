@@ -7,7 +7,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-
+//A pesar de ser una variable el mismo Google la indica con mayus en su documentación
 private val DarkColors = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
@@ -52,7 +52,6 @@ fun MarneTheme(
     } else {
         DarkColors
     }
-
     MaterialTheme(
         colorScheme = colors,
         content = content

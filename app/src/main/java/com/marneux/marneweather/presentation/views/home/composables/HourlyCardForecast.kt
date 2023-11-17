@@ -31,10 +31,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
-import com.marneux.marneweather.presentation.common.model.hourStringInTwelveHourFormat
+import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
 import com.marneux.marneweather.presentation.theme.MarneTheme
 import java.time.LocalDateTime
 
@@ -141,7 +142,7 @@ private fun HourlyForecastItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = dateTime.hourStringInTwelveHourFormat,
+            text = dateTime.hourTwelveHourFormat,
             style = MaterialTheme.typography.labelLarge
         )
         Icon(
@@ -158,7 +159,7 @@ private fun HourlyForecastItem(
 }
 
 
-@Preview
+@Preview(wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) // para ponerlo modo noche en caso de tener
 // dia y noche
 @Composable

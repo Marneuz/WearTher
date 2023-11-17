@@ -1,21 +1,20 @@
 package com.marneux.marneweather.data.weather.mapper
 
-import com.marneux.marneweather.data.weather.database.CurrentWeatherEntity
 import com.marneux.marneweather.data.weather.remote.models.CurrentWeatherResponse
 import com.marneux.marneweather.data.weather.remote.models.HourlyWeatherInfoResponse
 import com.marneux.marneweather.data.weather.remote.models.getWeatherIconResForCode
 import com.marneux.marneweather.data.weather.remote.models.getWeatherImageForCode
 import com.marneux.marneweather.model.location.Coordinates
-import com.marneux.marneweather.model.location.SavedLocation
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.model.weather.CurrentWeather
 import com.marneux.marneweather.model.weather.HourlyForecast
-import com.marneux.marneweather.model.weather.PrecipitationProbability
+import com.marneux.marneweather.model.weather.RainChances
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import kotlin.math.roundToInt
 
+// Extensión de CurrentWeather para convertirlo en un objeto BriefWeatherDetails.
 fun CurrentWeather.toBriefWeatherDetails() = BriefWeatherDetails(
     nameLocation = nameLocation,
     currentTemperatureRoundedToInt = temperatureRoundedToInt,
@@ -24,19 +23,25 @@ fun CurrentWeather.toBriefWeatherDetails() = BriefWeatherDetails(
     coordinates = coordinates
 )
 
+// Convierte una respuesta de pronóstico horario en una lista de objetos HourlyForecast.
 fun HourlyWeatherInfoResponse.toHourlyForecasts(): List<HourlyForecast> {
     val hourlyForecastList = mutableListOf<HourlyForecast>()
     for (i in hourlyForecast.timestamps.indices) {
+
+        // Convierte el tiempo Unix a LocalDateTime.
         val epochSeconds = hourlyForecast.timestamps[i].toLong()
         val correspondingLocalTime = LocalDateTime
             .ofInstant(
                 Instant.ofEpochSecond(epochSeconds),
                 ZoneId.systemDefault()
             )
+
         val weatherIconResId = getWeatherIconResForCode(
             weatherCode = hourlyForecast.weatherCodes[i],
             isDay = correspondingLocalTime.hour < 19
         )
+
+        // Crea un objeto HourlyForecast para cada hora con los datos correspondientes.
         val hourlyForecast = HourlyForecast(
             dateTime = correspondingLocalTime,
             weatherIconResId = weatherIconResId,
@@ -47,20 +52,9 @@ fun HourlyWeatherInfoResponse.toHourlyForecasts(): List<HourlyForecast> {
     return hourlyForecastList
 }
 
-fun BriefWeatherDetails.toSavedWeatherLocationEntity() =
-    CurrentWeatherEntity(
-        nameLocation = nameLocation,
-        latitude = coordinates.latitude,
-        longitude = coordinates.longitude
-    )
-
-fun CurrentWeatherEntity.toSavedLocation() = SavedLocation(
-    nameLocation = nameLocation,
-    coordinates = Coordinates(latitude = latitude, longitude = longitude)
-)
-
-fun HourlyWeatherInfoResponse.toPrecipitationProbabilities(): List<PrecipitationProbability> {
-    val probabilitiesList = mutableListOf<PrecipitationProbability>()
+// Convierte una respuesta de pronóstico horario en una lista de objetos PrecipitationProbability.
+fun HourlyWeatherInfoResponse.toPrecipitationProbabilities(): List<RainChances> {
+    val probabilitiesList = mutableListOf<RainChances>()
     for (i in hourlyForecast.timestamps.indices) {
         val epochSeconds = hourlyForecast.timestamps[i].toLong()
         val correspondingLocalDateTime = LocalDateTime
@@ -68,18 +62,18 @@ fun HourlyWeatherInfoResponse.toPrecipitationProbabilities(): List<Precipitation
                 Instant.ofEpochSecond(epochSeconds),
                 ZoneId.systemDefault()
             )
-
-        val precipitationProbability = PrecipitationProbability(
+        val rainChances = RainChances(
             dateTime = correspondingLocalDateTime,
-            probabilityPercentage = hourlyForecast.precipitationProbabilityPercentages[i],
+            probabilityPercentage = hourlyForecast.precipitationProbability[i],
             latitude = latitude,
             longitude = longitude
         )
-        probabilitiesList.add(precipitationProbability)
+        probabilitiesList.add(rainChances)
     }
     return probabilitiesList
 }
 
+// Convierte una respuesta de CurrentWeatherResponse en un objeto CurrentWeather.
 fun CurrentWeatherResponse.toCurrentWeather(nameLocation: String) = CurrentWeather(
     temperatureRoundedToInt = currentWeatherData.temperature.roundToInt(),
     nameLocation = nameLocation,
@@ -99,7 +93,7 @@ fun CurrentWeatherResponse.toCurrentWeather(nameLocation: String) = CurrentWeath
     )
 )
 
-
+// Mapa de códigos meteorológicos a descripciones.
 private val weatherCodeToDescriptionMap = mapOf(
     0 to "Clear sky",
     1 to "Mainly clear",

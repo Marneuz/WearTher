@@ -186,7 +186,7 @@ private fun SwipeToDismissCompactWeatherCard(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = false)
 @Composable
 private fun SavedLocationPreview() {
     MarneTheme {

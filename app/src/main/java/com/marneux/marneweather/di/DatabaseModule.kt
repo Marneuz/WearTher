@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDao
 import com.marneux.marneweather.data.local.database.Database
-import com.marneux.marneweather.data.weather.database.WeatherDao
+import com.marneux.marneweather.data.location.database.LocationDao
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -15,7 +15,7 @@ val databaseModule = module {
 
 private fun provideWeatherDao(
     context: Context
-): WeatherDao = Room.databaseBuilder(
+): LocationDao = Room.databaseBuilder(
     context = context,
     klass = Database::class.java,
     name = Database.DATABASE_NAME
