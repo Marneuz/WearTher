@@ -40,8 +40,8 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
-//Esta preparado para usar Dynamic colors, colores se ajustan al theme del sistema, y siempre
-// tema oscuro
+//Esta preparado para usar Dynamic colors, colores se ajustan al color predominante del sistema, y
+// siempre tema oscuro
 @Composable
 fun MarneTheme(
     content: @Composable () -> Unit

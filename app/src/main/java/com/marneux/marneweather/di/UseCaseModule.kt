@@ -7,7 +7,7 @@ import com.marneux.marneweather.domain.usecases.location.LocationNameCoordsUseCa
 import com.marneux.marneweather.domain.usecases.location.RestoreLocationUseCase
 import com.marneux.marneweather.domain.usecases.location.SaveLocationUseCase
 import com.marneux.marneweather.domain.usecases.location.SuggestedLocationUseCase
-import com.marneux.marneweather.domain.usecases.textgenerator.WeatherDetailsTextUseCase
+import com.marneux.marneweather.domain.usecases.textgenerator.GenerateTextWeatherDetailUseCase
 import com.marneux.marneweather.domain.usecases.weather.BriefWeatherDetailsUseCase
 import com.marneux.marneweather.domain.usecases.weather.HourlyForecastUseCase
 import com.marneux.marneweather.domain.usecases.weather.RainChancesUseCase
@@ -25,7 +25,7 @@ val useCaseModule = module {
     factory { SaveLocationUseCase(get()) }
     factory { SuggestedLocationUseCase(get()) }
     //Geneated Text use cases
-    factory { WeatherDetailsTextUseCase(get()) }
+    factory { GenerateTextWeatherDetailUseCase(get()) }
     //Weather use cases
     factory { BriefWeatherDetailsUseCase() }
     factory { HourlyForecastUseCase(get()) }

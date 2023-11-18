@@ -1,6 +1,5 @@
 package com.marneux.marneweather.data.weather
 
-//import com.marneux.marneweather.data.weather.mapper.toSavedLocation
 import com.marneux.marneweather.data.getBodyOrThrowException
 import com.marneux.marneweather.data.safeCall
 import com.marneux.marneweather.data.weather.mapper.toCurrentWeather

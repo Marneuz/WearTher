@@ -80,7 +80,7 @@ fun PrecipitationProbabilitiesCard(
 @Composable
 private fun ProbabilityProgressColumn(
     rainChances: RainChances,
-    modifier: Modifier = Modifier
+    modifier: Modifier
 ) {
     var progressValue by remember { mutableFloatStateOf(0f) }
     val animatedProgressValue by animateFloatAsState(targetValue = progressValue, label = "")

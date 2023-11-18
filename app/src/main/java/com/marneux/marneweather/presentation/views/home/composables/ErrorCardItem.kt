@@ -48,7 +48,6 @@ fun LazyListScope.errorCardItem(
                 ),
             shape = RoundedCornerShape(20.dp),
 
-
             ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -73,8 +72,7 @@ fun LazyListScope.errorCardItem(
 }
 
 @Preview(wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) // para ponerlo modo noche en caso de tener
-// dia y noche
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ErrorCardItemPreview() {

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +15,6 @@ import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.DismissState
 import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
@@ -28,14 +26,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
+import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
+import com.marneux.marneweather.presentation.common.model.weatherCodeToDescriptionMap
 import com.marneux.marneweather.presentation.theme.MarneTheme
 
 
@@ -69,9 +68,9 @@ fun LazyListScope.savedLocationItems(
                 .padding(horizontal = 16.dp)
                 .animateItemPlacement(),
             nameLocation = it.nameLocation,
-            shortDescription = it.shortDescription,
-            shortDescriptionIcon = it.shortDescriptionIcon,
-            weatherInDegrees = it.currentTemperatureRoundedToInt.toString(),
+            shortDescription = weatherCodeToDescriptionMap.getValue(it.shortDescriptionCode),
+            shortDescriptionIcon = getWeatherIconResForCode(it.shortDescriptionCode),
+            weatherInDegrees = it.temperatureRoundedToInt.toString(),
             onClick = { onSavedLocationItemClick(it) },
             dismissState = dismissState
         )
@@ -82,7 +81,7 @@ fun LazyListScope.savedLocationItems(
 @Composable
 private fun CompactWeatherCard(
     nameLocation: String,
-    shortDescription: String,
+    shortDescription: Int,
     @DrawableRes shortDescriptionIcon: Int,
     weatherInDegrees: String,
     onClick: () -> Unit,
@@ -118,7 +117,7 @@ private fun CompactWeatherCard(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium
                 )
-                ShortWeatherDescriptionWithIconRow(
+                RowDescriptionIcon(
                     shortDescription = shortDescription,
                     iconRes = shortDescriptionIcon
                 )
@@ -131,37 +130,11 @@ private fun CompactWeatherCard(
     }
 }
 
-@Composable
-fun ShortWeatherDescriptionWithIconRow(
-    shortDescription: String,
-    @DrawableRes iconRes: Int,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            modifier = Modifier.size(24.dp),
-            imageVector = ImageVector.vectorResource(id = iconRes),
-            contentDescription = null,
-            tint = Color.Unspecified
-        )
-        Text(
-            text = shortDescription,
-            maxLines = 1,
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Normal
-        )
-    }
-}
-
-
 @ExperimentalMaterial3Api
 @Composable
 private fun SwipeToDismissCompactWeatherCard(
     nameLocation: String,
-    shortDescription: String,
+    shortDescription: Int,
     @DrawableRes shortDescriptionIcon: Int,
     weatherInDegrees: String,
     onClick: () -> Unit,
@@ -186,14 +159,15 @@ private fun SwipeToDismissCompactWeatherCard(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true, showSystemUi = false)
+@Preview
+@Preview(wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE)
 @Composable
 private fun SavedLocationPreview() {
     MarneTheme {
         Surface {
             CompactWeatherCard(
                 nameLocation = "Zaragoza",
-                shortDescription = "Clean",
+                shortDescription = 99,
                 shortDescriptionIcon = R.drawable.ic_day_clear,
                 weatherInDegrees = "19",
                 onClick = {}

@@ -9,7 +9,6 @@
     <string name="home_dialog_description">By denying permissions, some features may not be available.
         Would you like to continue or change the permission settings?</string>
 
-
     <!-- Commons -->
     <string name="error_current_loc">An error occurred when fetching the weather for the current location.</string>
     <string name="error_saved_loc">An error occurred when fetching the current weather details of saved locations.</string>
@@ -33,5 +32,32 @@
     <string name="max_uv_index">Max UV Index</string>
     <string name="wind_direction">Wind Direction</string>
     <string name="wind_speed">Wind Speed</string>
+
+    <!-- Short Weather Description -->
+    <string name="weather_clear_sky">Clear sky</string>
+    <string name="weather_mainly_clear">Mainly clear</string>
+    <string name="weather_partly_cloudy">Partly cloudy</string>
+    <string name="weather_overcast">Overcast</string>
+    <string name="weather_fog">Fog</string>
+    <string name="weather_depositing_rime_fog">Depositing rime fog</string>
+    <string name="weather_drizzle">Drizzle</string>
+    <string name="weather_freezing_drizzle">Freezing drizzle</string>
+    <string name="weather_slight_rain">Slight rain</string>
+    <string name="weather_moderate_rain">Moderate rain</string>
+    <string name="weather_heavy_rain">Heavy rain</string>
+    <string name="weather_light_freezing_rain">Light freezing rain</string>
+    <string name="weather_heavy_freezing_rain">Heavy freezing rain</string>
+    <string name="weather_slight_snow_fall">Slight snow fall</string>
+    <string name="weather_moderate_snow_fall">Moderate snow fall</string>
+    <string name="weather_heavy_snow_fall">Heavy snow fall</string>
+    <string name="weather_snow_grains">Snow grains</string>
+    <string name="weather_slight_rain_showers">Slight rain showers</string>
+    <string name="weather_moderate_rain_showers">Moderate rain showers</string>
+    <string name="weather_violent_rain_showers">Violent rain showers</string>
+    <string name="weather_slight_snow_showers">Slight snow showers</string>
+    <string name="weather_heavy_snow_showers">Heavy snow showers</string>
+    <string name="weather_thunderstorms">Thunderstorms</string>
+    <string name="weather_thunderstorms_with_slight_hail">Thunderstorms with slight hail</string>
+    <string name="weather_thunderstorms_with_heavy_hail">Thunderstorms with heavy hail</string>
 
 </resources>

@@ -45,6 +45,4 @@ interface WeatherClient {
         @Query("timeformat") timeFormat: WeatherClientConstants.TimeFormats = WeatherClientConstants.TimeFormats.UNIX_EPOCH_TIME_IN_SECONDS,
         @Query("daily") dailyForecastsToReturn: WeatherClientConstants.DailyForecastItems = WeatherClientConstants.DailyForecastItems.ALL
     ): Response<DailyForecastOptions>
-
-
 }

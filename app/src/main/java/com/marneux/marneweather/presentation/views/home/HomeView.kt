@@ -159,8 +159,6 @@ fun HomeScreen(
         }
     )
 
-
-
     LaunchedEffect(key1 = hasRequestedPermissions) {
         if (!hasRequestedPermissions) {
             locationPermissionLauncher.launch(

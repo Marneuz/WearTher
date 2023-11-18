@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.presentation.theme.MarneTheme
 
@@ -47,7 +48,9 @@ fun LazyListScope.subHeaderItem(title: String, isLoadingAnimationVisible: Boolea
                     modifier = Modifier
                         .size(20.dp)
                         .padding(start = 8.dp),
-                    strokeWidth = 2.dp
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.inversePrimary
                 )
             }
         }
@@ -55,6 +58,9 @@ fun LazyListScope.subHeaderItem(title: String, isLoadingAnimationVisible: Boolea
 }
 
 @Preview
+@Preview(wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE)
+@Preview(wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE)
+@Preview(wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE)
 @Composable
 private fun HeaderPreview() {
     MarneTheme {

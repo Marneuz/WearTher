@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
 data class SuggestionResponse(
     @SerializedName("results") val suggestions: List<Suggestion> = emptyList()
 ) {
-
     data class Suggestion(
         @SerializedName("id") val idLocation: String,
         @SerializedName("name") val nameLocation: String,

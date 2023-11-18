@@ -8,7 +8,7 @@ import com.marneux.marneweather.model.weather.SingleWeatherDetail
 data class WeatherDetailState(
     val isLoading: Boolean = true,
     val isPreviouslySavedLocation: Boolean = false,
-    val weatherDetailsOfChosenLocation: CurrentWeather? = null,
+    val weatherDetailsLocation: CurrentWeather? = null,
     val isWeatherSummaryTextLoading: Boolean = false,
     val weatherSummaryText: String? = null,
     val errorMessage: String? = null,

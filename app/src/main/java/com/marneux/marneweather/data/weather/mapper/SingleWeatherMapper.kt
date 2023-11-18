@@ -25,8 +25,8 @@ private fun DailyForecastOptions.AdditionalForecastOptions.toSingleWeatherDetail
 ): List<SingleWeatherDetail> {
     // Requiere que haya solo un valor para la temperatura mínima del día para procesar.
     // Esto es un chequeo de seguridad para asegurar que los datos son para un único día.
-//    He dejado el codigo del require hardcodeado para no arrastrar el
-// context en esta capa, ya que al ser un mensaje de error no es algo util a nivel usuario.
+    //  He dejado el codigo del require hardcodeado para no arrastrar el
+    // context en esta capa, ya que al ser un mensaje de error no es algo util a nivel usuario.
     require(minTemperature.size == 1)
     {
         "This mapper method will only consider the first value of each list" +

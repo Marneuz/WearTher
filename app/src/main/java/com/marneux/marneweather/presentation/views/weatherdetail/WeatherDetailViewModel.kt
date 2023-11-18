@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marneux.marneweather.domain.usecases.location.ListSavedLocationUseCase
 import com.marneux.marneweather.domain.usecases.location.SaveLocationUseCase
-import com.marneux.marneweather.domain.usecases.textgenerator.WeatherDetailsTextUseCase
+import com.marneux.marneweather.domain.usecases.textgenerator.GenerateTextWeatherDetailUseCase
 import com.marneux.marneweather.domain.usecases.weather.HourlyForecastUseCase
 import com.marneux.marneweather.domain.usecases.weather.RainChancesUseCase
 import com.marneux.marneweather.domain.usecases.weather.TodayWeatherInfoUseCase
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 class WeatherDetailViewModel(
     savedStateHandle: SavedStateHandle,
-    private val weatherDetailsTextUseCase: WeatherDetailsTextUseCase,
+    private val generateTextWeatherDetailUseCase: GenerateTextWeatherDetailUseCase,
     private val weatherByLocationUseCase: WeatherByLocationUseCase,
     listSavedLocationUseCase: ListSavedLocationUseCase,
     private val saveLocationUseCase: SaveLocationUseCase,
@@ -36,13 +36,13 @@ class WeatherDetailViewModel(
 ) : ViewModel() {
 
     private val latitude: String =
-        savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_LATITUDE]
+        savedStateHandle[NavigationDestinations.WeatherDetailView.NAV_ARG_LATITUDE]
             ?: throw IllegalArgumentException("Latitude argument is missing")
     private val longitude: String =
-        savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_LONGITUDE]
+        savedStateHandle[NavigationDestinations.WeatherDetailView.NAV_ARG_LONGITUDE]
             ?: throw IllegalArgumentException("Longitude argument is missing")
     private val nameLocation: String =
-        savedStateHandle[NavigationDestinations.WeatherDetailScreen.NAV_ARG_NAME_OF_LOCATION]
+        savedStateHandle[NavigationDestinations.WeatherDetailView.NAV_ARG_NAME_OF_LOCATION]
             ?: throw IllegalArgumentException("Location name argument is missing")
 
     private val _uiState = MutableStateFlow(WeatherDetailState())
@@ -77,7 +77,7 @@ class WeatherDetailViewModel(
         _uiState.update { it.copy(isLoading = true, isWeatherSummaryTextLoading = true) }
 
         // Realiza varias operaciones asíncronas en paralelo para obtener los datos del clima.
-        val weatherDetailsChosenLocation = async {
+        val weatherDetailsLocation = async {
             weatherByLocationUseCase.execute(
                 nameLocation = nameLocation,
                 latitude = latitude,
@@ -86,8 +86,8 @@ class WeatherDetailViewModel(
         }
 
         val summaryMessage = async {
-            weatherDetailsTextUseCase.execute(
-                weatherDetails = weatherDetailsChosenLocation.await()
+            generateTextWeatherDetailUseCase.execute(
+                weatherDetails = weatherDetailsLocation.await()
             ).getOrNull()
         }
 
@@ -116,7 +116,7 @@ class WeatherDetailViewModel(
         _uiState.update {
             it.copy(
                 isLoading = false,
-                weatherDetailsOfChosenLocation = weatherDetailsChosenLocation.await(),
+                weatherDetailsLocation = weatherDetailsLocation.await(),
                 precipitationProbabilities = precipitationProbabilities.await(),
                 hourlyForecasts = hourlyForecasts.await(),
                 additionalWeatherInfoItems = additionalWeatherInfoItems.await()

@@ -33,4 +33,31 @@
     <string name="max_uv_index">Índice Max UV</string>
     <string name="wind_direction">Dir. Viento</string>
     <string name="wind_speed">Vel. Viento</string>
+
+    <!-- Short Weather Description -->
+    <string name="weather_clear_sky">Cielo despejado</string>
+    <string name="weather_mainly_clear">Principalmente despejado</string>
+    <string name="weather_partly_cloudy">Parcialmente nublado</string>
+    <string name="weather_overcast">Nublado</string>
+    <string name="weather_fog">Niebla</string>
+    <string name="weather_depositing_rime_fog">Escarcha</string>
+    <string name="weather_drizzle">Llovizna</string>
+    <string name="weather_freezing_drizzle">Llovizna helada</string>
+    <string name="weather_slight_rain">Lluvia ligera</string>
+    <string name="weather_moderate_rain">Lluvia moderada</string>
+    <string name="weather_heavy_rain">Lluvia intensa</string>
+    <string name="weather_light_freezing_rain">Lluvia helada ligera</string>
+    <string name="weather_heavy_freezing_rain">Lluvia helada intensa</string>
+    <string name="weather_slight_snow_fall">Nevada ligera</string>
+    <string name="weather_moderate_snow_fall">Nevada moderada</string>
+    <string name="weather_heavy_snow_fall">Nevada intensa</string>
+    <string name="weather_snow_grains">Granos de nieve</string>
+    <string name="weather_slight_rain_showers">Chubascos ligeros</string>
+    <string name="weather_moderate_rain_showers">Chubascos moderados</string>
+    <string name="weather_violent_rain_showers">Chubascos intensos</string>
+    <string name="weather_slight_snow_showers">Aguanieve ligera</string>
+    <string name="weather_heavy_snow_showers">Aguanieve intensa</string>
+    <string name="weather_thunderstorms">Tormentas</string>
+    <string name="weather_thunderstorms_with_slight_hail">Tormentas con granizo ligero</string>
+    <string name="weather_thunderstorms_with_heavy_hail">Tormentas con granizo intenso</string>
 </resources>

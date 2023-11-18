@@ -1,6 +1,5 @@
 package com.marneux.marneweather.presentation.views.weatherdetail
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,8 @@ import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
 import com.marneux.marneweather.model.weather.RainChances
 import com.marneux.marneweather.model.weather.SingleWeatherDetail
-import com.marneux.marneweather.model.weather.WeatherItem
+import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
+import com.marneux.marneweather.presentation.common.model.getWeatherImageForCode
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.Header
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.HourlyForecastCard
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.PrecipitationProbabilitiesCard
@@ -39,7 +39,7 @@ import com.marneux.marneweather.presentation.views.weatherdetail.composables.Sin
 import com.marneux.marneweather.presentation.views.weatherdetail.composables.WeatherSummaryTextCard
 
 @Composable
-fun WeatherDetailScreen(
+fun WeatherDetailView(
     uiState: WeatherDetailState,
     snackbarHostState: SnackbarHostState,
     onSaveButtonClick: () -> Unit,
@@ -66,13 +66,11 @@ fun WeatherDetailScreen(
                 content = { Text(stringResource(R.string.go_back)) })
         }
     } else {
-        WeatherDetailScreen(
+        WeatherDetailView(
             snackbarHostState = snackbarHostState,
-            nameLocation = uiState.weatherDetailsOfChosenLocation!!.nameLocation,
-            weatherConditionImage = uiState.weatherDetailsOfChosenLocation.imageResId,
-            weatherConditionIconId = uiState.weatherDetailsOfChosenLocation.iconResId,
-            weatherInDegrees = uiState.weatherDetailsOfChosenLocation.temperatureRoundedToInt,
-            weatherCondition = uiState.weatherDetailsOfChosenLocation.weatherCondition,
+            nameLocation = uiState.weatherDetailsLocation!!.nameLocation,
+            weatherInDegrees = uiState.weatherDetailsLocation.temperatureRoundedToInt,
+            weatherConditionCode = uiState.weatherDetailsLocation.shortDescriptionCode,
             aiGeneratedWeatherSummaryText = uiState.weatherSummaryText,
             isPreviouslySavedLocation = uiState.isPreviouslySavedLocation,
             isWeatherSummaryLoading = uiState.isWeatherSummaryTextLoading,
@@ -86,12 +84,10 @@ fun WeatherDetailScreen(
 }
 
 @Composable
-fun WeatherDetailScreen(
+fun WeatherDetailView(
     nameLocation: String,
-    weatherCondition: String,
+    weatherConditionCode: Int,
     aiGeneratedWeatherSummaryText: String?,
-    @DrawableRes weatherConditionImage: Int,
-    @DrawableRes weatherConditionIconId: Int,
     weatherInDegrees: Int,
     isWeatherSummaryLoading: Boolean,
     isPreviouslySavedLocation: Boolean,
@@ -116,14 +112,14 @@ fun WeatherDetailScreen(
                     modifier = Modifier
                         .requiredWidth(screenWidth)
                         .height(350.dp),
-                    headerImageResId = weatherConditionImage,
-                    weatherConditionIconId = weatherConditionIconId,
+                    headerImageResId = getWeatherImageForCode(weatherConditionCode),
+                    weatherConditionIconId = getWeatherIconResForCode(weatherConditionCode),
                     onBackButtonClick = onBackButtonClick,
-                    shouldDisplaySaveButton = !isPreviouslySavedLocation,
+                    showSaveLocationButton = !isPreviouslySavedLocation,
                     onSaveButtonClick = onSaveButtonClick,
                     nameLocation = nameLocation,
                     currentWeatherInDegrees = weatherInDegrees,
-                    weatherCondition = weatherCondition
+                    weatherCondition = weatherConditionCode
                 )
             }
 
@@ -145,32 +141,13 @@ fun WeatherDetailScreen(
             item(span = { GridItemSpan(maxLineSpan) }) {
                 PrecipitationProbabilitiesCard(precipitationProbabilities = precipitationProbabilities)
             }
+
             items(singleWeatherDetails) { detail ->
                 SingleWeatherDetailCard(
-                    nameResId = when (detail.itemType) {
-                        WeatherItem.MIN_TEMP -> R.string.min_temp
-                        WeatherItem.MAX_TEMP -> R.string.max_temp
-                        WeatherItem.SUNRISE -> R.string.sunrise
-                        WeatherItem.SUNSET -> R.string.sunset
-                        WeatherItem.FEELS_LIKE -> R.string.feels_like
-                        WeatherItem.MAX_UV_INDEX -> R.string.max_uv_index
-                        WeatherItem.WIND_DIRECTION -> R.string.wind_direction
-                        WeatherItem.WIND_SPEED -> R.string.wind_speed
-                    },
+                    itemType = detail.itemType,
                     value = detail.value,
-                    iconResId = when (detail.itemType) {
-                        WeatherItem.MIN_TEMP -> R.drawable.ic_min_temp
-                        WeatherItem.MAX_TEMP -> R.drawable.ic_max_temp
-                        WeatherItem.SUNRISE -> R.drawable.ic_sunrise
-                        WeatherItem.SUNSET -> R.drawable.ic_sunset
-                        WeatherItem.FEELS_LIKE -> R.drawable.ic_wind_pressure
-                        WeatherItem.MAX_UV_INDEX -> R.drawable.ic_uv_index
-                        WeatherItem.WIND_DIRECTION -> R.drawable.ic_wind_direction
-                        WeatherItem.WIND_SPEED -> R.drawable.ic_wind
-                    }
                 )
             }
-
             item {
                 Spacer(modifier = Modifier.navigationBarsPadding())
             }
@@ -184,6 +161,4 @@ fun WeatherDetailScreen(
         )
     }
 }
-
-
 

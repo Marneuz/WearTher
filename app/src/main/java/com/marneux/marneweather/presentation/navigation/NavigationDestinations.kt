@@ -5,10 +5,10 @@ sealed class NavigationDestinations(val route: String) {
     /** Esta es una clase sellada que representa los destinos de navegación en la aplicación.
     Cada objeto representa una pantalla diferente.*/
     // Objeto representando la pantalla de inicio.
-    object HomeScreen : NavigationDestinations(route = "home_screen")
+    object HomeView : NavigationDestinations(route = "home_view")
 
     // Objeto representando la pantalla de detalle del clima.
-    object WeatherDetailScreen :
+    object WeatherDetailView :
         NavigationDestinations(route = "weather_detail/{nameLocation}/{latitude}/{longitude}") {
 
         // Constantes para los argumentos de navegación.

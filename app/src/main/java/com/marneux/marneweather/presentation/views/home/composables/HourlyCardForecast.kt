@@ -1,6 +1,5 @@
 package com.marneux.marneweather.presentation.views.home.composables
 
-import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
+import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
 import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
 import com.marneux.marneweather.presentation.theme.MarneTheme
 import java.time.LocalDateTime
@@ -43,14 +43,14 @@ import java.time.LocalDateTime
 @Composable
 fun HourlyForecastCard(
     nameLocation: String,
-    shortDescription: String,
+    shortDescription: Int,
     @DrawableRes shortDescriptionIcon: Int,
     weatherInDegrees: String,
     onClick: () -> Unit,
     hourlyForecasts: List<HourlyForecast>,
     modifier: Modifier = Modifier
 ) {
-    val weatherWithDegreesSuperscript = remember(weatherInDegrees) {
+    val weatherDegree = remember(weatherInDegrees) {
         "$weatherInDegrees°"
     }
 
@@ -69,7 +69,7 @@ fun HourlyForecastCard(
     ) {
         Column(Modifier.padding(16.dp)) {
             HeaderSection(nameLocation, shortDescription, shortDescriptionIcon)
-            WeatherDegreeSection(weatherWithDegreesSuperscript)
+            WeatherDegreeSection(weatherDegree)
             HourlyForecastSection(hourlyForecasts)
         }
     }
@@ -78,7 +78,7 @@ fun HourlyForecastCard(
 @Composable
 private fun HeaderSection(
     nameLocation: String,
-    shortDescription: String,
+    shortDescription: Int,
     iconRes: Int
 ) {
     Row(
@@ -96,7 +96,7 @@ private fun HeaderSection(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Medium
             )
-            ShortWeatherDescriptionWithIconRow(
+            RowDescriptionIcon(
                 shortDescription = shortDescription,
                 iconRes = iconRes
             )
@@ -105,9 +105,9 @@ private fun HeaderSection(
 }
 
 @Composable
-private fun WeatherDegreeSection(weatherWithDegreesSuperscript: String) {
+private fun WeatherDegreeSection(weatherDegrees: String) {
     Text(
-        text = weatherWithDegreesSuperscript,
+        text = weatherDegrees,
         style = MaterialTheme.typography.displayMedium,
         textAlign = TextAlign.End
     )
@@ -122,7 +122,7 @@ private fun HourlyForecastSection(hourlyForecasts: List<HourlyForecast>) {
         items(hourlyForecasts) { forecast ->
             HourlyForecastItem(
                 dateTime = forecast.dateTime,
-                iconResId = forecast.weatherIconResId,
+                iconResId = getWeatherIconResForCode(forecast.iconDescriptionCode),
                 temperature = forecast.temperature
             )
         }
@@ -158,23 +158,20 @@ private fun HourlyForecastItem(
     }
 }
 
-
-@Preview(wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) // para ponerlo modo noche en caso de tener
-// dia y noche
+@Preview(wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE)
+@Preview
 @Composable
 private fun HourlyForecastCardPreview() {
     MarneTheme {
         Surface {
             val mockHourlyForecasts = listOf(
-                HourlyForecast(LocalDateTime.now(), R.drawable.ic_day_clear, 18),
-                HourlyForecast(LocalDateTime.now().plusHours(1), R.drawable.ic_day_rain, 20),
-                HourlyForecast(LocalDateTime.now().plusHours(2), R.drawable.ic_day_few_clouds, 17)
+                HourlyForecast(LocalDateTime.now(), 18, 1),
+                HourlyForecast(LocalDateTime.now().plusHours(1), -5, 0),
+                HourlyForecast(LocalDateTime.now().plusHours(2), 32, 99)
             )
-
             HourlyForecastCard(
                 nameLocation = "Zaragoza",
-                shortDescription = "Fog",
+                shortDescription = R.string.weather_clear_sky,
                 shortDescriptionIcon = R.drawable.ic_day_clear,
                 weatherInDegrees = "17",
                 onClick = { },

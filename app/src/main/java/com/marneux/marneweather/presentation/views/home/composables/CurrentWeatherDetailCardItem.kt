@@ -7,6 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.model.weather.HourlyForecast
+import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
+import com.marneux.marneweather.presentation.common.model.weatherCodeToDescriptionMap
+
 
 @ExperimentalFoundationApi
 fun LazyListScope.currentWeatherCardItem(
@@ -20,9 +23,15 @@ fun LazyListScope.currentWeatherCardItem(
                 .padding(horizontal = 16.dp)
                 .animateItemPlacement(),
             nameLocation = weatherCurrentLocation.nameLocation,
-            shortDescription = weatherCurrentLocation.shortDescription,
-            shortDescriptionIcon = weatherCurrentLocation.shortDescriptionIcon,
-            weatherInDegrees = weatherCurrentLocation.currentTemperatureRoundedToInt.toString(),
+            shortDescription = weatherCodeToDescriptionMap.getValue(
+                weatherCurrentLocation
+                    .shortDescriptionCode
+            ),
+            shortDescriptionIcon = getWeatherIconResForCode(
+                weatherCurrentLocation
+                    .shortDescriptionCode
+            ),
+            weatherInDegrees = weatherCurrentLocation.temperatureRoundedToInt.toString(),
             onClick = onClick,
             hourlyForecasts = hourlyForecast,
         )

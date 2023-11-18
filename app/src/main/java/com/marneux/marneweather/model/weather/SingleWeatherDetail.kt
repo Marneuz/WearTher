@@ -6,7 +6,6 @@ data class SingleWeatherDetail(
     val value: String,
 )
 
-//crear enum
 enum class WeatherItem {
     MIN_TEMP, MAX_TEMP, SUNRISE, SUNSET, FEELS_LIKE,
     MAX_UV_INDEX, WIND_DIRECTION, WIND_SPEED

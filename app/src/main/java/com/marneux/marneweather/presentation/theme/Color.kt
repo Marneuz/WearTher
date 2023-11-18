@@ -3,7 +3,7 @@ package com.marneux.marneweather.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-/** Colores proporcionados por [https://m3.material.io/theme-builder] */
+/** Colores generados en [https://m3.material.io/theme-builder] */
 val md_theme_dark_primary = Color(0xFFD0BCFF)
 val md_theme_dark_onPrimary = Color(0xFF381E72)
 val md_theme_dark_primaryContainer = Color(0xFF4F378B)

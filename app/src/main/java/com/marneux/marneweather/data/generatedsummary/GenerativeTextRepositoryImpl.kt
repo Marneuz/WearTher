@@ -2,6 +2,7 @@ package com.marneux.marneweather.data.generatedsummary
 
 import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextDao
 import com.marneux.marneweather.data.generatedsummary.database.GeneratedTextEntity
+import com.marneux.marneweather.data.generatedsummary.mapper.weatherCodeStringMap
 import com.marneux.marneweather.data.generatedsummary.remote.TextGeneratorClient
 import com.marneux.marneweather.data.generatedsummary.remote.models.MessageDTO
 import com.marneux.marneweather.data.generatedsummary.remote.models.TextGenerationPromptBody
@@ -38,12 +39,13 @@ class GenerativeTextRepositoryImpl(
     }
 
     // Función principal para generar texto basado en los detalles del clima.
-    override suspend fun generateTextForWeatherDetails(weatherDetails: CurrentWeather): Result<String> {
+    override suspend fun generateTextWeatherDetails(weatherDetails: CurrentWeather):
+            Result<String> {
         val systemLanguageCode = Locale.getDefault().language
         return generatedTextDao.getSavedGeneratedTextForDetails(
             nameLocation = weatherDetails.nameLocation,
             temperature = weatherDetails.temperatureRoundedToInt,
-            conciseWeatherDescription = weatherDetails.weatherCondition
+            conciseWeatherDescription = weatherCodeStringMap.getValue(weatherDetails.shortDescriptionCode)
         )?.let { Result.success(it.generatedDescription) }
             ?: generateAndSaveText(weatherDetails, systemLanguageCode)
     }
@@ -64,6 +66,7 @@ class GenerativeTextRepositoryImpl(
             maxResponseTokens = 150
         )
         return try {
+
             // Realiza la petición al cliente de generación de texto y procesa la respuesta.
             val generatedTextResponse =
                 textGeneratorClient.getAIModelResponse(textGenerationPrompt)
@@ -87,7 +90,7 @@ class GenerativeTextRepositoryImpl(
         return """
             Location = ${weatherDetails.nameLocation};
             Current temperature = ${weatherDetails.temperatureRoundedToInt};
-            Weather Condition = ${weatherDetails.weatherCondition};
+            Weather Condition = ${weatherDetails.shortDescriptionCode};
             Is Night = ${weatherDetails.isDay != 1};
             Used language for response = $systemLanguageCode
         """.trimIndent()
@@ -98,7 +101,7 @@ class GenerativeTextRepositoryImpl(
         val generatedTextEntity = GeneratedTextEntity(
             nameLocation = weatherDetails.nameLocation,
             temperature = weatherDetails.temperatureRoundedToInt,
-            conciseWeatherDescription = weatherDetails.weatherCondition,
+            conciseWeatherDescription = weatherCodeStringMap.getValue(weatherDetails.shortDescriptionCode),
             generatedDescription = generatedText
         )
         generatedTextDao.addGeneratedTextForLocation(generatedTextEntity)

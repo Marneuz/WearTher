@@ -14,12 +14,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,11 +30,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.marneux.marneweather.R
+import com.marneux.marneweather.presentation.common.model.weatherCodeToDescriptionMap
+import com.marneux.marneweather.presentation.theme.MarneTheme
 
 @Composable
 fun Header(
@@ -41,16 +48,21 @@ fun Header(
     @DrawableRes headerImageResId: Int,
     @DrawableRes weatherConditionIconId: Int,
     onBackButtonClick: () -> Unit,
-    shouldDisplaySaveButton: Boolean,
+    showSaveLocationButton: Boolean,
     onSaveButtonClick: () -> Unit,
     nameLocation: String,
     currentWeatherInDegrees: Int,
-    weatherCondition: String,
+    weatherCondition: Int,
 ) {
     Box(modifier = modifier) {
         val iconButtonContainerColor = remember {
             Color.Black.copy(0.4f)
         }
+        val stringId = weatherCodeToDescriptionMap[weatherCondition] ?: error(
+            "String not found " +
+                    "for $weatherCondition"
+        )
+        val name = stringResource(id = stringId)
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = headerImageResId),
@@ -74,10 +86,11 @@ fun Header(
         ) {
             Icon(
                 imageVector = Icons.Filled.Menu,
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
             )
         }
-        if (shouldDisplaySaveButton) {
+        if (showSaveLocationButton) {
             IconButton(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -88,8 +101,9 @@ fun Header(
                 onClick = onSaveButtonClick
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Star,
-                    contentDescription = null
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         }
@@ -131,7 +145,7 @@ fun Header(
                         tint = Color.Unspecified
                     )
                     Text(
-                        text = weatherCondition,
+                        text = name,
                         color = Color.White,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
@@ -139,6 +153,25 @@ fun Header(
                     )
                 }
             }
+        }
+    }
+}
+
+@Preview(wallpaper = Wallpapers.NONE)
+@Composable
+private fun DetailHeaderPreview() {
+    MarneTheme {
+        Surface {
+            Header(
+                headerImageResId = R.drawable.img_day_clear,
+                weatherConditionIconId = R.drawable.ic_day_clear,
+                onBackButtonClick = {},
+                showSaveLocationButton = true,
+                onSaveButtonClick = {},
+                nameLocation = "Zaragoza",
+                currentWeatherInDegrees = 24,
+                weatherCondition = 0
+            )
         }
     }
 }
