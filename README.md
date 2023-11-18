@@ -33,18 +33,22 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 
 > [!IMPORTANT]
 >## Configuración Previa
-Antes de ejecutar la aplicación, es necesario introducir tu "GPT" __`API_KEY`__ en el archivo
-[TextGeneratorClientConstants](com.marneux.marneweather.data.remote.languagemodel.TextGeneratorClientConstants)
+>Antes de ejecutar la aplicación, es necesario introducir tu "GPT" __`API_KEY`__ en el archivo
+> [TextGeneratorClientConstants](com.marneux.marneweather.data.remote.languagemodel.
+> TextGeneratorClientConstants)
 
-### [!NOTE] sobre GPT
+> ### [!NOTE] sobre GPT
 
-GPT, al ser una API relativamente reciente, puede presentar ocasionalmente fallos o retardos en sus
-respuestas.
-En consecuencia, hay situaciones en las que la API podría no devolver texto.
+> GPT, al ser una API relativamente reciente, puede presentar ocasionalmente fallos o retardos en
+> sus
+> respuestas.
+> En consecuencia, hay situaciones en las que la API podría no devolver texto.
 
-Para gestionar la presentación de textos devueltos por GPT en la aplicación,
-se emplean literales de cadenas de texto multilínea (""" """) en Kotlin. Esto permite representar el
-texto exactamente como se recibe, manteniendo su formato original. Para más información sobre
-literales de
-cadenas de texto multilínea en Kotlin, se puede
-consultar [esta fuente](https://realkotlin.com/tutorials/2018-06-26-multiline-string-literals-in-kotlin/).
+> Para gestionar la presentación de textos devueltos por GPT en la aplicación,
+> se emplean literales de cadenas de texto multilínea (""" """) en Kotlin. Esto permite
+> representar el
+> texto exactamente como se recibe, manteniendo su formato original. Para más información sobre
+> literales de
+> cadenas de texto multilínea en Kotlin, se puede
+> consultar [esta fuente](https://realkotlin.
+> com/tutorials/2018-06-26-multiline-string-literals-in-kotlin/).
