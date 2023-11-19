@@ -33,12 +33,12 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 
 > [!IMPORTANT]
 >## Configuración Previa
->Antes de ejecutar la aplicación, es necesario introducir tu "GPT" __`API_KEY`__ en el archivo
+>Antes de ejecutar la aplicación, es necesario introducir tu __`GPT_API_KEY`__ en el archivo
 > [TextGeneratorClientConstants](com.marneux.marneweather.data.remote.languagemodel.
 > TextGeneratorClientConstants)
 
-> ### [!NOTE] sobre GPT
-
+> [!NOTE]
+> ### Notas sobre GPT
 > GPT, al ser una API relativamente reciente, puede presentar ocasionalmente fallos o retardos en
 > sus
 > respuestas.

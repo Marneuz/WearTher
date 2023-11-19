@@ -134,9 +134,7 @@ private fun PrecipitationPreview() {
                 RainChances("1", "100", LocalDateTime.now(), 25),
                 RainChances("16", "100", LocalDateTime.now().plusHours(1), 80),
                 RainChances("16", "16", LocalDateTime.now().plusHours(2), 50),
-
                 )
-
             PrecipitationProbabilitiesCard(mockRainProbability)
         }
     }

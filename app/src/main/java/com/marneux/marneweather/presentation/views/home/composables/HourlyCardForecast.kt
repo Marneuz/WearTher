@@ -36,6 +36,7 @@ import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
 import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
 import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
+import com.marneux.marneweather.presentation.common.model.weatherCodeToDescriptionMap
 import com.marneux.marneweather.presentation.theme.MarneTheme
 import java.time.LocalDateTime
 
@@ -171,7 +172,7 @@ private fun HourlyForecastCardPreview() {
             )
             HourlyForecastCard(
                 nameLocation = "Zaragoza",
-                shortDescription = R.string.weather_clear_sky,
+                shortDescription = weatherCodeToDescriptionMap.getValue(0),
                 shortDescriptionIcon = R.drawable.ic_day_clear,
                 weatherInDegrees = "17",
                 onClick = { },

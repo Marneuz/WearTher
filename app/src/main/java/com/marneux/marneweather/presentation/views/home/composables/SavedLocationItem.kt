@@ -45,6 +45,7 @@ fun LazyListScope.savedLocationItems(
     onSavedLocationItemClick: (BriefWeatherDetails) -> Unit,
     onSavedLocationDismissed: (BriefWeatherDetails) -> Unit
 ) {
+
     items(
         items = savedLocationItemsList,
         key = { it.nameLocation }
@@ -88,7 +89,6 @@ private fun CompactWeatherCard(
     modifier: Modifier = Modifier
 ) {
     val weatherDegress = remember(weatherInDegrees) {
-
         "$weatherInDegrees°"
     }
     OutlinedCard(
@@ -167,7 +167,7 @@ private fun SavedLocationPreview() {
         Surface {
             CompactWeatherCard(
                 nameLocation = "Zaragoza",
-                shortDescription = 99,
+                shortDescription = R.string.weather_clear_sky,
                 shortDescriptionIcon = R.drawable.ic_day_clear,
                 weatherInDegrees = "19",
                 onClick = {}
