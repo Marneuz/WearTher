@@ -21,7 +21,7 @@ fun getWeatherImageForCode(weatherCode: Int): Int {
             in thunderstorms -> R.drawable.img_day_thunder
             in snowy -> R.drawable.img_day_snow
             in foggy -> R.drawable.img_day_fog
-            else -> throw IllegalArgumentException("Unknown weatherCode $weatherCode")
+            else -> throw IllegalArgumentException("Unknown weather code : $weatherCode")
         }
     } else {
         when (weatherCode) {
@@ -31,7 +31,7 @@ fun getWeatherImageForCode(weatherCode: Int): Int {
             in thunderstorms -> R.drawable.img_night_thunder
             in snowy -> R.drawable.img_night_snow
             in foggy -> R.drawable.img_night_fog
-            else -> throw IllegalArgumentException("Unknown weatherCode $weatherCode")
+            else -> throw IllegalArgumentException("Unknown weather code :  $weatherCode")
         }
     }
 }
@@ -46,7 +46,7 @@ fun getWeatherIconResForCode(weatherCode: Int): Int {
             in thunderstorms -> R.drawable.ic_day_thunderstorms
             in snowy -> R.drawable.ic_day_snow
             in foggy -> R.drawable.ic_mist
-            else -> throw IllegalArgumentException("Unknown weatherCode $weatherCode")
+            else -> throw IllegalArgumentException("Unknown weather code : $weatherCode")
         }
     } else {
         when (weatherCode) {
@@ -56,19 +56,14 @@ fun getWeatherIconResForCode(weatherCode: Int): Int {
             in thunderstorms -> R.drawable.ic_night_thunderstorms
             in snowy -> R.drawable.ic_night_snow
             in foggy -> R.drawable.ic_mist
-            else -> throw IllegalArgumentException("Unknown weatherCode $weatherCode")
+            else -> throw IllegalArgumentException("Unknown weather code : $weatherCode")
         }
     }
 }
-
 fun isDaytime(): Boolean {
     val currentHour = LocalDateTime.now().hour
     return currentHour in 6..18
 }
-//fun getDescriptionForWeatherCode(code: Int): String {
-//    val stringId = weatherCodeToDescriptionMap[code] ?: R.string.weather_clear_sky
-//    return getString(stringId)
-//}
 
 // Mapa de códigos meteorológicos a descripciones
 val weatherCodeToDescriptionMap = mapOf(

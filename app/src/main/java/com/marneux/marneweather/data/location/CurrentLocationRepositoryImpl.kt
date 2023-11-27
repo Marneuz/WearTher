@@ -70,10 +70,10 @@ class CurrentLocationRepositoryImpl(
     }
 
     override suspend fun deleteSavedLocation(briefWeatherLocation: BriefWeatherDetails) {
-        locationDao.markLocationEntityAsDeleted(briefWeatherLocation.nameLocation)
+        locationDao.markLocationDeleted(briefWeatherLocation.nameLocation)
     }
 
     override suspend fun restoreDeletedLocation(nameLocation: String) {
-        locationDao.markLocationEntityAsUnDeleted(nameLocation)
+        locationDao.markLocationUndeleted(nameLocation)
     }
 }

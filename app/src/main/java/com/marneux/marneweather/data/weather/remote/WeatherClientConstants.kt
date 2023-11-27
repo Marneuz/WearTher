@@ -4,7 +4,8 @@ import java.time.ZoneId
 
 object WeatherClientConstants {
 
-    /** Parametros de la API con las cuales se puede mostrar un valores metricos o imperiales*/
+    /** Variables de la API con las cuales se puede decidir si lo quieres con metricos o
+     * imperiales, entre otros*/
 
     const val BASE_URL = "https://api.open-meteo.com/v1/"
 

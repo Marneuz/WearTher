@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -36,6 +37,9 @@ import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
 import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
 import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
+import com.marneux.marneweather.presentation.common.model.leftRightShading
+import com.marneux.marneweather.presentation.common.model.rememberIsFadeBothEdges
+import com.marneux.marneweather.presentation.common.model.rightShading
 import com.marneux.marneweather.presentation.common.model.weatherCodeToDescriptionMap
 import com.marneux.marneweather.presentation.theme.MarneTheme
 import java.time.LocalDateTime
@@ -116,9 +120,17 @@ private fun WeatherDegreeSection(weatherDegrees: String) {
 
 @Composable
 private fun HourlyForecastSection(hourlyForecasts: List<HourlyForecast>) {
+    val listState = rememberLazyListState()
+    val fadeEdges = rememberIsFadeBothEdges(listState = listState, dataList = hourlyForecasts)
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        state = listState,
+        modifier = Modifier.then(
+            if (fadeEdges) Modifier.leftRightShading()
+            else Modifier.rightShading()
+        )
     ) {
         items(hourlyForecasts) { forecast ->
             HourlyForecastItem(

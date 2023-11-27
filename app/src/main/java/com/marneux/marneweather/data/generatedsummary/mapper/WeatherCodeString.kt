@@ -2,9 +2,10 @@ package com.marneux.marneweather.data.generatedsummary.mapper
 
 /**Mapa de códigos meteorológicos a descripciones para GPT.
 // Como aclaracion, ya que este mismo mapper se encuentra en [WeatherCodesResources],
-no he descubierto como pasarle de forma adecuada resources a gpt, ya que coge el valor del
-resource, asi que para poder conservar la capa presentation sin hardcodear textos tome esta
-decision */
+no he descubierto como pasarle de forma adecuada string resources a gpt, ya que coge el int del
+recurso en lugar del contenido, asi que para poder conservar la capa presentation sin hardcodear
+textos tome la decision de hacer un mapper con el valor hardcodeado para pasarlo a GPT, y el
+mismo pero con string resources en presentation para mantener una buena arquitectura*/
 
 val weatherCodeStringMap = mapOf(
     0 to "Clear sky",

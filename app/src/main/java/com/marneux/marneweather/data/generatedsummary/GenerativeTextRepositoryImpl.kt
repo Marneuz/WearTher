@@ -21,7 +21,8 @@ class GenerativeTextRepositoryImpl(
     companion object {
         private const val MODEL_ID = "gpt-3.5-turbo-1106"
         private val SYSTEM_PROMPT = """
-            "Provide a brief and concise weather description and then procced to make a clothing recommendation for a man, following the format specified below:
+            "Provide a brief and concise weather description and then procced to make a clothing
+             recommendation for a man, following the format specified below:
 
             -Top: (jackets, shirts, t-shirts, coats, etc.)
 

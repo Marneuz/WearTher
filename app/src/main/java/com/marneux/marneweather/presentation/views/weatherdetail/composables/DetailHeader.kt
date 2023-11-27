@@ -3,12 +3,12 @@ package com.marneux.marneweather.presentation.views.weatherdetail.composables
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -117,40 +118,46 @@ fun Header(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 32.dp),
                 text = nameLocation,
                 style = MaterialTheme.typography.displayMedium,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Medium
             )
             Text(
                 text = "$currentWeatherInDegrees°",
                 style = MaterialTheme.typography.displayLarge.copy(fontSize = 80.sp)
             )
-            Box(
-                modifier = Modifier
-                    .background(Color.Black, shape = RoundedCornerShape(16.dp))
+            Surface(
+                modifier = Modifier.padding(top = 16.dp),
+                shape = RoundedCornerShape(16.dp),
+                tonalElevation = 6.dp
             ) {
-                Row(
+                Box(
                     modifier = Modifier
-                        .padding(start = 8.dp)
-                        .offset(x = (-8).dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .background(Color.Black, shape = RoundedCornerShape(16.dp))
                 ) {
-                    Icon(
-                        modifier = Modifier.size(32.dp),
-                        imageVector = ImageVector.vectorResource(id = weatherConditionIconId),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                    Text(
-                        text = name,
-                        color = Color.White,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(32.dp),
+                            imageVector = ImageVector.vectorResource(id = weatherConditionIconId),
+                            contentDescription = null,
+                            tint = Color.Unspecified
+                        )
+                        Text(
+                            text = name,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    }
                 }
             }
         }

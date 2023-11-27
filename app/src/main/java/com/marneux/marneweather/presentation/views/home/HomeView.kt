@@ -77,7 +77,7 @@ fun HomeScreen(
         onSuggestionClick = onSuggestionClick,
         onSavedLocationItemClick = onSavedLocationItemClick,
         onLocationPermissionGranted = onLocationPermissionGranted,
-        snackbarHostState = snackbarHostState,
+        snackBarHostState = snackbarHostState,
     )
 }
 
@@ -109,7 +109,7 @@ fun HomeScreen(
     onSavedLocationItemClick: (BriefWeatherDetails) -> Unit,
     onSavedLocationDismissed: (BriefWeatherDetails) -> Unit,
     onLocationPermissionGranted: () -> Unit,
-    snackbarHostState: SnackbarHostState,
+    snackBarHostState: SnackbarHostState,
     viewModel: HomeViewModel = viewModel(),
 ) {
 
@@ -239,7 +239,7 @@ fun HomeScreen(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding(),
-            hostState = snackbarHostState
+            hostState = snackBarHostState
         )
         PullRefreshIndicator(
             modifier = Modifier.align(Alignment.TopCenter),

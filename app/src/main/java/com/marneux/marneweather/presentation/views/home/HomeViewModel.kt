@@ -129,7 +129,7 @@ class HomeViewModel(
         retryFetchSavedLocation.update { true }
     }
 
-    fun setSearchQueryForSuggestionsGeneration(searchQuery: String) {
+    fun searchSuggestionQuery(searchQuery: String) {
         currentSearchQuery.value = searchQuery
     }
 

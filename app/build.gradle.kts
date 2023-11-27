@@ -34,7 +34,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-        // posible solucion java.time api sdk <26 https://stackoverflow.com/questions/63789699/iscorelibrarydesugaringenabled-not-works-in-gradle-kotlin-dsl-kts
+        // soluciona problema con dispositivos sdk26 con api https://stackoverflow
+        // .com/questions/63789699/iscorelibrarydesugaringenabled-not-works-in-gradle-kotlin-dsl-kts
         isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
@@ -128,6 +129,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 
     // mockito
+    testImplementation("org.mockito:mockito-core:5.3.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
 
     // koin dependency injection

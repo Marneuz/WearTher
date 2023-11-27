@@ -1,5 +1,7 @@
 package com.marneux.marneweather.presentation.navigation
 
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -10,12 +12,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.marneux.marneweather.R
 import com.marneux.marneweather.model.location.AutoSuggestLocation
 import com.marneux.marneweather.model.weather.BriefWeatherDetails
 import com.marneux.marneweather.presentation.views.home.HomeScreen
@@ -36,14 +40,14 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
         homeScreen(
             route = NavigationDestinations.HomeView.route,
             onSuggestionClick = {
-                navController.navigateToWeatherDetailScreen(
+                navController.navigateToWeatherDetailView(
                     nameLocation = it.nameLocation,
                     latitude = it.coordinatesLocation.latitude,
                     longitude = it.coordinatesLocation.longitude
                 )
             },
             onSavedLocationItemClick = {
-                navController.navigateToWeatherDetailScreen(
+                navController.navigateToWeatherDetailView(
                     nameLocation = it.nameLocation,
                     latitude = it.coordinates.latitude,
                     longitude = it.coordinates.longitude
@@ -66,6 +70,8 @@ private fun NavGraphBuilder.homeScreen(
         // Inicialización del ViewModel de la pantalla de inicio y manejo de su estado.
         val viewModel: HomeViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsState()
+        val beenDeleted = stringResource(id = R.string.has_been_deleted)
+        val undo = stringResource(id = R.string.undo)
 
         // Configuración de componentes reactivos y manejo de eventos de Snackbar.
         val snackbarHostState = remember { SnackbarHostState() }
@@ -74,8 +80,8 @@ private fun NavGraphBuilder.homeScreen(
             coroutineScope.launch {
                 snackbarHostState.currentSnackbarData?.dismiss()
                 val snackbarResult = snackbarHostState.showSnackbar(
-                    message = "${briefWeatherDetails.nameLocation} has been deleted",
-                    actionLabel = "Undo",
+                    message = "${briefWeatherDetails.nameLocation} $beenDeleted",
+                    actionLabel = undo,
                     duration = SnackbarDuration.Short
                 )
                 if (snackbarResult == SnackbarResult.ActionPerformed) {
@@ -92,7 +98,7 @@ private fun NavGraphBuilder.homeScreen(
                 viewModel.deleteSavedLocation(it)
                 showSnackbar(it)
             },
-            onSearchQueryChange = viewModel::setSearchQueryForSuggestionsGeneration,
+            onSearchQueryChange = viewModel::searchSuggestionQuery,
             onSuggestionClick = onSuggestionClick,
             onSavedLocationItemClick = onSavedLocationItemClick,
             onLocationPermissionGranted = viewModel::fetchWeatherCurrentLocation,
@@ -105,30 +111,42 @@ fun NavGraphBuilder.weatherDetailScreen(
     route: String,
     onBackButtonClick: () -> Unit
 ) {
-    composable(route) {
+    composable(
+        route,
+        enterTransition = {
+            slideInVertically(
+                initialOffsetY = { it }
+            )
+        },
+        exitTransition = {
+            slideOutVertically(
+                targetOffsetY = { it })
+        },
+    ) {
         // Inicialización del ViewModel de la pantalla de detalle del clima y manejo de su estado.
         val viewModel: WeatherDetailViewModel = koinViewModel()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
         // Configuración de componentes reactivos y manejo de eventos de Snackbar.
         val coroutineScope = rememberCoroutineScope()
-        val snackbarHostState = remember { SnackbarHostState() }
+        val favLocation = stringResource(id = R.string.added_to_saved_locations)
+        val snackBarHostState = remember { SnackbarHostState() }
         WeatherDetailView(
             uiState = uiState,
-            snackbarHostState = snackbarHostState,
+            snackBarHostState = snackBarHostState,
             onBackButtonClick = onBackButtonClick,
             onSaveButtonClick = {
                 viewModel.addLocationToSavedLocations()
-                snackbarHostState.currentSnackbarData?.dismiss()
+                snackBarHostState.currentSnackbarData?.dismiss()
                 coroutineScope.launch {
-                    snackbarHostState.showSnackbar(message = "Added to saved locations")
+                    snackBarHostState.showSnackbar(message = favLocation)
                 }
             }
         )
     }
 }
 
-private fun NavHostController.navigateToWeatherDetailScreen(
+private fun NavHostController.navigateToWeatherDetailView(
     nameLocation: String,
     latitude: String,
     longitude: String

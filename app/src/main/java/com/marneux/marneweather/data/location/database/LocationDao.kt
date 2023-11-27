@@ -18,13 +18,13 @@ interface LocationDao {
         "UPDATE ${Database.LOCATION_TABLE_NAME} SET is_deleted = 1 WHERE " +
                 "name_location = :nameOfWeatherLocationEntity"
     )
-    suspend fun markLocationEntityAsDeleted(nameOfWeatherLocationEntity: String)
+    suspend fun markLocationDeleted(nameOfWeatherLocationEntity: String)
 
     @Query(
         "UPDATE ${Database.LOCATION_TABLE_NAME} SET is_deleted = 0 WHERE " +
                 "name_location = :nameOfWeatherLocationEntity"
     )
-    suspend fun markLocationEntityAsUnDeleted(nameOfWeatherLocationEntity: String)
+    suspend fun markLocationUndeleted(nameOfWeatherLocationEntity: String)
 
     @Query("DELETE FROM ${Database.LOCATION_TABLE_NAME} WHERE is_deleted = 1")
     suspend fun deleteAllItemsMarkedAsDeleted()

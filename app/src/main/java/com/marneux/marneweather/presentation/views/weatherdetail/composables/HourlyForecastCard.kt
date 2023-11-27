@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,8 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +33,9 @@ import com.marneux.marneweather.R
 import com.marneux.marneweather.model.weather.HourlyForecast
 import com.marneux.marneweather.presentation.common.model.getWeatherIconResForCode
 import com.marneux.marneweather.presentation.common.model.hourTwelveHourFormat
+import com.marneux.marneweather.presentation.common.model.leftRightShading
+import com.marneux.marneweather.presentation.common.model.rememberIsFadeBothEdges
+import com.marneux.marneweather.presentation.common.model.rightShading
 import com.marneux.marneweather.presentation.theme.MarneTheme
 import java.time.LocalDateTime
 
@@ -38,6 +44,9 @@ fun HourlyForecastCard(
     hourlyForecasts: List<HourlyForecast>,
     modifier: Modifier = Modifier
 ) {
+
+    val listState = rememberLazyListState()
+    val fadeBothEdges = rememberIsFadeBothEdges(listState = listState, dataList = hourlyForecasts)
     Card(modifier = modifier) {
         Row(
             modifier = Modifier
@@ -58,7 +67,13 @@ fun HourlyForecastCard(
         }
 
         LazyRow(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+                .then(
+                    if (fadeBothEdges)
+                        Modifier.leftRightShading() else Modifier.rightShading()
+                ),
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -70,7 +85,6 @@ fun HourlyForecastCard(
                 )
             }
         }
-
     }
 }
 
@@ -88,12 +102,12 @@ private fun HourlyForecastItem(
     ) {
         Text(
             text = dateTime.hourTwelveHourFormat,
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.alpha(0.75f)
         )
-
         Icon(
             modifier = Modifier.size(40.dp),
-            imageVector = ImageVector.vectorResource(id = iconResId),
+            painter = painterResource(id = iconResId),
             contentDescription = null,
             tint = Color.Unspecified
         )
@@ -102,7 +116,6 @@ private fun HourlyForecastItem(
             style = MaterialTheme.typography.labelLarge
         )
     }
-
 }
 
 @Preview
@@ -125,7 +138,6 @@ private fun HourlyForecastPreview() {
                     temperature = -5, iconDescriptionCode = 2
                 )
             )
-
             HourlyForecastCard(
                 hourlyForecasts = mockHourlyForecasts
             )

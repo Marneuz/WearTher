@@ -41,10 +41,11 @@ import com.marneux.marneweather.presentation.views.weatherdetail.composables.Wea
 @Composable
 fun WeatherDetailView(
     uiState: WeatherDetailState,
-    snackbarHostState: SnackbarHostState,
+    snackBarHostState: SnackbarHostState,
     onSaveButtonClick: () -> Unit,
     onBackButtonClick: () -> Unit,
 ) {
+
     if (uiState.isLoading) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -67,7 +68,7 @@ fun WeatherDetailView(
         }
     } else {
         WeatherDetailView(
-            snackbarHostState = snackbarHostState,
+            snackBarHostState = snackBarHostState,
             nameLocation = uiState.weatherDetailsLocation!!.nameLocation,
             weatherInDegrees = uiState.weatherDetailsLocation.temperatureRoundedToInt,
             weatherConditionCode = uiState.weatherDetailsLocation.shortDescriptionCode,
@@ -96,7 +97,7 @@ fun WeatherDetailView(
     singleWeatherDetails: List<SingleWeatherDetail>,
     hourlyForecasts: List<HourlyForecast>,
     precipitationProbabilities: List<RainChances>,
-    snackbarHostState: SnackbarHostState,
+    snackBarHostState: SnackbarHostState,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     Box {
@@ -157,7 +158,7 @@ fun WeatherDetailView(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding(),
-            hostState = snackbarHostState
+            hostState = snackBarHostState
         )
     }
 }

@@ -50,7 +50,6 @@ fun LazyListScope.savedLocationItems(
         items = savedLocationItemsList,
         key = { it.nameLocation }
     ) {
-
         val dismissState = remember {
             DismissState(
                 initialValue = DismissValue.Default,

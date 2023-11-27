@@ -4,11 +4,13 @@
 
     <!-- Home View -->
     <string name="home_saved_locations">Ubicaciones Guardadas</string>
-    <string name="home_search_location">Buscar una ubicació</string>
+    <string name="home_search_location">Buscar una ubicación</string>
     <string name="home_current_location">Ubicación Actual</string>
     <string name="home_dialog_title">Advertencia de Permisos</string>
     <string name="home_dialog_description">Al denegar los permisos, algunas funciones pueden no
         estar disponibles. ¿Deseas continuar o cambiar los ajustes de permisos?</string>
+    <string name="has_been_deleted">ha sido eliminado.</string>
+    <string name="undo">Deshacer.</string>
 
     <!-- Commons -->
     <string name="error_current_loc">Ocurrió un error al obtener el clima de la ubicación actual.</string>
@@ -33,6 +35,8 @@
     <string name="max_uv_index">Índice Max UV</string>
     <string name="wind_direction">Dir. Viento</string>
     <string name="wind_speed">Vel. Viento</string>
+    <string name="added_to_saved_locations">Añadido a ubicaciones guardadas</string>
+    <string name="icon_not_found_for">Icono no encontrado para </string>
 
     <!-- Short Weather Description -->
     <string name="weather_clear_sky">Cielo despejado</string>
