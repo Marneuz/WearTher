@@ -50,5 +50,4 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 > texto exactamente como se recibe, manteniendo su formato original. Para más información sobre
 > literales de
 > cadenas de texto multilínea en Kotlin, se puede
-> consultar [esta fuente](https://realkotlin.
-> com/tutorials/2018-06-26-multiline-string-literals-in-kotlin/).
+> consultar [esta fuente](https://realkotlin.com/tutorials/2018-06-26-multiline-string-literals-in-kotlin/).
