@@ -24,7 +24,6 @@ El proyecto está estructurado siguiendo los principios de la Clean Architecture
 - **Coroutines**: Para la programación asíncrona y concurrente en Kotlin.
 - **Retrofit**: Cliente HTTP para Android y Java.
 - **WorkManager**: Para la ejecución de tareas en segundo plano.
-- **Coil**: Para la carga y visualización de imágenes.
 - **Compose con Material 3**: Framework moderno de UI para Android.
 
 ## Recursos Utilizados
