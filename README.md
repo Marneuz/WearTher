@@ -1,8 +1,8 @@
 
-# MarneWeather
+# WearTher
 
 ## Descripción
-MarneWeather es una aplicación Android que proporciona información sobre el clima basándose en tu ubicación actual. 
+WearTher es una aplicación Android que proporciona información sobre el clima basándose en tu ubicación actual. 
 Además de mostrarte el clima de tu zona, en el detalle de la aplicación se realiza una llamada a la API de GPT, 
 la cual te sugiere qué tipo de ropa deberías llevar de acuerdo al clima actual. También es posible buscar otras ciudades y 
 añadirlas a favoritas desde la sección de detalles.
